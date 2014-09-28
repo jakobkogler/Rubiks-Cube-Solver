@@ -15,3 +15,54 @@ void Group::buildTransitionTable()
 		}
 	}
 }
+
+void Group::buildPruneTable()
+{
+	prune_table = vector<int>(state_count, 20);
+
+	int visited_count = 0;
+	int depth = 0;
+
+	while (visited_count < state_count)
+	{
+		int cnt = pruneTreeSearch(0, depth, depth, -1);
+		visited_count += cnt;
+		depth++;
+	}
+}
+
+int Group::pruneTreeSearch(int state, int depth_left, int depth, int lastMove)
+{
+	int cnt = 0;
+
+	if (depth_left == 0)
+	{
+		if (prune_table[state] > depth)
+		{
+			prune_table[state] = depth;
+			cnt = 1;
+		}
+	}
+	else
+	{
+		if (prune_table[state] == depth - depth_left)
+		{
+			for (int move = 0; move < 6; move++)
+			{
+				if (move == lastMove)
+					continue;
+				if ((lastMove & 1) == 1 && move == lastMove - 1)
+					continue;
+
+				for (int j = 0; j < 3; j++)
+				{
+					state = transition_table[state][move];
+					cnt += pruneTreeSearch(state, depth_left - 1, depth, move);
+				}
+				state = transition_table[state][move];
+			}
+		}
+	}
+
+	return cnt;
+}
