@@ -1,8 +1,12 @@
+#include <vector>
+
+using namespace std;
+
 class Indexing
 {
 public:
-	static int permutation_to_index(int *arr, int n);
-	static void index_to_permutation(int index, int *arr, int n);
-	static int orientation_to_index_dependent(int *arr, int n, int orientation_cnt);
-	static void index_to_orientation_dependent(int index, int *arr, int n, int orientation_cnt);
+	static int permutation_to_index(vector<int> const& arr);
+	static void index_to_permutation(int index, vector<int> & arr);
+	static int orientation_to_index_dependent(vector<int> const& arr, int orientation_cnt);
+	static void index_to_orientation_dependent(int index, vector<int> & arr, int orientation_cnt);
 };

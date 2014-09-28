@@ -1,7 +1,8 @@
 #include "indexing.h"
 
-int Indexing::permutation_to_index(int *arr, int n)
+int Indexing::permutation_to_index(vector<int> const& arr)
 {
+	int n = arr.size();
 	int index = 0;
 	for (int i = 0; i < n; i++)
 	{
@@ -17,8 +18,9 @@ int Indexing::permutation_to_index(int *arr, int n)
 	return index;
 }
 
-void Indexing::index_to_permutation(int index, int *arr, int n)
+void Indexing::index_to_permutation(int index, vector<int> & arr)
 {
+	int n = arr.size();
 	arr[n - 1] = 0;
 	for (int i = n - 2; i >= 0; i--)
 	{
@@ -34,8 +36,9 @@ void Indexing::index_to_permutation(int index, int *arr, int n)
 	}
 }
 
-int Indexing::orientation_to_index_dependent(int *arr, int n, int orientation_cnt)
+int Indexing::orientation_to_index_dependent(vector<int> const& arr, int orientation_cnt)
 {
+	int n = arr.size();
 	int index = 0;
 	for (int i = 0; i < n - 1; i++)
 	{
@@ -44,8 +47,9 @@ int Indexing::orientation_to_index_dependent(int *arr, int n, int orientation_cn
 	return index;
 }
 
-void Indexing::index_to_orientation_dependent(int index, int *arr, int n, int orientation_cnt)
+void Indexing::index_to_orientation_dependent(int index, vector<int> & arr, int orientation_cnt)
 {
+	int n = arr.size();
 	arr[n - 1] = 0;
 	for (int i = n - 2; i >= 0; i--)
 	{
