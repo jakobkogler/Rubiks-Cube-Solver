@@ -1,3 +1,6 @@
+#ifndef GROUP_H
+#define GROUP_H
+
 #include <vector>
 
 using namespace std;
@@ -23,3 +26,5 @@ protected:
 private:
 	int pruneTreeSearch(int state, int depth_left, int depth, int lastMove);
 };
+
+#endif // GROUP_H

@@ -1,5 +1,7 @@
-#include "group.h"
+#ifndef CORNERPERMUTATION_H
+#define CORNERPERMUTATION_H
 
+#include "group.h"
 
 class CornerPermutation : public Group
 {
@@ -12,3 +14,5 @@ private:
 	int array_to_index(vector<int> const& arr);
 	void permute_array(vector<int> & arr, int idx1, int idx2, int idx3, int idx4);
 };
+
+#endif // CORNERPERMUTATION_H
