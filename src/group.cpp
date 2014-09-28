@@ -10,6 +10,7 @@ void Group::buildTransitionTable()
 		for (int move = 0; move < 6; move++)
 		{
 			index_to_array(index, arr);
+			apply_move(arr, move);
 			transition_table[index][move] = array_to_index(arr);
 		}
 	}
