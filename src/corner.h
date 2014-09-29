@@ -17,6 +17,7 @@ public:
 		: permutation_transition_table(permutation_transition_table), 
 		orientation_transition_table(orientation_transition_table), state_count(88179840) {}
 	void buildPruneTable();
+	vector<int> getPruneTable(){ return prune_table; }
 private:
 	void pruneTreeSearch(long state, int depth_left, int depth, int lastMove);
 	long apply_transition(long state, int move);
