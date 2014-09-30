@@ -4,6 +4,7 @@
 #include "corner_orientation.h"
 #include "corner.h"
 #include "edge_orientation.h"
+#include "edge_permutation.h"
 #include <iostream>
 
 OptimalSolver::OptimalSolver()
@@ -28,6 +29,10 @@ OptimalSolver::OptimalSolver()
 	eo_transition = eo.getTransitionTable();
 	eo_prune = eo.getPruneTable();
 
+	EdgePermutation ep;
+	ep.buildTransitionTable();
+	ep_transition = ep.getTransitionTable();
+
 	moveNames[0] = string("U");
 	moveNames[1] = string("D");
 	moveNames[2] = string("R");
@@ -39,11 +44,14 @@ OptimalSolver::OptimalSolver()
 	moveCntNames[2] = string("'");
 };
 
-int OptimalSolver::IDA(vector<int> cornerPermutation, vector<int> cornerOrientation, vector<int> edgeOrientation)
+int OptimalSolver::IDA(vector<int> cornerPermutation, vector<int> cornerOrientation, vector<int> edgeOrientation, vector<int> edgePermutation1, vector<int> edgePermutation2)
 {
 	int cornerPerm = Indexing::permutation_to_index(cornerPermutation);
 	int cornerOrient = Indexing::orientation_to_index_dependent(cornerOrientation, 3);
-	int endgeOrient = Indexing::orientation_to_index_dependent(edgeOrientation, 2);
+	int edgeOrient = Indexing::orientation_to_index_dependent(edgeOrientation, 2);
+	EdgePermutation ep;
+	int edgePerm1 = ep.array_to_index(edgePermutation1);
+	int edgePerm2 = ep.array_to_index(edgePermutation2);
 
 	solution = "";
 	nodeCnt = 0;
@@ -54,7 +62,7 @@ int OptimalSolver::IDA(vector<int> cornerPermutation, vector<int> cornerOrientat
 	{
 		nodeResentCnt = 0;
 		cout << "Depth " << depth << ": ";
-		if (treeSearch(cornerPerm, cornerOrient, endgeOrient, depth, -1))
+		if (treeSearch(cornerPerm, cornerOrient, edgeOrient, edgePerm1, edgePerm2, depth, -1))
 		{
 			cout << "solution found (" << nodeResentCnt << " nodes visited)\n" << solution.c_str() << endl;
 			break;
@@ -70,12 +78,12 @@ int OptimalSolver::IDA(vector<int> cornerPermutation, vector<int> cornerOrientat
 	return depth;
 }
 
-bool OptimalSolver::treeSearch(int cornerPermutation, int cornerOrientation, int edgeOrientation, int depth, int lastMove)
+bool OptimalSolver::treeSearch(int cornerPermutation, int cornerOrientation, int edgeOrientation, int edgePermutation1, int edgePermutation2, int depth, int lastMove)
 {
 	nodeResentCnt++;
 	if (depth == 0)
 	{
-		return (cornerPermutation == 0 && cornerOrientation == 0 && edgeOrientation == 0);
+		return (cornerPermutation == 0 && cornerOrientation == 0 && edgeOrientation == 0 && edgePermutation1 == 0 && edgePermutation2 == 366288);
 	}
 	else
 	{
@@ -93,8 +101,10 @@ bool OptimalSolver::treeSearch(int cornerPermutation, int cornerOrientation, int
 					cornerPermutation = cp_transition[cornerPermutation][move];
 					cornerOrientation = co_transition[cornerOrientation][move];
 					edgeOrientation = eo_transition[edgeOrientation][move];
+					edgePermutation1 = ep_transition[edgePermutation1][move];
+					edgePermutation2 = ep_transition[edgePermutation2][move];
 
-					if (treeSearch(cornerPermutation, cornerOrientation, edgeOrientation, depth - 1, move))
+					if (treeSearch(cornerPermutation, cornerOrientation, edgeOrientation, edgePermutation1, edgePermutation2, depth - 1, move))
 					{
 						solution = moveNames[move] + moveCntNames[j] + string(" ") + solution;
 						return true;
@@ -103,6 +113,8 @@ bool OptimalSolver::treeSearch(int cornerPermutation, int cornerOrientation, int
 				cornerPermutation = cp_transition[cornerPermutation][move];
 				cornerOrientation = co_transition[cornerOrientation][move];
 				edgeOrientation = eo_transition[edgeOrientation][move];
+				edgePermutation1 = ep_transition[edgePermutation1][move];
+				edgePermutation2 = ep_transition[edgePermutation2][move];
 			}
 		}
 
