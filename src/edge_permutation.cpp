@@ -191,3 +191,18 @@ void EdgePermutation::index_to_array(int index, vector<int> & arr)
 		usedPieces[piece] = true;
 	}
 }
+
+void EdgePermutation::buildPruneTable2()
+{
+	prune_table2 = vector<int>(state_count, 20);
+
+	int visited_count = 0;
+	int depth = 0;
+
+	while (visited_count < state_count)
+	{
+		int cnt = pruneTreeSearch(366288, prune_table2, depth, depth, -1);
+		visited_count += cnt;
+		depth++;
+	}
+}

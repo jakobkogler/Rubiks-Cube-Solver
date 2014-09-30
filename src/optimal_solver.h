@@ -6,10 +6,10 @@ using namespace std;
 class OptimalSolver
 {
 private:
-	int nodeResentCnt, nodeCnt;
+	int nodeCnt;
 	string solution;
 	vector<vector<long> > co_transition, cp_transition, eo_transition, ep_transition;
-	vector<int> c_prune, eo_prune, ep1_prune;
+	vector<int> c_prune, eo_prune, ep1_prune, ep2_prune;
 	string moveNames[6], moveCntNames[3];
 
 public:
