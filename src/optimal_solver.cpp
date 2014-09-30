@@ -31,7 +31,9 @@ OptimalSolver::OptimalSolver()
 
 	EdgePermutation ep;
 	ep.buildTransitionTable();
+	ep.buildPruneTable();
 	ep_transition = ep.getTransitionTable();
+	ep1_prune = ep.getPruneTable();
 
 	moveNames[0] = string("U");
 	moveNames[1] = string("D");
@@ -87,7 +89,7 @@ bool OptimalSolver::treeSearch(int cornerPermutation, int cornerOrientation, int
 	}
 	else
 	{
-		if (c_prune[cornerPermutation * 2187 + cornerOrientation] <= depth && eo_prune[edgeOrientation] <= depth)
+		if (c_prune[cornerPermutation * 2187 + cornerOrientation] <= depth && eo_prune[edgeOrientation] <= depth && ep1_prune[edgePermutation1] <= depth)
 		{
 			for (int move = 0; move < 6; move++)
 			{
