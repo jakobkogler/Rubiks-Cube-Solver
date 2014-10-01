@@ -62,3 +62,24 @@ void Indexing::index_to_orientation_dependent(int index, vector<int> & arr, int 
 		index /= orientation_cnt;
 	}
 }
+
+int orientation_to_index(vector<int> const& arr, int orientation_cnt)
+{
+	int n = arr.size();
+	int index = 0;
+	for (int i = 0; i < n; i++)
+	{
+		index = index * orientation_cnt + arr[i];
+	}
+	return index;
+}
+
+void index_to_orientation(int index, vector<int> & arr, int orientation_cnt)
+{
+	int n = arr.size();
+	for (int i = n - 1; i >= 0; i--)
+	{
+		arr[i] = index % orientation_cnt;
+		index /= orientation_cnt;
+	}
+}
