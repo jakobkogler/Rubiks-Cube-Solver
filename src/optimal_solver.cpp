@@ -6,7 +6,6 @@
 #include "edge_orientation.h"
 #include "edge_permutation.h"
 #include <iostream>
-#include <conio.h>
 #include <ctime>
 
 double diffclock(clock_t clock1, clock_t clock2)
