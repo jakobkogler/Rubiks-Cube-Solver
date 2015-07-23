@@ -8,7 +8,7 @@ class OptimalSolver
 {
 private:
 	long prune_count;
-	int nodeCnt;
+	long nodeCnt;
 	string solution;
 	vector<vector<long> > co_transition, cp_transition, eo_transition, ep_transition;
 	vector<int> c_prune, eo_prune, ep1_prune, ep2_prune;
