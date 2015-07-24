@@ -124,7 +124,7 @@ bool OptimalSolver::treeSearch(int cornerPermutation, int cornerOrientation, int
 	}
 	else
 	{
-		long p = edgePermutation1 * 665280 + edgePermutation2;
+		long p = edgePermutation1 * 665280L + edgePermutation2;
 		int ep_prune_value = 7;
 		if (e_prune.count(p) == 1)
 			ep_prune_value = e_prune[p];
