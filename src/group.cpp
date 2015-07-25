@@ -1,4 +1,5 @@
 #include "group.h"
+#include "read_store.h"
 
 void Group::buildTransitionTable()
 {
@@ -18,16 +19,21 @@ void Group::buildTransitionTable()
 
 void Group::buildPruneTable()
 {
-	prune_table = vector<char>(state_count, 20);
-
-	int visited_count = 0;
-	char depth = 0;
-
-	while (visited_count < state_count)
+	if (!Read_Store::read_char_vector(prune_table, prune_file_path, state_count))
 	{
-		int cnt = pruneTreeSearch(0, prune_table, depth, depth, -1);
-		visited_count += cnt;
-		depth++;
+		prune_table = vector<char>(state_count, 20);
+	
+		int visited_count = 0;
+		char depth = 0;
+	
+		while (visited_count < state_count)
+		{
+			int cnt = pruneTreeSearch(0, prune_table, depth, depth, -1);
+			visited_count += cnt;
+			depth++;
+		}
+	
+		Read_Store::store_char_vector(prune_table, prune_file_path);
 	}
 }
 

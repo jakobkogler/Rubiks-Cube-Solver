@@ -6,7 +6,7 @@
 class EdgeOrientation : public Group
 {
 public:
-	EdgeOrientation() : Group(2048, 12) {}
+	EdgeOrientation() : Group(2048, 12, "edge_orientation_prune.data") {}
 
 private:
 	void index_to_array(int index, vector<int> & arr);

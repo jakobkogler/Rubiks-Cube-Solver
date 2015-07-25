@@ -38,10 +38,10 @@ OptimalSolver::OptimalSolver()
 	EdgePermutation ep;
 	ep.buildTransitionTable();
 	ep.buildPruneTable();
-	ep.buildPruneTable2();
+	//ep.buildPruneTable2();
 	ep_transition = ep.getTransitionTable();
 	ep1_prune = ep.getPruneTable();
-	ep2_prune = ep.getPruneTable2();
+	//ep2_prune = ep.getPruneTable2();
 
 	// IDA* for e_prune
 	prune_count = 0;

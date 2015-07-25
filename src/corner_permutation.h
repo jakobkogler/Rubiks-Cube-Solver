@@ -6,7 +6,7 @@
 class CornerPermutation : public Group
 {
 public:
-	CornerPermutation() : Group(40320, 8) {}
+	CornerPermutation() : Group(40320, 8, "corner_permutation_prune.data") {}
 
 private:
 	void index_to_array(int index, vector<int> & arr);

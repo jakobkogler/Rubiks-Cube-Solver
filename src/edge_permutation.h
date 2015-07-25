@@ -9,10 +9,10 @@ private:
 	vector<char> prune_table2;
 
 public:
-	EdgePermutation() : Group(665280, 6) {}
+	EdgePermutation() : Group(665280, 6, "edge_permutation_prune.data") {}
 	int array_to_index(vector<int> const& arr);
-	void buildPruneTable2();
-	vector<char> getPruneTable2(){ return prune_table2; }
+	//void buildPruneTable2();
+	//vector<char> getPruneTable2(){ return prune_table2; }
 
 private:
 	void index_to_array(int index, vector<int> & arr);

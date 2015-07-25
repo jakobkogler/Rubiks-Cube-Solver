@@ -6,7 +6,7 @@
 class CornerOrientation : public Group
 {
 public:
-	CornerOrientation() : Group(2187, 8) {}
+	CornerOrientation() : Group(2187, 8, "corner_orientation_prune.data") {}
 
 private:
 	void index_to_array(int index, vector<int> & arr);
