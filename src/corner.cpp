@@ -1,10 +1,11 @@
 #include "corner.h"
 #include <fstream>
 #include <iterator>
+#include "read_store.h"
 
 void Corner::buildPruneTable()
 {
-	if (!try_read_from_file("corner_prune.data"))
+	if (!Read_Store::read_char_vector(prune_table, prune_file_path, state_count))
 	{
 		prune_table = vector<char>(state_count, 11);
 		int visited_count = 0;
@@ -33,7 +34,7 @@ void Corner::buildPruneTable()
 			}
 		}
 		
-		store_to_file_prune("corner_prune.data");
+		Read_Store::store_char_vector(prune_table, prune_file_path);
 	}
 }
 
@@ -109,30 +110,6 @@ bool Corner::solveable(long state, char depth, char maxBreathDepthSearch, int la
 			state = apply_transition(state, move);
 		}
 
-		return false;
-	}
-}
-
-void Corner::store_to_file_prune(string path)
-{
-	ofstream file(path.c_str(), ios::out | ofstream::binary);
-	file.write(reinterpret_cast<const char *>(&prune_table[0]), prune_table.size()*sizeof(char));
-	file.close();
-}
-
-bool Corner::try_read_from_file(string path)
-{
-	ifstream file(path.c_str(), ios::binary);
-	if (file.good())
-	{
-		prune_table.reserve(state_count);
-		prune_table.assign(istreambuf_iterator<char>(file), istreambuf_iterator<char>());
-		file.close();
-		return prune_table.size() == state_count;
-	}
-	else
-	{
-		file.close();
 		return false;
 	}
 }

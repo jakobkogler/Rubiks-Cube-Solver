@@ -12,11 +12,12 @@ private:
 	vector<vector<long> > permutation_transition_table, orientation_transition_table;
 	vector<char> prune_table;
 	int state_count;
+	string prune_file_path;
 
 public:
 	Corner(vector<vector<long> > & permutation_transition_table, vector<vector<long> > & orientation_transition_table)
-		: permutation_transition_table(permutation_transition_table), 
-		orientation_transition_table(orientation_transition_table), state_count(88179840) {}
+		: permutation_transition_table(permutation_transition_table), orientation_transition_table(orientation_transition_table), 
+		  state_count(88179840, prune_file_path("corner_prune.data")) {}
 	void buildPruneTable();
 	vector<char> getPruneTable(){ return prune_table; }
 private:
