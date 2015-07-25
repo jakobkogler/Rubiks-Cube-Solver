@@ -24,4 +24,7 @@ int main()
 
 	cout << "** Pi-COLL **" << endl;
 	os.solve("U2 F U R U' R' U R U2 R' U' R U R' F'");
+	
+	cout << "** Random (takes way too long) **" << endl;
+	os.IDA(vector<int>{ 2, 4, 6, 0, 3, 1, 7, 5 }, vector<int>{ 0, 0, 0, 0, 0, 1, 1, 1 }, vector<int>{ 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1 }, vector<int>{ 4, 9, 1, 2, 8, 7 }, vector<int>{ 3, 11, 10, 5, 6, 0 });
 }
