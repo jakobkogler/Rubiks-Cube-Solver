@@ -3,7 +3,7 @@
 void Read_Store::store_char_vector(vector<char> &vec, string path)
 {
 	ofstream file(path.c_str(), ios::out | ofstream::binary);
-	file.write(reinterpret_cast<const char *>(&vec[0]), vec.size()*sizeof(char));
+	file.write(r&vec[0], vec.size()*sizeof(char));
 	file.close();
 }
 
