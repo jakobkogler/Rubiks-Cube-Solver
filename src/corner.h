@@ -17,7 +17,7 @@ private:
 public:
 	Corner(vector<vector<long> > & permutation_transition_table, vector<vector<long> > & orientation_transition_table)
 		: permutation_transition_table(permutation_transition_table), orientation_transition_table(orientation_transition_table), 
-		  state_count(88179840, prune_file_path("corner_prune.data")) {}
+		  state_count(88179840), prune_file_path("corner_prune.data") {}
 	void buildPruneTable();
 	vector<char> getPruneTable(){ return prune_table; }
 private:

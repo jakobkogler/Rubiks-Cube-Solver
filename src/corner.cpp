@@ -1,6 +1,4 @@
 #include "corner.h"
-#include <fstream>
-#include <iterator>
 #include "read_store.h"
 
 void Corner::buildPruneTable()
