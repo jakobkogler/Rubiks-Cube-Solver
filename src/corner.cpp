@@ -1,5 +1,6 @@
 #include "corner.h"
 #include <fstream>
+#include <iterator>
 
 void Corner::buildPruneTable()
 {
@@ -121,19 +122,13 @@ void Corner::store_to_file_prune(string path)
 
 bool Corner::try_read_from_file(string path)
 {
-	ifstream file(path.c_str(), ios::in | ifstream::binary);
+	ifstream file(path.c_str(), ios::binary);
 	if (file.good())
 	{
-		prune_table = vector<char>(state_count);
-		
-		char value;
-		for (int i = 0; i < state_count; i++)
-		{
-			file.read(reinterpret_cast<char *>(&value), sizeof(value));
-			prune_table[i] = value;
-		}
+		prune_table.reserve(state_count);
+		prune_table.assign(istreambuf_iterator<char>(file), istreambuf_iterator<char>());
 		file.close();
-		return true;
+		return prune_table.size() == state_count;
 	}
 	else
 	{
