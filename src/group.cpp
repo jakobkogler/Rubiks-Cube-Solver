@@ -18,10 +18,10 @@ void Group::buildTransitionTable()
 
 void Group::buildPruneTable()
 {
-	prune_table = vector<int>(state_count, 20);
+	prune_table = vector<char>(state_count, 20);
 
 	int visited_count = 0;
-	int depth = 0;
+	char depth = 0;
 
 	while (visited_count < state_count)
 	{
@@ -31,7 +31,7 @@ void Group::buildPruneTable()
 	}
 }
 
-int Group::pruneTreeSearch(int state, vector<int> & table, int depth_left, int depth, int lastMove)
+int Group::pruneTreeSearch(int state, vector<char> & table, char depth_left, char depth, int lastMove)
 {
 	int cnt = 0;
 

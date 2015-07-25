@@ -5,12 +5,12 @@ void Corner::buildPruneTable()
 {
 	if (!try_read_from_file("corner_prune.data"))
 	{
-		prune_table = vector<int>(state_count, 11);
+		prune_table = vector<char>(state_count, 11);
 		int visited_count = 0;
-		int maxBreathDepthSearch = 8;
+		char maxBreathDepthSearch = 8;
 	
 	
-		for (int depth = 0; depth <= maxBreathDepthSearch; depth++)
+		for (char depth = 0; depth <= maxBreathDepthSearch; depth++)
 		{
 			pruneTreeSearch(0, depth, depth, -1);
 		}
@@ -22,7 +22,7 @@ void Corner::buildPruneTable()
 				continue;
 	
 			//Only the position smaller than 11, since 11 is max
-			for (int depth = maxBreathDepthSearch + 1; depth < 11; depth++)
+			for (char depth = maxBreathDepthSearch + 1; depth < 11; depth++)
 			{
 				if (solveable(i, depth, maxBreathDepthSearch, -1))
 				{
@@ -36,7 +36,7 @@ void Corner::buildPruneTable()
 	}
 }
 
-void Corner::pruneTreeSearch(long state, int depth_left, int depth, int lastMove)
+void Corner::pruneTreeSearch(long state, char depth_left, char depth, int lastMove)
 {
 	if (depth_left == 0)
 	{
@@ -78,7 +78,7 @@ long Corner::apply_transition(long state, int move)
 	return permutation_state * 2187 + orientation_state;
 }
 
-bool Corner::solveable(int state, int depth, int maxBreathDepthSearch, int lastMove)
+bool Corner::solveable(long state, char depth, char maxBreathDepthSearch, int lastMove)
 {
 	if (prune_table[state] == depth)
 	{
@@ -115,7 +115,7 @@ bool Corner::solveable(int state, int depth, int maxBreathDepthSearch, int lastM
 void Corner::store_to_file_prune(string path)
 {
 	ofstream file(path.c_str(), ios::out | ofstream::binary);
-	file.write(reinterpret_cast<const char *>(&prune_table[0]), prune_table.size()*sizeof(int));
+	file.write(reinterpret_cast<const char *>(&prune_table[0]), prune_table.size()*sizeof(char));
 	file.close();
 }
 
@@ -124,9 +124,9 @@ bool Corner::try_read_from_file(string path)
 	ifstream file(path.c_str(), ios::in | ifstream::binary);
 	if (file.good())
 	{
-		prune_table = vector<int>(state_count);
+		prune_table = vector<char>(state_count);
 		
-		int value;
+		char value;
 		for (int i = 0; i < state_count; i++)
 		{
 			file.read(reinterpret_cast<char *>(&value), sizeof(value));

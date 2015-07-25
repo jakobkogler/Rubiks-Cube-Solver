@@ -46,13 +46,13 @@ OptimalSolver::OptimalSolver()
 	// IDA* for e_prune
 	prune_count = 0;
 	e_prune.clear();
-	int depth = 0;
+	char depth = 0;
 	long max = 12 * 11 * 10 * 9 * 8 * 7 * 6 * 5 * 4 * 3 * 2 * 1;
 	cout << endl << "Edge Prune Table:" << endl;
 	while (prune_count < max && depth < 7)
 	{
 		prune_treeSearch(0, 366288, depth, depth, -1);
-		cout << "Depth " << depth << ": " << prune_count << endl;
+		cout << "Depth " << (int)depth << ": " << prune_count << endl;
 		depth++;
 	}
 
@@ -77,7 +77,7 @@ OptimalSolver::OptimalSolver()
 	moveCntNames[2] = string("'");
 };
 
-int OptimalSolver::IDA(vector<int> cornerPermutation, vector<int> cornerOrientation, vector<int> edgeOrientation, vector<int> edgePermutation1, vector<int> edgePermutation2)
+char OptimalSolver::IDA(vector<int> cornerPermutation, vector<int> cornerOrientation, vector<int> edgeOrientation, vector<int> edgePermutation1, vector<int> edgePermutation2)
 {
 	int cornerPerm = Indexing::permutation_to_index(cornerPermutation);
 	int cornerOrient = Indexing::orientation_to_index_dependent(cornerOrientation, 3);
@@ -91,10 +91,10 @@ int OptimalSolver::IDA(vector<int> cornerPermutation, vector<int> cornerOrientat
 	clock_t start = clock();
 
 	cout << "Start solving" << endl;
-	int depth;
+	char depth;
 	for (depth = 0; depth <= 20; depth++)
 	{
-		cout << "Depth " << depth << ": ";
+		cout << "Depth " << (int)depth << ": ";
 		if (treeSearch(cornerPerm, cornerOrient, edgeOrient, edgePerm1, edgePerm2, depth, -1))
 		{
 			cout << "solution found (" << nodeCnt << " nodes visited)\n" << solution.c_str() << endl;
@@ -113,7 +113,7 @@ int OptimalSolver::IDA(vector<int> cornerPermutation, vector<int> cornerOrientat
 	return depth;
 }
 
-bool OptimalSolver::treeSearch(int cornerPermutation, int cornerOrientation, int edgeOrientation, int edgePermutation1, int edgePermutation2, int depth, int lastMove)
+bool OptimalSolver::treeSearch(int cornerPermutation, int cornerOrientation, int edgeOrientation, int edgePermutation1, int edgePermutation2, char depth, int lastMove)
 {
 	nodeCnt++;
 	if (depth == 0)
@@ -123,7 +123,7 @@ bool OptimalSolver::treeSearch(int cornerPermutation, int cornerOrientation, int
 	else
 	{
 		long p = edgePermutation1 * 665280L + edgePermutation2;
-		int ep_prune_value = 7;
+		char ep_prune_value = 7;
 		if (e_prune.count(p) == 1)
 			ep_prune_value = e_prune[p];
 
@@ -162,7 +162,7 @@ bool OptimalSolver::treeSearch(int cornerPermutation, int cornerOrientation, int
 	}
 }
 
-void OptimalSolver::prune_treeSearch(long ep1, long ep2, int depth_left, int depth, int lastMove)
+void OptimalSolver::prune_treeSearch(long ep1, long ep2, char depth_left, char depth, int lastMove)
 {
 	long p = ep1 * 665280 + ep2;
 

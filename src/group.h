@@ -11,11 +11,11 @@ protected:
 	int state_count;
 	int piece_count;
 	vector<vector<long> > transition_table;
-	vector<int> prune_table;
+	vector<char> prune_table;
 	
 public:
 	vector<vector<long> > getTransitionTable(){ return transition_table; }
-	vector<int> getPruneTable(){ return prune_table; }
+	vector<char> getPruneTable(){ return prune_table; }
 	void buildTransitionTable();
 	void buildPruneTable();
 protected:
@@ -23,7 +23,7 @@ protected:
 	virtual void index_to_array(int index, vector<int> & arr) = 0;
 	virtual void apply_move(vector<int> & arr, int move) = 0;
 	virtual int array_to_index(vector<int> const& arr) = 0;
-	int pruneTreeSearch(int state, vector<int> & table, int depth_left, int depth, int lastMove);
+	int pruneTreeSearch(int state, vector<char> & table, char depth_left, char depth, int lastMove);
 };
 
 #endif // GROUP_H
