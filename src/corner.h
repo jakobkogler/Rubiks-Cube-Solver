@@ -22,6 +22,8 @@ private:
 	void pruneTreeSearch(long state, int depth_left, int depth, int lastMove);
 	long apply_transition(long state, int move);
 	bool solveable(int state, int depth, int maxBreathDepthSearch, int lastMove);
+	void store_to_file_prune(string path);
+	bool try_read_from_file(string path);
 };
 
 #endif // CORNER_H

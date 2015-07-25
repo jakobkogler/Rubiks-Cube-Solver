@@ -19,12 +19,10 @@ OptimalSolver::OptimalSolver()
 {
 	CornerPermutation cp;
 	cp.buildTransitionTable();
-	cp.buildPruneTable();
 	cp_transition = cp.getTransitionTable();
 
 	CornerOrientation co;
 	co.buildTransitionTable();
-	co.buildPruneTable();
 	co_transition = co.getTransitionTable();
 
 	Corner corner(cp_transition, co_transition);
