@@ -12,3 +12,7 @@ Then run
     ./test
 
 At the moment there is no interactive mode. You need to specify your scrambles in `test.cpp` and recompile.
+
+### License
+
+Copyright (C) 2014 Jakob Kogler, [MITLicense](https://github.com/jakobkogler/Rubiks-Cube-Solver/blob/master/LICENCE.txt)
