@@ -17,8 +17,11 @@ private:
 
 public:
 	OptimalSolver();
+	char solve(string scramble);
 	char IDA(vector<int> cornerPermutation, vector<int> cornerOrientation, vector<int> edgeOrientation, vector<int> edgePermutation1, vector<int> edgePermutation2);
+	
 private: 
 	bool treeSearch(int cornerPermutation, int cornerOrientation, int edgeOrientation, int edgePermutation1, int edgePermutation2, char depth, int lastMove);
 	void prune_treeSearch(long ep1, long ep2, char depth_left, char depth, int lastMove);
+	void apply_scramble(string scramble, vector<int> &cp_vec, vector<int> &co_vec, vector<int> &eo_vec, vector<int> &ep1_vec, vector<int> &ep2_vec);
 };

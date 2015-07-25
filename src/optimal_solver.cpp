@@ -7,6 +7,7 @@
 #include "edge_permutation.h"
 #include <iostream>
 #include <ctime>
+#include <sstream>
 
 double diffclock(clock_t clock1, clock_t clock2)
 {
@@ -76,6 +77,22 @@ OptimalSolver::OptimalSolver()
 	moveCntNames[1] = string("2");
 	moveCntNames[2] = string("'");
 };
+
+char OptimalSolver::solve(string scramble)
+{
+	vector<int> cp_vec{ 0, 1, 2, 3, 4, 5, 6, 7 };
+	vector<int> co_vec{ 0, 0, 0, 0, 0, 0, 0, 0 };
+	vector<int> eo_vec{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+	vector<int> ep1_vec{ 0, 1, 2, 3, 4, 5 };
+	vector<int> ep2_vec{ 6, 7, 8, 9, 10, 11, 12 };
+	
+	apply_scramble(scramble, cp_vec, co_vec, eo_vec, ep1_vec, ep2_vec);
+	
+	cout << "Solve the scramble \"" << scramble << "\": " << endl;
+	char depth = IDA(cp_vec, co_vec, eo_vec, ep1_vec, ep2_vec);
+	cout << endl;
+	return depth;
+}
 
 char OptimalSolver::IDA(vector<int> cornerPermutation, vector<int> cornerOrientation, vector<int> edgeOrientation, vector<int> edgePermutation1, vector<int> edgePermutation2)
 {
@@ -194,6 +211,70 @@ void OptimalSolver::prune_treeSearch(long ep1, long ep2, char depth_left, char d
 				ep1 = ep_transition[ep1][move];
 				ep2 = ep_transition[ep2][move];
 			}
+		}
+	}
+}
+
+void OptimalSolver::apply_scramble(string scramble, vector<int> &cp_vec, vector<int> &co_vec, vector<int> &eo_vec, vector<int> &ep1_vec, vector<int> &ep2_vec)
+{
+	CornerPermutation cp;
+	CornerOrientation co;
+	EdgeOrientation eo;
+	EdgePermutation ep;
+	
+	stringstream ss(scramble);
+	string turn;
+	
+	while (ss >> turn)
+	{
+		int move;
+		switch (turn[0])
+		{
+			case 'U':
+				move = 0;
+				break;
+			case 'D':
+				move = 1;
+				break;
+			case 'R':
+				move = 2;
+				break;
+			case 'L':
+				move = 3;
+				break;
+			case 'F':
+				move = 4;
+				break;
+			case 'B':
+				move = 5;
+				break;
+			default:
+				move = 0;
+		}
+		
+		int count = 1;
+		if (turn.size() == 2)
+		{
+			switch (turn[1])
+			{
+				case '2':
+					count = 2;
+					break;
+				case '\'':
+					count = 3;
+					break;
+				default:
+					count = 1;
+			}
+		}
+		
+		for (int i = 0; i < count; i++)
+		{
+			cp.apply_move(cp_vec, move);
+			co.apply_move(co_vec, move);
+			eo.apply_move(eo_vec, move);
+			ep.apply_move(ep1_vec, move);
+			ep.apply_move(ep2_vec, move);
 		}
 	}
 }
