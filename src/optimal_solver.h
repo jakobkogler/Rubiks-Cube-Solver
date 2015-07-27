@@ -14,6 +14,7 @@ private:
 	vector<char> c_prune, eo_prune, ep1_prune, ep2_prune;
 	string moveNames[6], moveCntNames[3];
 	unordered_map<long, char> e_prune;
+	int edges_combined_max;
 
 public:
 	OptimalSolver();

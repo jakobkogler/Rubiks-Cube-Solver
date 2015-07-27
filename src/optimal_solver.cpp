@@ -45,12 +45,15 @@ OptimalSolver::OptimalSolver()
 	//ep2_prune = ep.getPruneTable2();
 
 	// IDA* for e_prune
+	edges_combined_max = 8;
+	e_prune = unordered_map<long, char>(73596790*2); 
+	
 	prune_count = 0;
 	e_prune.clear();
 	char depth = 0;
 	long max = 12 * 11 * 10 * 9 * 8 * 7 * 6 * 5 * 4 * 3 * 2 * 1;
 	cout << endl << "Edge Prune Table:" << endl;
-	while (prune_count < max && depth < 7)
+	while (prune_count < max && depth < edges_combined_max)
 	{
 		prune_treeSearch(0, 366288, depth, depth, -1);
 		cout << "Depth " << (int)depth << ": " << prune_count << endl;
@@ -140,7 +143,7 @@ bool OptimalSolver::treeSearch(int cornerPermutation, int cornerOrientation, int
 	else
 	{
 		long p = edgePermutation1 * 665280L + edgePermutation2;
-		char ep_prune_value = 7;
+		char ep_prune_value = edges_combined_max;
 		if (e_prune.count(p) == 1)
 			ep_prune_value = e_prune[p];
 
