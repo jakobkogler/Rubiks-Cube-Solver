@@ -36,7 +36,7 @@ void Corner::buildPruneTable()
 	}
 }
 
-void Corner::pruneTreeSearch(long state, char depth_left, char depth, int lastMove)
+void Corner::pruneTreeSearch(long long state, char depth_left, char depth, int lastMove)
 {
 	if (depth_left == 0)
 	{
@@ -67,10 +67,10 @@ void Corner::pruneTreeSearch(long state, char depth_left, char depth, int lastMo
 	}
 }
 
-long Corner::apply_transition(long state, int move)
+long long Corner::apply_transition(long long state, int move)
 {
-	long permutation_state = state / 2187;
-	long orientation_state = state % 2187;
+	long long permutation_state = state / 2187;
+	long long orientation_state = state % 2187;
 
 	permutation_state = permutation_transition_table[permutation_state][move];
 	orientation_state = orientation_transition_table[orientation_state][move];
@@ -78,7 +78,7 @@ long Corner::apply_transition(long state, int move)
 	return permutation_state * 2187 + orientation_state;
 }
 
-bool Corner::solveable(long state, char depth, char maxBreathDepthSearch, int lastMove)
+bool Corner::solveable(long long state, char depth, char maxBreathDepthSearch, int lastMove)
 {
 	if (prune_table[state] == depth)
 	{

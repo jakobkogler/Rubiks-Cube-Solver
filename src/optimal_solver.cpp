@@ -46,12 +46,12 @@ OptimalSolver::OptimalSolver()
 
 	// IDA* for e_prune
 	edges_combined_max = 8;
-	e_prune = unordered_map<long, char>(73596790*2); 
+	e_prune = unordered_map<long long, char>(73596790*2); 
 	
 	prune_count = 0;
 	e_prune.clear();
 	char depth = 0;
-	long max = 12 * 11 * 10 * 9 * 8 * 7 * 6 * 5 * 4 * 3 * 2 * 1;
+	long long max = 12 * 11 * 10 * 9 * 8 * 7 * 6 * 5 * 4 * 3 * 2 * 1;
 	cout << endl << "Edge Prune Table:" << endl;
 	while (prune_count < max && depth < edges_combined_max)
 	{
@@ -60,13 +60,13 @@ OptimalSolver::OptimalSolver()
 		depth++;
 	}
 
-	long sum_c_prune = 0;
-	for (long i = 0; i < c_prune.size(); i++)
+	long long sum_c_prune = 0;
+	for (long long i = 0; i < c_prune.size(); i++)
 		sum_c_prune += c_prune[i];
 	cout << "average prune depth corners: " << (sum_c_prune / (double)c_prune.size()) << endl;
 
-	long sum_e1_prune = 0;
-	for (long i = 0; i < ep1_prune.size(); i++)
+	long long sum_e1_prune = 0;
+	for (long long i = 0; i < ep1_prune.size(); i++)
 		sum_e1_prune += ep1_prune[i];
 	cout << "average prune depth corners: " << (sum_e1_prune / (double)ep1_prune.size()) << endl;
 
@@ -142,7 +142,7 @@ bool OptimalSolver::treeSearch(int cornerPermutation, int cornerOrientation, int
 	}
 	else
 	{
-		long p = edgePermutation1 * 665280L + edgePermutation2;
+		long long p = edgePermutation1 * 665280L + edgePermutation2;
 		char ep_prune_value = edges_combined_max;
 		if (e_prune.count(p) == 1)
 			ep_prune_value = e_prune[p];
@@ -182,9 +182,9 @@ bool OptimalSolver::treeSearch(int cornerPermutation, int cornerOrientation, int
 	}
 }
 
-void OptimalSolver::prune_treeSearch(long ep1, long ep2, char depth_left, char depth, int lastMove)
+void OptimalSolver::prune_treeSearch(long long ep1, long long ep2, char depth_left, char depth, int lastMove)
 {
-	long p = ep1 * 665280 + ep2;
+	long long p = ep1 * 665280 + ep2;
 
 	if (depth_left == 0)
 	{

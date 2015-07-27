@@ -3,7 +3,7 @@
 
 void Group::buildTransitionTable()
 {
-	transition_table = vector<vector<long> >(state_count, vector<long>(6));
+	transition_table = vector<vector<long long> >(state_count, vector<long long>(6));
 	vector<int> arr(piece_count);
 
 	for (int index = 0; index < state_count; index++)

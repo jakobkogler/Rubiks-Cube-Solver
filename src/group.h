@@ -11,12 +11,12 @@ class Group
 protected: 
 	int state_count;
 	int piece_count;
-	vector<vector<long> > transition_table;
+	vector<vector<long long> > transition_table;
 	vector<char> prune_table;
 	string prune_file_path;
 	
 public:
-	vector<vector<long> > getTransitionTable(){ return transition_table; }
+	vector<vector<long long> > getTransitionTable(){ return transition_table; }
 	vector<char> getPruneTable(){ return prune_table; }
 	void buildTransitionTable();
 	void buildPruneTable();
