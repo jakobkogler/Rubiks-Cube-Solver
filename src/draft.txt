@@ -1,0 +1,9 @@
+12 edges
+4 bits to identify each edge
+
+12*4 = 48 bits => fits easily into a long long
+each turn can be done with bitwise operators
+
+optionally add an additionally bit to represent the orientation
+
+this allows to create better pruning tables
