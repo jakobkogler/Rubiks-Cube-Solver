@@ -7,7 +7,7 @@ void EdgeOrientation::index_to_array(int index, vector<int> & arr)
 	Indexing::index_to_orientation_dependent(index, arr, 2);
 }
 
-void EdgeOrientation::apply_move(vector<int> & arr, int move)
+void EdgeOrientation::do_apply_move(vector<int> & arr, int move)
 {
 	if (move == 0)
 	{

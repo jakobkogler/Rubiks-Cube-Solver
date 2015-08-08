@@ -7,7 +7,7 @@ void CornerPermutation::index_to_array(int index, vector<int> & arr)
 	Indexing::index_to_permutation(index, arr);
 }
 
-void CornerPermutation::apply_move(vector<int> & arr, int move)
+void CornerPermutation::do_apply_move(vector<int> & arr, int move)
 {
 	if (move == 0)
 	{

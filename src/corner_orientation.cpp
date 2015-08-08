@@ -7,7 +7,7 @@ void CornerOrientation::index_to_array(int index, vector<int> & arr)
 	Indexing::index_to_orientation_dependent(index, arr, 3);
 }
 
-void CornerOrientation::apply_move(vector<int> & arr, int move)
+void CornerOrientation::do_apply_move(vector<int> & arr, int move)
 {
 	if (move == 0)
 	{

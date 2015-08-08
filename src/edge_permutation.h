@@ -10,8 +10,10 @@ private:
 
 public:
 	EdgePermutation() : Group(665280, 6, "edge_permutation_prune.data") {}
-	void apply_move(vector<int> & arr, int move);
-	int array_to_index(vector<int> const& arr);
+	void apply_move(vector<int> & arr, int move) { do_apply_move(arr, move); }
+	static void do_apply_move(vector<int> & arr, int move);
+	int array_to_index(vector<int> const& arr) { return do_array_to_index(arr); }
+	static int do_array_to_index(vector<int> const& arr);
 	//void buildPruneTable2();
 	//vector<char> getPruneTable2(){ return prune_table2; }
 

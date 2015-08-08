@@ -99,13 +99,6 @@ char OptimalSolver::solve(string scramble)
 
 char OptimalSolver::IDA(vector<int> cornerPermutation, vector<int> cornerOrientation, vector<int> edgeOrientation, vector<int> edgePermutation1, vector<int> edgePermutation2)
 {
-	int cornerPerm = Indexing::permutation_to_index(cornerPermutation);
-	int cornerOrient = Indexing::orientation_to_index_dependent(cornerOrientation, 3);
-	int edgeOrient = Indexing::orientation_to_index_dependent(edgeOrientation, 2);
-	EdgePermutation ep;
-	int edgePerm1 = ep.array_to_index(edgePermutation1);
-	int edgePerm2 = ep.array_to_index(edgePermutation2);
-
 	solution = "";
 	nodeCnt = 0;
 	clock_t start = clock();
@@ -115,7 +108,7 @@ char OptimalSolver::IDA(vector<int> cornerPermutation, vector<int> cornerOrienta
 	for (depth = 0; depth <= 20; depth++)
 	{
 		cout << "Depth " << (int)depth << ": ";
-		if (treeSearch(cornerPerm, cornerOrient, edgeOrient, edgePerm1, edgePerm2, depth, -1))
+		if (treeSearch(cornerPermutation, cornerOrientation, edgeOrientation, edgePermutation1, edgePermutation2, depth, -1))
 		{
 			cout << "solution found (" << nodeCnt << " nodes visited)\n" << solution.c_str() << endl;
 			break;
@@ -133,21 +126,27 @@ char OptimalSolver::IDA(vector<int> cornerPermutation, vector<int> cornerOrienta
 	return depth;
 }
 
-bool OptimalSolver::treeSearch(int cornerPermutation, int cornerOrientation, int edgeOrientation, int edgePermutation1, int edgePermutation2, char depth, int lastMove)
+bool OptimalSolver::treeSearch(vector<int> cornerPermutation, vector<int> cornerOrientation, vector<int> edgeOrientation, vector<int> edgePermutation1, vector<int> edgePermutation2, char depth, int lastMove)
 {
+	int cornerPerm = Indexing::permutation_to_index(cornerPermutation);
+	int cornerOrient = Indexing::orientation_to_index_dependent(cornerOrientation, 3);
+	int edgeOrient = Indexing::orientation_to_index_dependent(edgeOrientation, 2);
+	int edgePerm1 = EdgePermutation::do_array_to_index(edgePermutation1);
+	int edgePerm2 = EdgePermutation::do_array_to_index(edgePermutation2);
+	
 	nodeCnt++;
 	if (depth == 0)
 	{
-		return (cornerPermutation == 0 && cornerOrientation == 0 && edgeOrientation == 0 && edgePermutation1 == 0 && edgePermutation2 == 366288);
+		return (cornerPerm == 0 && cornerOrient == 0 && edgeOrient == 0 && edgePerm1 == 0 && edgePerm2 == 366288);
 	}
 	else
 	{
-		long long p = edgePermutation1 * 665280L + edgePermutation2;
+		long long p = edgePerm1 * 665280L + edgePerm2;
 		char ep_prune_value = edges_combined_max;
 		if (e_prune.count(p) == 1)
 			ep_prune_value = e_prune[p];
 
-		if (c_prune[cornerPermutation * 2187 + cornerOrientation] <= depth && eo_prune[edgeOrientation] <= depth && ep_prune_value <= depth)
+		if (c_prune[cornerPerm * 2187 + cornerOrient] <= depth && eo_prune[edgeOrient] <= depth && ep_prune_value <= depth)
 		{
 			for (int move = 0; move < 6; move++)
 			{
@@ -158,11 +157,11 @@ bool OptimalSolver::treeSearch(int cornerPermutation, int cornerOrientation, int
 
 				for (int j = 0; j < 3; j++)
 				{
-					cornerPermutation = cp_transition[cornerPermutation][move];
-					cornerOrientation = co_transition[cornerOrientation][move];
-					edgeOrientation = eo_transition[edgeOrientation][move];
-					edgePermutation1 = ep_transition[edgePermutation1][move];
-					edgePermutation2 = ep_transition[edgePermutation2][move];
+					CornerPermutation::do_apply_move(cornerPermutation, move);
+					CornerOrientation::do_apply_move(cornerOrientation, move);
+					EdgeOrientation::do_apply_move(edgeOrientation, move);
+					EdgePermutation::do_apply_move(edgePermutation1, move);
+					EdgePermutation::do_apply_move(edgePermutation2, move);
 
 					if (treeSearch(cornerPermutation, cornerOrientation, edgeOrientation, edgePermutation1, edgePermutation2, depth - 1, move))
 					{
@@ -170,11 +169,11 @@ bool OptimalSolver::treeSearch(int cornerPermutation, int cornerOrientation, int
 						return true;
 					}
 				}
-				cornerPermutation = cp_transition[cornerPermutation][move];
-				cornerOrientation = co_transition[cornerOrientation][move];
-				edgeOrientation = eo_transition[edgeOrientation][move];
-				edgePermutation1 = ep_transition[edgePermutation1][move];
-				edgePermutation2 = ep_transition[edgePermutation2][move];
+				CornerPermutation::do_apply_move(cornerPermutation, move);
+				CornerOrientation::do_apply_move(cornerOrientation, move);
+				EdgeOrientation::do_apply_move(edgeOrientation, move);
+				EdgePermutation::do_apply_move(edgePermutation1, move);
+				EdgePermutation::do_apply_move(edgePermutation2, move);
 			}
 		}
 
