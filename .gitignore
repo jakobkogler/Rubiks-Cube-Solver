@@ -3,3 +3,10 @@ src/test
 .settings/
 src/.depend
 *.data
+.idea/
+
+CMakeCache.txt
+CMakeFiles/
+Makefile
+Rubiks_Cube_Solver
+cmake_install.cmake
