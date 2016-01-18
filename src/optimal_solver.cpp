@@ -153,8 +153,11 @@ bool OptimalSolver::treeSearch(int cornerPermutation, int cornerOrientation, int
     {
         long long p = edgePermutation1 * 665280L + edgePermutation2;
         char ep_prune_value = edges_combined_max;
-        if (e_prune.count(p) == 1)
-            ep_prune_value = e_prune[p];
+        auto it = e_prune.find(p);
+        if (it != e_prune.end())
+        {
+            ep_prune_value = it->second;
+        }
 
         if (c_prune[cornerPermutation * 2187 + cornerOrientation] <= depth && eo_prune[edgeOrientation] <= depth && ep_prune_value <= depth)
         {
