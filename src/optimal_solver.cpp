@@ -9,6 +9,10 @@
 #include <ctime>
 #include <sstream>
 #include <iomanip>
+#include <fstream>
+#include <boost/serialization/unordered_map.hpp>
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
 
 double diffclock(clock_t clock1, clock_t clock2)
 {
@@ -61,12 +65,28 @@ OptimalSolver::OptimalSolver()
     char depth = 0;
     long long max = 12 * 11 * 10 * 9 * 8 * 7 * 6 * 5 * 4 * 3 * 2 * 1;
     cout << "Generate Combined Edge Permutation Prune Table:" << endl;
-    while (prune_count < max && depth < edges_combined_max)
+    ifstream ifile("edge_combined_permutation_prune.data", ios::binary);
+    if (ifile.good())
     {
-        prune_treeSearch(0, 366288, depth, depth, -1);
-        cout << "Depth " << (int)depth << ": " << prune_count << endl;
-        depth++;
+        boost::archive::binary_iarchive iarch(ifile);
+        iarch >> e_prune;
     }
+    else
+    {
+        while (prune_count < max && depth < edges_combined_max)
+        {
+            prune_treeSearch(0, 366288, depth, depth, -1);
+            cout << "Depth " << (int)depth << ": " << prune_count << endl;
+            depth++;
+        }
+
+        cout << "Save Combined Edge Permutation Prune Table to file" << endl;
+        ofstream ofile("edge_combined_permutation_prune.data", ios::out | ofstream::binary);
+        boost::archive::binary_oarchive oarch(ofile);
+        oarch << e_prune;
+        ofile.close();
+    }
+    ifile.close();
 
     long long sum_c_prune = 0;
     for (long long i = 0; i < c_prune.size(); i++)
