@@ -151,43 +151,47 @@ bool OptimalSolver::treeSearch(int cornerPermutation, int cornerOrientation, int
     }
     else
     {
+        // prune if possible
+        if (c_prune[cornerPermutation * 2187 + cornerOrientation] > depth)
+            return false;
+        if (eo_prune[edgeOrientation] > depth)
+            return false;
+
         long long p = edgePermutation1 * 665280L + edgePermutation2;
         char ep_prune_value = edges_combined_max;
         auto it = e_prune.find(p);
         if (it != e_prune.end())
-        {
             ep_prune_value = it->second;
-        }
+        if (ep_prune_value > depth)
+            return false;
 
-        if (c_prune[cornerPermutation * 2187 + cornerOrientation] <= depth && eo_prune[edgeOrientation] <= depth && ep_prune_value <= depth)
+        // prune values allow a solution of length depth => call recursive
+        for (int move = 0; move < 6; move++)
         {
-            for (int move = 0; move < 6; move++)
+            if (move == lastMove)
+                continue;
+            if ((lastMove & 1) == 1 && move == lastMove - 1)
+                continue;
+
+            for (int j = 0; j < 3; j++)
             {
-                if (move == lastMove)
-                    continue;
-                if ((lastMove & 1) == 1 && move == lastMove - 1)
-                    continue;
-
-                for (int j = 0; j < 3; j++)
-                {
-                    cornerPermutation = cp_transition[cornerPermutation][move];
-                    cornerOrientation = co_transition[cornerOrientation][move];
-                    edgeOrientation = eo_transition[edgeOrientation][move];
-                    edgePermutation1 = ep_transition[edgePermutation1][move];
-                    edgePermutation2 = ep_transition[edgePermutation2][move];
-
-                    if (treeSearch(cornerPermutation, cornerOrientation, edgeOrientation, edgePermutation1, edgePermutation2, depth - 1, move))
-                    {
-                        solution = moveNames[move] + moveCntNames[j] + string(" ") + solution;
-                        return true;
-                    }
-                }
                 cornerPermutation = cp_transition[cornerPermutation][move];
                 cornerOrientation = co_transition[cornerOrientation][move];
                 edgeOrientation = eo_transition[edgeOrientation][move];
                 edgePermutation1 = ep_transition[edgePermutation1][move];
                 edgePermutation2 = ep_transition[edgePermutation2][move];
+
+                if (treeSearch(cornerPermutation, cornerOrientation, edgeOrientation, edgePermutation1, edgePermutation2, depth - 1, move))
+                {
+                    solution = moveNames[move] + moveCntNames[j] + string(" ") + solution;
+                    return true;
+                }
             }
+            cornerPermutation = cp_transition[cornerPermutation][move];
+            cornerOrientation = co_transition[cornerOrientation][move];
+            edgeOrientation = eo_transition[edgeOrientation][move];
+            edgePermutation1 = ep_transition[edgePermutation1][move];
+            edgePermutation2 = ep_transition[edgePermutation2][move];
         }
 
         return false;
