@@ -19,26 +19,33 @@ double diffclock(clock_t clock1, clock_t clock2)
 
 OptimalSolver::OptimalSolver()
 {
+    cout << "Generate Corner Permutation Transition Table" << endl;
     CornerPermutation cp;
     cp.buildTransitionTable();
     cp_transition = cp.getTransitionTable();
 
+    cout << "Generate Corner Orientation Transition Table" << endl;
     CornerOrientation co;
     co.buildTransitionTable();
     co_transition = co.getTransitionTable();
 
+    cout << "Generate Corner Prune Table" << endl;
     Corner corner(cp_transition, co_transition);
     corner.buildPruneTable();
     c_prune = corner.getPruneTable();
 
+    cout << "Generate Edge Orientation Transition Table" << endl;
     EdgeOrientation eo;
     eo.buildTransitionTable();
+    cout << "Generate Edge Orientation Prune Table" << endl;
     eo.buildPruneTable();
     eo_transition = eo.getTransitionTable();
     eo_prune = eo.getPruneTable();
 
+    cout << "Generate Edge Permutation Transition Table" << endl;
     EdgePermutation ep;
     ep.buildTransitionTable();
+    cout << "Generate Edge Permutation Prune Table 1" << endl;
     ep.buildPruneTable();
     //ep.buildPruneTable2();
     ep_transition = ep.getTransitionTable();
@@ -53,7 +60,7 @@ OptimalSolver::OptimalSolver()
     e_prune.clear();
     char depth = 0;
     long long max = 12 * 11 * 10 * 9 * 8 * 7 * 6 * 5 * 4 * 3 * 2 * 1;
-    cout << endl << "Edge Prune Table:" << endl;
+    cout << "Generate Edge Permutation Prune Table 2:" << endl;
     while (prune_count < max && depth < edges_combined_max)
     {
         prune_treeSearch(0, 366288, depth, depth, -1);
