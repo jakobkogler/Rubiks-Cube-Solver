@@ -24,7 +24,10 @@ int main()
 
     cout << "** Pi-COLL **" << endl;
     os.solve("U2 F U R U' R' U R U2 R' U' R U R' F'");
-    
+
+    cout << "** Random (15 moves) **" << endl;
+    os.solve("U' B D R2 F' L2 R U' B' D' L B2 F' L2 R'");
+
     cout << "** Random (16 moves) **" << endl;
     os.solve("R' L2 D' R' L B2 L2 F D' U F D' L D2 R2 D");
 }
