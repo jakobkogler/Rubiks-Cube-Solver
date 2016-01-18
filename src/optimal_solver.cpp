@@ -115,7 +115,7 @@ char OptimalSolver::IDA(vector<int> cornerPermutation, vector<int> cornerOrienta
     char depth;
     for (depth = 0; depth <= 20; depth++)
     {
-        cout << "Depth " << setfill(' ') << setw(2) << (int)depth << ": ";
+        cout << "Depth " << setfill(' ') << setw(2) << (int)depth << ": " << flush;
         if (treeSearch(cornerPerm, cornerOrient, edgeOrient, edgePerm1, edgePerm2, depth, -1))
         {
             cout << "solution, " << setfill(' ') << setw(10) << nodeCnt << " nodes visited" << endl;
