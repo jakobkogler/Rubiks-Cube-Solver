@@ -9,6 +9,7 @@
 #include <ctime>
 #include <sstream>
 #include <iomanip>
+#include <stack>
 
 double diffclock(clock_t clock1, clock_t clock2)
 {
@@ -123,7 +124,7 @@ char OptimalSolver::IDA(vector<int> cornerPermutation, vector<int> cornerOrienta
     for (depth = 0; depth <= 20; depth++)
     {
         cout << "Depth " << setfill(' ') << setw(2) << (int)depth << ": " << flush;
-        if (treeSearch(cornerPerm, cornerOrient, edgeOrient, edgePerm1, edgePerm2, depth, -1))
+        if (stackSearch(cornerPerm, cornerOrient, edgeOrient, edgePerm1, edgePerm2, depth))
         {
             cout << "solution, " << setfill(' ') << setw(10) << nodeCnt << " nodes visited" << endl;
             cout << solution.c_str() << endl;
@@ -196,6 +197,85 @@ bool OptimalSolver::treeSearch(int cornerPermutation, int cornerOrientation, int
 
         return false;
     }
+}
+
+struct Position
+{
+    int depth;
+    int cornerPermutation;
+    int cornerOrientation;
+    int edgeOrientation;
+    int edgePermutation1;
+    int edgePermutation2;
+    int lastMove;
+    long long solution;
+    Position(int depth, int cornerPermutation, int cornerOrientation, int edgeOrientation, int edgePermutation1, int edgePermutation2, int lastMove, long long solution)
+            : depth(depth), cornerPermutation(cornerPermutation), cornerOrientation(cornerOrientation), edgeOrientation(edgeOrientation),
+              edgePermutation1(edgePermutation1), edgePermutation2(edgePermutation2), lastMove(lastMove), solution(solution) {}
+};
+
+bool OptimalSolver::stackSearch(int cP, int cO, int eO, int eP1, int eP2, int d)
+{
+    stack<Position> stack;
+    stack.push(Position(d, cP, cO, eO, eP1, eP2, -1, 0));
+
+    while (!stack.empty())
+    {
+        Position pos = stack.top();
+        stack.pop();
+
+        nodeCnt++;
+
+        if (pos.depth == 0)
+        {
+            if (pos.cornerPermutation == 0 && pos.cornerOrientation == 0 && pos.edgeOrientation == 0 &&
+                pos.edgePermutation1 == 0 && pos.edgePermutation2 == 366288)
+                return true;
+        }
+        else
+        {
+            // prune if possible
+            if (c_prune[pos.cornerPermutation * 2187 + pos.cornerOrientation] > pos.depth)
+                continue;
+            if (eo_prune[pos.edgeOrientation] > pos.depth)
+                continue;
+
+            long long p = pos.edgePermutation1 * 665280L + pos.edgePermutation2;
+            char ep_prune_value = edges_combined_max;
+            auto it = e_prune.find(p);
+            if (it != e_prune.end())
+                ep_prune_value = it->second;
+            if (ep_prune_value > pos.depth)
+                continue;
+
+            // prune values allow a solution of length depth => call recursive
+            for (int move = 0; move < 6; move++) {
+                if (move == pos.lastMove)
+                    continue;
+                if ((pos.lastMove & 1) == 1 && move == pos.lastMove - 1)
+                    continue; //ERROR
+
+                for (int j = 0; j < 3; j++) {
+                    pos.cornerPermutation = cp_transition[pos.cornerPermutation][move];
+                    pos.cornerOrientation = co_transition[pos.cornerOrientation][move];
+                    pos.edgeOrientation = eo_transition[pos.edgeOrientation][move];
+                    pos.edgePermutation1 = ep_transition[pos.edgePermutation1][move];
+                    pos.edgePermutation2 = ep_transition[pos.edgePermutation2][move];
+
+                    stack.push(
+                            Position(pos.depth - 1, pos.cornerPermutation, pos.cornerOrientation, pos.edgeOrientation,
+                                     pos.edgePermutation1, pos.edgePermutation2, move, 0));
+                }
+                pos.cornerPermutation = cp_transition[pos.cornerPermutation][move];
+                pos.cornerOrientation = co_transition[pos.cornerOrientation][move];
+                pos.edgeOrientation = eo_transition[pos.edgeOrientation][move];
+                pos.edgePermutation1 = ep_transition[pos.edgePermutation1][move];
+                pos.edgePermutation2 = ep_transition[pos.edgePermutation2][move];
+            }
+        }
+    }
+
+    return false;
 }
 
 void OptimalSolver::prune_treeSearch(long long ep1, long long ep2, char depth_left, char depth, int lastMove)
