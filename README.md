@@ -4,12 +4,11 @@ An optimal solver for the Rubik's cube implemented in C++.
 
 ### Usage:
 
-Specify your C++ compiler in the `Makefile`. The compiler needs to support C++11. 
-Then run 
+Compile the program and run it with
 
-    make dep
+    cmake .
     make
-    ./test
+    ./Rubiks_Cube_Solver
 
 At the moment there is no interactive mode. You need to specify your scrambles in `test.cpp` and recompile.
 
