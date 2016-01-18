@@ -8,6 +8,7 @@
 #include <iostream>
 #include <ctime>
 #include <sstream>
+#include <iomanip>
 
 double diffclock(clock_t clock1, clock_t clock2)
 {
@@ -114,15 +115,16 @@ char OptimalSolver::IDA(vector<int> cornerPermutation, vector<int> cornerOrienta
     char depth;
     for (depth = 0; depth <= 20; depth++)
     {
-        cout << "Depth " << (int)depth << ": ";
+        cout << "Depth " << setfill(' ') << setw(2) << (int)depth << ": ";
         if (treeSearch(cornerPerm, cornerOrient, edgeOrient, edgePerm1, edgePerm2, depth, -1))
         {
-            cout << "solution found (" << nodeCnt << " nodes visited)\n" << solution.c_str() << endl;
+            cout << "solution, " << setfill(' ') << setw(10) << nodeCnt << " nodes visited" << endl;
+            cout << solution.c_str() << endl;
             break;
         }
         else
         {
-            cout << "nothing (" << nodeCnt << " nodes visited)" << endl;
+            cout << "nothing,  " << setfill(' ') << setw(10) << nodeCnt << " nodes visited" << endl;
         }
     }
     cout << "total: " << nodeCnt << " nodes visited" << endl;
