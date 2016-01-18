@@ -60,7 +60,7 @@ OptimalSolver::OptimalSolver()
     e_prune.clear();
     char depth = 0;
     long long max = 12 * 11 * 10 * 9 * 8 * 7 * 6 * 5 * 4 * 3 * 2 * 1;
-    cout << "Generate Edge Permutation Prune Table 2:" << endl;
+    cout << "Generate Combined Edge Permutation Prune Table:" << endl;
     while (prune_count < max && depth < edges_combined_max)
     {
         prune_treeSearch(0, 366288, depth, depth, -1);
