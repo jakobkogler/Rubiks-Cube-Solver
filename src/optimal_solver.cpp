@@ -6,7 +6,6 @@
 #include "edge_orientation.h"
 #include "edge_permutation.h"
 #include <iostream>
-#include <ctime>
 #include <sstream>
 #include <iomanip>
 #include <fstream>
