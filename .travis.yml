@@ -8,12 +8,10 @@ cache:
 addons:
   apt:
     sources:
-    - boost-latest
     - ubuntu-toolchain-r-test
     packages:
     - gcc-4.9
     - g++-4.9
-    - libboost1.56-all-dev
 
 compiler:
   - g++
@@ -28,6 +26,12 @@ install:
   - make
   - sudo make install
   - cd ..
+  - wget -O boost_1_56_0.tar.gz http://sourceforge.net/projects/boost/files/boost/1.56.0/boost_1_56_0.tar.gz/download
+  - tar xzvf boost_1_56_0.tar.gz
+  - cd boost_1_56_0/
+  - wget https://dl.dropboxusercontent.com/u/88131281/install_boost.sh
+  - chmod +x install_boost.sh
+  - ./install_boost.sh
 
 before_script:
   - mkdir build
