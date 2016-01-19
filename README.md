@@ -1,6 +1,11 @@
 # Rubik's Cube Solver
 
-An optimal solver for the Rubik's cube implemented in C++. 
+An optimal solver for the Rubik's Cube implemented in C++. 
+
+### Requirements:
+
+ - A C++11 compiler
+ - Boost >= 1.56
 
 ### Usage:
 
