@@ -31,7 +31,7 @@ install:
   - cd boost_1_56_0/
   - wget https://dl.dropboxusercontent.com/u/88131281/install_boost.sh
   - chmod +x install_boost.sh
-  - ./install_boost.sh
+  - yes | ./install_boost.sh
 
 before_script:
   - mkdir build
