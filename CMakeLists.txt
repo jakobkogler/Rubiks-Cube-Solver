@@ -24,7 +24,7 @@ set(SOURCE_FILES
     src/read_store.h
     src/test.cpp)
 
-find_package(Boost 1.60 COMPONENTS serialization REQUIRED)
+find_package(Boost 1.56 COMPONENTS serialization REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
 
 add_executable(Rubiks_Cube_Solver ${SOURCE_FILES})
