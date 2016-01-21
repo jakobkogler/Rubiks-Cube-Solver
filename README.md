@@ -5,6 +5,7 @@ An optimal solver for the Rubik's Cube implemented in C++.
 ### Requirements:
 
  - A C++11 compiler
+ - CMake >= 3.3
  - Boost >= 1.56
 
 ### Usage:
