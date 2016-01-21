@@ -11,7 +11,9 @@ An optimal solver for the Rubik's Cube implemented in C++.
 
 Compile the program and run it with
 
-    cmake .
+    mkdir build
+    cd build
+    cmake ..
     make
     ./Rubiks_Cube_Solver
 
