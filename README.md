@@ -10,6 +10,12 @@ An optimal solver for the Rubik's Cube implemented in C++.
 
 ### Usage:
 
+First clone the project and fetch all externals:
+
+    git clone https://github.com/jakobkogler/Rubiks-Cube-Solver.git
+    cd Rubiks-Cube-Solver
+    git submodule update --init 
+
 Compile the program and run it with
 
     mkdir build
@@ -18,7 +24,7 @@ Compile the program and run it with
     make
     ./Rubiks_Cube_Solver
 
-At the moment there is no interactive mode. You need to specify your scrambles in `test.cpp` and recompile.
+At the moment there is no interactive mode. You need to specify scrambles in `main.cpp` and recompile.
 
 ### License
 
