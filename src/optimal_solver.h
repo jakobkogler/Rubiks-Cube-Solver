@@ -10,10 +10,11 @@ class OptimalSolver
 private:
     long long nodeCnt;
     string solution;
-    string moveNames[6], moveCntNames[3];
+    string moveNames[6] = {"U", "D", "R", "L", "F", "B"};
+    string moveCntNames[3] = {" ", "2", "'"};
 
 public:
-    OptimalSolver();
+    OptimalSolver() {};
     char solve(string scramble);
     char IDA(Cube &cube);
     

@@ -9,19 +9,6 @@ double diffclock(clock_t clock1, clock_t clock2)
     return diffms;
 }
 
-OptimalSolver::OptimalSolver()
-{
-    moveNames[0] = string("U");
-    moveNames[1] = string("D");
-    moveNames[2] = string("R");
-    moveNames[3] = string("L");
-    moveNames[4] = string("F");
-    moveNames[5] = string("B");
-    moveCntNames[0] = string(" ");
-    moveCntNames[1] = string("2");
-    moveCntNames[2] = string("'");
-};
-
 char OptimalSolver::solve(string scramble)
 {
     Cube cube(scramble);
