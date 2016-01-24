@@ -9,6 +9,7 @@ add_executable(Rubiks_Cube_Solver ${SOURCE_FILES})
 
 include_directories(src)
 include_directories(src/cube)
+include_directories(src/pruning)
 
 add_subdirectory(src)
 add_subdirectory(tests)

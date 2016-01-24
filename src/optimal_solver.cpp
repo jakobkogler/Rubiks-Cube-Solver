@@ -1,12 +1,31 @@
 #include "optimal_solver.h"
 #include <iostream>
 #include <iomanip>
+#include "eoPruning.h"
+#include "coPruning.h"
+#include "cpPruning.h"
 
 double diffclock(clock_t clock1, clock_t clock2)
 {
     double diffticks = abs(clock1 - clock2);
     double diffms = (diffticks) / (CLOCKS_PER_SEC / 1000);
     return diffms;
+}
+
+OptimalSolver::OptimalSolver()
+{
+    pruning.push_back(new eoPruning());
+    pruning.push_back(new coPruning());
+    pruning.push_back(new cpPruning());
+}
+
+OptimalSolver::~OptimalSolver()
+{
+    for (auto pruning_method : pruning)
+    {
+        delete pruning_method;
+    }
+    pruning.clear();
 }
 
 char OptimalSolver::solve(string scramble)
@@ -58,6 +77,14 @@ bool OptimalSolver::treeSearch(Cube &cube, char depth, int lastMove)
     }
     else
     {
+        for (auto pruning_method : pruning)
+        {
+            if (pruning_method->pruning_number(cube) > depth)
+            {
+                return false;
+            }
+        }
+
         for (int move = 0; move < 6; move++)
         {
             if (move == lastMove)

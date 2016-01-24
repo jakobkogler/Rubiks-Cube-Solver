@@ -9,16 +9,18 @@ set(HEADER_FILES
         )
 
 include_directories(cube)
+include_directories(pruning)
 
 set(SOURCE_FILES
         optimal_solver.cpp
         )
 
 add_subdirectory(cube)
+add_subdirectory(pruning)
 
 #find_package(Boost 1.56 COMPONENTS serialization REQUIRED)
 #include_directories(${Boost_INCLUDE_DIR})
 
 add_library(Optimal_Solver STATIC ${SOURCE_FILES} ${HEADER_FILES})
 #target_link_libraries(Optimal_Solver ${Boost_LIBRARIES} Cube)
-target_link_libraries(Optimal_Solver Cube)
+target_link_libraries(Optimal_Solver Cube Prune)

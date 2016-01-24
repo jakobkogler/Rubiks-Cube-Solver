@@ -2,6 +2,7 @@
 #include <string>
 #include <unordered_map>
 #include "cube.h"
+#include "prune.h"
 
 using namespace std;
 
@@ -12,9 +13,11 @@ private:
     string solution;
     string moveNames[6] = {"U", "D", "R", "L", "F", "B"};
     string moveCntNames[3] = {" ", "2", "'"};
+    vector<Prune*> pruning;
 
 public:
-    OptimalSolver() {};
+    OptimalSolver();
+    ~OptimalSolver();
     char solve(string scramble);
     char IDA(Cube &cube);
     
