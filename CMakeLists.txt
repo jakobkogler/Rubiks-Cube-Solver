@@ -7,7 +7,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3")
 set(SOURCE_FILES main.cpp)
 add_executable(Rubiks_Cube_Solver ${SOURCE_FILES})
 
-include_directories(include)
+include_directories(src)
+include_directories(src/cube)
 
 add_subdirectory(src)
 add_subdirectory(tests)
