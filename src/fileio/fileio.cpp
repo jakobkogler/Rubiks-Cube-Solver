@@ -28,7 +28,7 @@ bool FileIO::read_char_vector(vector<char> &vec, string path, int required_size)
 }
 
 bool FileIO::read_unordered_map(unordered_map<long long, char> &map, string path, int required_size) {
-    map = unordered_map<long long, char>(73596790*2);
+    map = unordered_map<long long, char>(required_size*2);
     ifstream ifile(path, ios::binary);
     if (ifile.good()) {
         boost::archive::binary_iarchive iarch(ifile);
