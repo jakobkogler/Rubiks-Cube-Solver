@@ -1,6 +1,6 @@
-#include "epPruning.h"
+#include "ep1Pruning.h"
 
-epPruning::epPruning()
+ep1Pruning::ep1Pruning()
 {
     EdgePermutation edgePermutation;
     edgePermutation.buildTransitionTable();
@@ -9,7 +9,7 @@ epPruning::epPruning()
     buildPruneTable(transition_table, edgePermutation.get_state_count());
 }
 
-int epPruning::pruning_number(Cube &cube)
+int ep1Pruning::pruning_number(Cube &cube)
 {
     return prune_table[cube.getEpState1()];
 }

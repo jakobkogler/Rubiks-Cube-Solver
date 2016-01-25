@@ -10,7 +10,7 @@ set(HEADER_FILES
         cpPruning.h
         coPruning.h
         eoPruning.h
-        epPruning.h
+        ep1Pruning.h
         ep2Pruning.h
         )
 
@@ -22,7 +22,7 @@ set(SOURCE_FILES
         cpPruning.cpp
         coPruning.cpp
         eoPruning.cpp
-        epPruning.cpp
+        ep1Pruning.cpp
         ep2Pruning.cpp
         )
 
