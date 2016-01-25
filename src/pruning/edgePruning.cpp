@@ -14,7 +14,12 @@ edgePruning::edgePruning()
 
 int edgePruning::pruning_number(Cube &cube)
 {
-    return prune_table[cube.getEpState1() * 665280 + cube.getEpState2()];
+    long long p = cube.getEpState1() * 665280L + cube.getEpState2();
+    char ep_prune_value = edges_combined_max;
+    auto it = pruning_map.find(p);
+    if (it != pruning_map.end())
+        ep_prune_value = it->second;
+    return ep_prune_value;
 }
 
 void edgePruning::buildPruneTable(vector<vector<long long>> &transition_table, int state_count, int start_value)

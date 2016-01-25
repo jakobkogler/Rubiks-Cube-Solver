@@ -8,6 +8,7 @@ class edgePruning : public Prune{
 private:
     unordered_map<long long, char> pruning_map;
     long long prune_count;
+    char edges_combined_max;
 
 public:
     edgePruning();
