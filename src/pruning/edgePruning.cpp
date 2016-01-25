@@ -27,7 +27,7 @@ void edgePruning::buildPruneTable(vector<vector<long long>> &transition_table, i
     prune_count = 0;
     pruning_map.clear();
     char depth = 0;
-    char edges_combined_max = 8;
+    edges_combined_max = 8;
     long long max = 12 * 11 * 10 * 9 * 8 * 7 * 6 * 5 * 4 * 3 * 2 * 1;
 
     if (!FileIO::read_unordered_map(pruning_map, file_path, 73596790))
