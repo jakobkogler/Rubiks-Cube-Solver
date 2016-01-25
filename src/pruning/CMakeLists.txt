@@ -11,6 +11,7 @@ set(HEADER_FILES
         coPruning.h
         eoPruning.h
         epPruning.h
+        ep2Pruning.h
         )
 
 include_directories(../cube)
@@ -22,6 +23,7 @@ set(SOURCE_FILES
         coPruning.cpp
         eoPruning.cpp
         epPruning.cpp
+        ep2Pruning.cpp
         )
 
 add_library(Prune STATIC ${SOURCE_FILES} ${HEADER_FILES})

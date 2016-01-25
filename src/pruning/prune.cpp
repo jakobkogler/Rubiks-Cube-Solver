@@ -1,6 +1,6 @@
 #include "prune.h"
 
-void Prune::buildPruneTable(vector<vector<long long>> &transition_table, int state_count)
+void Prune::buildPruneTable(vector<vector<long long>> &transition_table, int state_count, int start_value)
 {
     prune_table = vector<char>(state_count, 20);
 
@@ -9,7 +9,7 @@ void Prune::buildPruneTable(vector<vector<long long>> &transition_table, int sta
 
     while (visited_count < state_count)
     {
-        int cnt = pruneTreeSearch(0, prune_table, depth, depth, -1, transition_table);
+        int cnt = pruneTreeSearch(start_value, prune_table, depth, depth, -1, transition_table);
         visited_count += cnt;
         depth++;
     }
