@@ -5,6 +5,7 @@
 #include "coPruning.h"
 #include "cpPruning.h"
 #include "cornerPruning.h"
+#include "epPruning.h"
 
 double diffclock(clock_t clock1, clock_t clock2)
 {
@@ -19,6 +20,7 @@ OptimalSolver::OptimalSolver()
     pruning.push_back(new coPruning());
     pruning.push_back(new cpPruning());
     pruning.push_back(new cornerPruning());
+    pruning.push_back(new epPruning());
 }
 
 OptimalSolver::~OptimalSolver()
