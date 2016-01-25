@@ -7,6 +7,9 @@ int main()
 {
     OptimalSolver os;
 
+    cout << "** Sexy **" << endl;
+    os.solve("R U R' U'");
+
     cout << "** A-perm **" << endl;
     os.solve("R' F R' B2 R F' R' B2 R2");
     
