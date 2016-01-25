@@ -2,6 +2,8 @@
 
 coPruning::coPruning()
 {
+    file_path = "coPruning.data";
+
     CornerOrientation cornerOrientation;
     cornerOrientation.buildTransitionTable();
     vector<vector<long long>> transition_table = cornerOrientation.getTransitionTable();

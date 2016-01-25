@@ -2,6 +2,8 @@
 
 cpPruning::cpPruning()
 {
+    file_path = "cpPruning.data";
+
     CornerPermutation cornerPermutation;
     cornerPermutation.buildTransitionTable();
     vector<vector<long long>> transition_table = cornerPermutation.getTransitionTable();

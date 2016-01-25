@@ -2,6 +2,8 @@
 
 ep1Pruning::ep1Pruning()
 {
+    file_path = "ep1Pruning.data";
+
     EdgePermutation edgePermutation;
     edgePermutation.buildTransitionTable();
     vector<vector<long long>> transition_table = edgePermutation.getTransitionTable();

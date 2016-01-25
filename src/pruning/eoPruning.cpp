@@ -2,6 +2,8 @@
 
 eoPruning::eoPruning()
 {
+    file_path = "eoPruning.datat";
+
     EdgeOrientation edgeOrientation;
     edgeOrientation.buildTransitionTable();
     vector<vector<long long>> transition_table = edgeOrientation.getTransitionTable();

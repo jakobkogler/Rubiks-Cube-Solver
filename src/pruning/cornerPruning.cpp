@@ -1,7 +1,10 @@
 #include "cornerPruning.h"
+#include "fileio.h"
 
 cornerPruning::cornerPruning()
 {
+    file_path = "cornerPruning.data";
+
     buildPruneTable();
 }
 
@@ -23,30 +26,31 @@ void cornerPruning::buildPruneTable()
 
     long long state_count = (long long)cornerOrientation.get_state_count() * (long long)cornerPermutation.get_state_count();
 
-    prune_table = vector<char>(state_count, 11);
-    int visited_count = 0;
-    char maxBreathDepthSearch = 8;
-
-    for (char depth = 0; depth <= maxBreathDepthSearch; depth++)
+    if (!FileIO::read_char_vector(prune_table, file_path, state_count))
     {
-        pruneTreeSearch(0, 0, depth, depth, -1);
-    }
+        prune_table = vector<char>(state_count, 11);
+        int visited_count = 0;
+        char maxBreathDepthSearch = 8;
+
+        for (char depth = 0; depth <= maxBreathDepthSearch; depth++) {
+            pruneTreeSearch(0, 0, depth, depth, -1);
+        }
 
 
-    for (int i = 0; i < state_count; i++)
-    {
-        if (prune_table[i] < 11)
-            continue;
+        for (int i = 0; i < state_count; i++) {
+            if (prune_table[i] < 11)
+                continue;
 
-        //Only the position smaller than 11, since 11 is max
-        for (char depth = maxBreathDepthSearch + 1; depth < 11; depth++)
-        {
-            if (solveable(i % 2187, i / 2187, depth, maxBreathDepthSearch, -1))
-            {
-                prune_table[i] = depth;
-                break;
+            //Only the position smaller than 11, since 11 is max
+            for (char depth = maxBreathDepthSearch + 1; depth < 11; depth++) {
+                if (solveable(i % 2187, i / 2187, depth, maxBreathDepthSearch, -1)) {
+                    prune_table[i] = depth;
+                    break;
+                }
             }
         }
+
+        FileIO::store_char_vector(prune_table, file_path);
     }
 }
 

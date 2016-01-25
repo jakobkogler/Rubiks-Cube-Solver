@@ -7,6 +7,7 @@
 class Prune {
 protected:
     vector<char> prune_table;
+    string file_path;
 
 public:
     virtual int pruning_number(Cube &cube) = 0;
@@ -17,3 +18,4 @@ protected:
 
 
 #endif //PRUNE_H
+

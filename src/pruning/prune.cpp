@@ -1,17 +1,22 @@
 #include "prune.h"
+#include "fileio.h"
 
 void Prune::buildPruneTable(vector<vector<long long>> &transition_table, int state_count, int start_value)
 {
-    prune_table = vector<char>(state_count, 20);
-
-    int visited_count = 0;
-    char depth = 0;
-
-    while (visited_count < state_count)
+    if (!FileIO::read_char_vector(prune_table, file_path, state_count))
     {
-        int cnt = pruneTreeSearch(start_value, prune_table, depth, depth, -1, transition_table);
-        visited_count += cnt;
-        depth++;
+        prune_table = vector<char>(state_count, 20);
+
+        int visited_count = 0;
+        char depth = 0;
+
+        while (visited_count < state_count) {
+            int cnt = pruneTreeSearch(start_value, prune_table, depth, depth, -1, transition_table);
+            visited_count += cnt;
+            depth++;
+        }
+
+        FileIO::store_char_vector(prune_table, file_path);
     }
 }
 
