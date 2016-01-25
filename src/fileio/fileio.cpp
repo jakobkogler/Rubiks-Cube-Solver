@@ -1,13 +1,13 @@
-#include "read_store.h"
+#include "fileio.h"
 
-void Read_Store::store_char_vector(vector<char> &vec, string path)
+void FileIO::store_char_vector(vector<char> &vec, string path)
 {
     ofstream file(path.c_str(), ios::out | ofstream::binary);
     file.write(&vec[0], vec.size()*sizeof(char));
     file.close();
 }
 
-bool Read_Store::read_char_vector(vector<char> &vec, string path, int required_size)
+bool FileIO::read_char_vector(vector<char> &vec, string path, int required_size)
 {
     ifstream file(path.c_str(), ios::binary);
     if (file.good())
