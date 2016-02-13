@@ -2,7 +2,7 @@
 
 eoPruning::eoPruning()
 {
-    file_path = "eoPruning.datat";
+    file_path = "eoPruning.data";
 
     EdgeOrientation edgeOrientation;
     edgeOrientation.buildTransitionTable();
