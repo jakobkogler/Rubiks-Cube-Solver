@@ -31,7 +31,7 @@ void EdgeOrientation::apply_move(vector<int> & arr, int move)
     }
     else if (move == 5)
     {
-        permute_array(arr, 0, 5, 8, 4, 1); // F
+        permute_array(arr, 0, 5, 8, 4, 1); // B
     }
 }
 
