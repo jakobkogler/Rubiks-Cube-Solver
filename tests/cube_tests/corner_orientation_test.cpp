@@ -1,13 +1,14 @@
-#include "gtest/gtest.h"
+#define BOOST_TEST_MODULE solver_tests
+#define BOOST_TEST_DYN_LINK
+#include <boost/test/unit_test.hpp>
+
 #include "corner_orientation.h"
 
-class CornerOrientationTest : public ::testing::Test {
-protected:
+class CornerOrientationTest
+{
+public:
     CornerOrientation co;
-
-    //virtual void SetUp() {}
-    // virtual void TearDown() {}
-
+    
     void test_four_identical_moves(vector<int> state, int move)
     {
         vector<int> current_state(state);
@@ -16,7 +17,7 @@ protected:
             co.apply_move(current_state, 0);
         }
 
-        EXPECT_EQ(state, current_state);
+        BOOST_CHECK(state == current_state);
     }
 
     vector<vector<int>> get_all_states()
@@ -38,51 +39,55 @@ protected:
 };
 
 
-TEST_F(CornerOrientationTest, four_identical_moves){
-    for (auto state : get_all_states())
+BOOST_AUTO_TEST_SUITE(corner_orientation_tests)
+
+    BOOST_AUTO_TEST_CASE(four_identical_moves)
     {
-        for (int move = 0; move < 6; move++)
-        {
-            test_four_identical_moves(state, move);
+        auto cot = CornerOrientationTest();
+        for (auto state : cot.get_all_states()) {
+            for (int move = 0; move < 6; move++) {
+                cot.test_four_identical_moves(state, move);
+            }
         }
     }
-}
 
-TEST_F(CornerOrientationTest, solved_state) {
-    vector<int> state(8, 0);
-    vector<int> current_state(state);
+    BOOST_AUTO_TEST_CASE(solved_state)
+    {
+        auto cot = CornerOrientationTest();
+        vector<int> state(8, 0);
+        vector<int> current_state(state);
+    
+        cot.co.apply_move(current_state, 0); // U
+        BOOST_CHECK(state == current_state);
+    
+        cot.co.apply_move(current_state, 1); // D
+        BOOST_CHECK(state == current_state);
+    
+        cot.co.apply_move(current_state, 2); // R
+        BOOST_CHECK(state != current_state);
+        cot.co.apply_move(current_state, 2); // R2
+        BOOST_CHECK(state == current_state);
+    
+        cot.co.apply_move(current_state, 3); // L
+        BOOST_CHECK(state != current_state);
+        cot.co.apply_move(current_state, 3); // L2
+        BOOST_CHECK(state == current_state);
+    
+        cot.co.apply_move(current_state, 4); // F
+        BOOST_CHECK(state != current_state);
+        cot.co.apply_move(current_state, 4); // F2
+        BOOST_CHECK(state == current_state);
+        
+        cot.co.apply_move(current_state, 5); // B
+        BOOST_CHECK(state != current_state);
+        cot.co.apply_move(current_state, 5); // B2
+        BOOST_CHECK(state == current_state);
+    }
 
-    co.apply_move(current_state, 0); // U
-    EXPECT_EQ(state, current_state);
-
-    co.apply_move(current_state, 1); // D
-    EXPECT_EQ(state, current_state);
-
-    co.apply_move(current_state, 2); // R
-    EXPECT_NE(state, current_state);
-    co.apply_move(current_state, 2); // R2
-    EXPECT_EQ(state, current_state);
-
-    co.apply_move(current_state, 3); // L
-    EXPECT_NE(state, current_state);
-    co.apply_move(current_state, 3); // L2
-    EXPECT_EQ(state, current_state);
-
-    co.apply_move(current_state, 4); // F
-    EXPECT_NE(state, current_state);
-    co.apply_move(current_state, 4); // F2
-    EXPECT_EQ(state, current_state);
-
-
-    co.apply_move(current_state, 5); // B
-    EXPECT_NE(state, current_state);
-    co.apply_move(current_state, 5); // B2
-    EXPECT_EQ(state, current_state);
-}
-
-TEST_F(CornerOrientationTest, opposite_independance)
+BOOST_AUTO_TEST_CASE(opposite_independance)
 {
-    for (auto state : get_all_states())
+    auto cot = CornerOrientationTest();
+    for (auto state : cot.get_all_states())
     {
         vector<int> current_state(state);
         for (int axis = 0; axis < 3; axis++)
@@ -91,11 +96,13 @@ TEST_F(CornerOrientationTest, opposite_independance)
             int move2 = axis * 2 + 1;
 
             for (int i = 0; i < 4; i++) {
-                co.apply_move(current_state, move1);
-                co.apply_move(current_state, move2);
+                cot.co.apply_move(current_state, move1);
+                cot.co.apply_move(current_state, move2);
             }
 
-            EXPECT_EQ(state, current_state);
+            BOOST_CHECK(state == current_state);
         }
     }
 }
+
+BOOST_AUTO_TEST_SUITE_END()
