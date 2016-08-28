@@ -4,17 +4,16 @@ An optimal solver for the Rubik's Cube implemented in C++.
 
 ### Requirements:
 
- - A C++11 compiler
+ - C++11 compiler (gcc, clang, ...)
  - CMake >= 3.3
  - Boost >= 1.56
 
 ### Usage:
 
-First clone the project and fetch all externals:
+First clone the project and change to the project directory:
 
     git clone https://github.com/jakobkogler/Rubiks-Cube-Solver.git
     cd Rubiks-Cube-Solver
-    git submodule update --init 
 
 Compile the program and run it with
 
