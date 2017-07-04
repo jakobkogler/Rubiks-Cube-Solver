@@ -27,4 +27,4 @@ At the moment there is no interactive mode. You need to specify scrambles in `ma
 
 ### License
 
-Copyright (C) 2016 Jakob Kogler, [MIT License](https://github.com/jakobkogler/Rubiks-Cube-Solver/blob/master/LICENCE.txt)
+Copyright (C) 2017 Jakob Kogler, [MIT License](https://github.com/jakobkogler/Rubiks-Cube-Solver/blob/master/LICENCE.txt)
