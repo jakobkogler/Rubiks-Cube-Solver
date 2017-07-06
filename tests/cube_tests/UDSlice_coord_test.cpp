@@ -2,6 +2,7 @@
 
 #include "UDSlice_coord.h"
 #include <set>
+#include <algorithm>
 
 class UDSliceCoordTest
 {
@@ -110,6 +111,19 @@ BOOST_AUTO_TEST_SUITE(UFSlice_coord_tests)
         udslice_test.udslice.apply_move(current_state, 5); // B2
         std::sort(current_state.begin(), current_state.end());
         BOOST_CHECK(state == current_state);
+    }
+
+    BOOST_AUTO_TEST_CASE(permutations)
+    {
+        auto udslice_test = UDSliceCoordTest();
+        for (auto state : udslice_test.get_all_states()) {
+            int start_index = udslice_test.udslice.array_to_index(state);
+            while (std::next_permutation(state.begin(), state.end()))
+            {
+                int index = udslice_test.udslice.array_to_index(state);
+                BOOST_CHECK(index == start_index);
+            } 
+        }
     }
 
     BOOST_AUTO_TEST_CASE(opposite_independance)
