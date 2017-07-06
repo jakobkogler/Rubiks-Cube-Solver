@@ -73,6 +73,9 @@ BOOST_AUTO_TEST_SUITE(UFSlice_coord_tests)
         auto udslice_test = UDSliceCoordTest();
         vector<int> state = {4, 5, 6, 7};
         vector<int> current_state(state);
+
+        int index = udslice_test.udslice.array_to_index(state);
+        BOOST_CHECK(index == 425);
     
         udslice_test.udslice.apply_move(current_state, 0); // U
         BOOST_CHECK(state == current_state);
