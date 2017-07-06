@@ -6,6 +6,7 @@
 #include "corner_permutation.h"
 #include "edge_orientation.h"
 #include "edge_permutation.h"
+#include "UDSlice_coord.h"
 
 
 class Cube
@@ -15,6 +16,7 @@ private:
     vector<vector<long long>> cpTransition;
     vector<vector<long long>> eoTransition;
     vector<vector<long long>> epTransition;
+    vector<vector<long long>> UDSliceTransition;
 
     int coState;
     int cpState;

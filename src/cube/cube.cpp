@@ -10,11 +10,13 @@ Cube::Cube()
     CornerPermutation cornerPermutation;
     EdgeOrientation edgeOrientation;
     EdgePermutation edgePermutation;
+    UDSlice_Coord udsliceCoord;
     coState = cornerOrientation.array_to_index(vector<int>{ 0, 0, 0, 0, 0, 0, 0, 0 });
     cpState = cornerPermutation.array_to_index(vector<int>{ 0, 1, 2, 3, 4, 5, 6, 7 });
     eoState = edgeOrientation.array_to_index(vector<int>{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
     epState1 = edgePermutation.array_to_index(vector<int>{ 0, 1, 2, 3, 4, 5 });
     epState2 = edgePermutation.array_to_index(vector<int>{ 6, 7, 8, 9, 10, 11, 12 });
+    UDSliceState = udsliceCoord.array_to_index(vector<int>{ 4, 5, 6, 7 });
 
     cornerOrientation.buildTransitionTable();
     coTransition = cornerOrientation.getTransitionTable();
@@ -27,6 +29,9 @@ Cube::Cube()
 
     edgePermutation.buildTransitionTable();
     epTransition = edgePermutation.getTransitionTable();
+
+    udsliceCoord.buildTransitionTable();
+    UDSliceTransition = udsliceCoord.getTransitionTable();
 }
 
 Cube::Cube(string scramble) : Cube()
@@ -61,9 +66,10 @@ void Cube::apply_move(int move)
     eoState = eoTransition[eoState][move];
     epState1 = epTransition[epState1][move];
     epState2 = epTransition[epState2][move];
+    UDSliceState = UDSliceTransition[UDSliceState][move];
 }
 
 bool Cube::is_solved()
 {
-    return cpState == 0 && coState == 0 && eoState == 0 && epState1 == 0 && epState2 == 366288;
+    return cpState == 0 && coState == 0 && eoState == 0 && epState1 == 0 && epState2 == 366288 && UDSliceState == 425;
 }
