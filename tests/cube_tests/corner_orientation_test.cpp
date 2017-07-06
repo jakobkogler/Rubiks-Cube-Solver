@@ -14,7 +14,7 @@ public:
         vector<int> current_state(state);
         for (int i = 1; i <= 4; i++)
         {
-            co.apply_move(current_state, 0);
+            co.apply_move(current_state, move);
         }
 
         BOOST_CHECK(state == current_state);
