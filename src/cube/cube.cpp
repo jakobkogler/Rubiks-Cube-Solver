@@ -73,3 +73,8 @@ bool Cube::is_solved()
 {
     return cpState == 0 && coState == 0 && eoState == 0 && epState1 == 0 && epState2 == 366288 && UDSliceState == 425;
 }
+
+bool Cube::is_phase1_solved()
+{
+    return coState == 0 && eoState == 0 && UDSliceState == 425;
+}

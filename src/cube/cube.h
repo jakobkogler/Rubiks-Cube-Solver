@@ -30,6 +30,7 @@ public:
     Cube(string scramble);
     void apply_move(int move);
     bool is_solved();
+    bool is_phase1_solved();
     int getCoState() const { return coState; }
     int getCpState() const { return cpState; }
     int getEoState() const { return eoState; }
