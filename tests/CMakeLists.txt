@@ -5,6 +5,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(SOURCE_FILES
         cube_tests/cube_tests.cpp
         cube_tests/corner_orientation_test.cpp
+        cube_tests/UDSlice_coord_test.cpp
         )
 
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)

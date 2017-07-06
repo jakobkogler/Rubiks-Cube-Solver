@@ -21,6 +21,7 @@ private:
     int eoState;
     int epState1;
     int epState2;
+    int UDSliceState;
 
 public:
     Cube();
@@ -32,6 +33,7 @@ public:
     int getEoState() const { return eoState; }
     int getEpState1() const { return epState1; }
     int getEpState2() const { return epState2; }
+    int getUDSliceState() const { return UDSliceState; }
 };
 
 

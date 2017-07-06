@@ -12,6 +12,7 @@ set(HEADER_FILES
         edge_orientation.h
         edge_permutation.h
         indexing.h
+        UDSlice_coord.h
         )
 
 set(SOURCE_FILES
@@ -22,6 +23,7 @@ set(SOURCE_FILES
         edge_orientation.cpp
         edge_permutation.cpp
         indexing.cpp
+        UDSlice_coord.cpp
         )
 
 add_library(Cube STATIC ${SOURCE_FILES} ${HEADER_FILES})
