@@ -147,4 +147,41 @@ BOOST_AUTO_TEST_SUITE(UFSlice_coord_tests)
         }
     }
 
+    BOOST_AUTO_TEST_CASE(transition_table)
+    {
+        auto udslice_test = UDSliceCoordTest();
+        auto& udslice = udslice_test.udslice;
+        udslice.buildTransitionTable();
+        auto transition_table = udslice.getTransitionTable();
+
+        int solved = 425;
+        int state = 425;
+
+        state = transition_table[state][0]; // U
+        BOOST_CHECK(state == solved);
+
+        state = transition_table[state][1]; // D
+        BOOST_CHECK(state == solved);
+
+        state = transition_table[state][2]; // R
+        BOOST_CHECK(state != solved);
+        state = transition_table[state][2]; // R2
+        BOOST_CHECK(state == solved);
+
+        state = transition_table[state][3]; // L
+        BOOST_CHECK(state != solved);
+        state = transition_table[state][3]; // L2
+        BOOST_CHECK(state == solved);
+
+        state = transition_table[state][4]; // F
+        BOOST_CHECK(state != solved);
+        state = transition_table[state][4]; // F2
+        BOOST_CHECK(state == solved);
+
+        state = transition_table[state][5]; // B
+        BOOST_CHECK(state != solved);
+        state = transition_table[state][5]; // B2
+        BOOST_CHECK(state == solved);
+    }
+
 BOOST_AUTO_TEST_SUITE_END()
