@@ -35,8 +35,6 @@ void Phase1Pruning::buildPruneTable()
     if (!FileIO::read_char_vector(prune_table, file_path, state_count))
     {
         prune_table = vector<char>(state_count, 20);
-        std::cout << "Max size: " << prune_table.max_size() << std::endl;
-        std::cout << "Size: " << prune_table.size() << std::endl;
 
         std::cout << "Generating Pruning Table for Phase1: (" << state_count << " states)" << std::endl;
         prune_table[425] = 0;
