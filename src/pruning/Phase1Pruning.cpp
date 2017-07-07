@@ -35,9 +35,11 @@ void Phase1Pruning::buildPruneTable()
     if (!FileIO::read_char_vector(prune_table, file_path, state_count))
     {
         prune_table = vector<char>(state_count, 20);
+        long long sum = 0;
 
         std::cout << "Generating Pruning Table for Phase1: (" << state_count << " states)" << std::endl;
         prune_table[425] = 0;
+        std::cout << "Depth 0: 1" << std::endl;
         for (int i = 0; i < 15; i++) {
             std::cout << "Depth " << i + 1 << ": ";
             long long cnt = 0;
@@ -69,7 +71,9 @@ void Phase1Pruning::buildPruneTable()
                 }
             }
             std::cout << cnt << std::endl;
+            sum += cnt * (i + 1);
         }
+        std::cout << "Average pruning value: " << sum / (double)state_count << std::endl;
 
         FileIO::store_char_vector(prune_table, file_path);
     }
