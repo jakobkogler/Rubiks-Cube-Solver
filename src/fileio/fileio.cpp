@@ -10,7 +10,7 @@ void FileIO::store_char_vector(vector<char> &vec, string path)
     file.close();
 }
 
-bool FileIO::read_char_vector(vector<char> &vec, string path, int required_size)
+bool FileIO::read_char_vector(vector<char> &vec, string path, long long required_size)
 {
     ifstream file(path.c_str(), ios::binary);
     if (file.good())
