@@ -13,6 +13,7 @@ set(HEADER_FILES
         ep1Pruning.h
         ep2Pruning.h
         edgePruning.h
+        Phase1Pruning.h
         )
 
 include_directories(../cube)
@@ -27,6 +28,7 @@ set(SOURCE_FILES
         ep1Pruning.cpp
         ep2Pruning.cpp
         edgePruning.cpp
+        Phase1Pruning.cpp
         )
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../fileio ${CMAKE_CURRENT_BINARY_DIR}/fileio)
