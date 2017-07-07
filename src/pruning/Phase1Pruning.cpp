@@ -12,7 +12,7 @@ Phase1Pruning::Phase1Pruning()
 
 int Phase1Pruning::pruning_number(Cube &cube)
 {
-    return prune_table[(long long)cube.getCpState() * 2187 + cube.getCoState()];
+    return prune_table[(cube.getCoState() * 2048LL + cube.getEoState()) * 495LL + cube.getUDSliceState()];
 }
 
 void Phase1Pruning::buildPruneTable()
