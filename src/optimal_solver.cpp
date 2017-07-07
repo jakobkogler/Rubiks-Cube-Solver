@@ -40,7 +40,7 @@ char OptimalSolver::solve(string scramble)
 {
     Cube cube(scramble);
     
-    cout << "Solve the scramble \"" << scramble << "\": " << endl;
+    cout << "Solve the scramble \"" << scramble << "\" with OptimalSolver: " << endl;
     char depth = IDA(cube);
     cout << endl;
     return depth;
