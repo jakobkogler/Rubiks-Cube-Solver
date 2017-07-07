@@ -1,6 +1,7 @@
 #include "optimal_solver.h"
 #include <iostream>
 #include <iomanip>
+#include <chrono>
 #include "eoPruning.h"
 #include "coPruning.h"
 #include "cpPruning.h"
@@ -8,13 +9,6 @@
 #include "ep1Pruning.h"
 #include "ep2Pruning.h"
 #include "edgePruning.h"
-
-double diffclock(clock_t clock1, clock_t clock2)
-{
-    double diffticks = abs(clock1 - clock2);
-    double diffms = (diffticks) / (CLOCKS_PER_SEC / 1000);
-    return diffms;
-}
 
 OptimalSolver::OptimalSolver()
 {
@@ -50,7 +44,7 @@ char OptimalSolver::IDA(Cube &cube)
 {
     solution = "";
     nodeCnt = 0;
-    clock_t start = clock();
+    auto start_time = std::chrono::high_resolution_clock::now();
 
     cout << "Start solving" << endl;
     char depth;
@@ -69,9 +63,10 @@ char OptimalSolver::IDA(Cube &cube)
         }
     }
     cout << "total: " << nodeCnt << " nodes visited" << endl;
-    clock_t end = clock();
-    double seconds = diffclock(start, end) / 1000.0;
-    cout << "Time: " << seconds << " seconds(" << (int)(nodeCnt / seconds) << " nodes / second)" << endl;
+    auto end_time = std::chrono::high_resolution_clock::now();
+    auto duration_in_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count() / 1000.0;
+    cout << "Time: " << duration_in_seconds << " seconds";
+    cout << "(" << (int)(nodeCnt / duration_in_seconds) << " nodes / second)" << endl;
 
     return depth;
 }
