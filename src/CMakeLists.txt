@@ -2,10 +2,11 @@ cmake_minimum_required(VERSION 3.3)
 
 project(Optimal_Solver)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3 -g")
 
 set(HEADER_FILES
         optimal_solver.h
+        kociemba_solver.h
         )
 
 include_directories(cube)
@@ -13,6 +14,7 @@ include_directories(pruning)
 
 set(SOURCE_FILES
         optimal_solver.cpp
+        kociemba_solver.cpp
         )
 
 add_subdirectory(cube)
