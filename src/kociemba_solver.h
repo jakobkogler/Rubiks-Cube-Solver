@@ -14,6 +14,7 @@ private:
     string moveNames[6] = {"U", "D", "R", "L", "F", "B"};
     string moveCntNames[3] = {" ", "2", "'"};
     Phase1Pruning phase1pruning;
+    vector<Prune*> phase2pruning;
 
 public:
     KociembaSolver();
@@ -22,5 +23,7 @@ public:
     char IDA(Cube &cube);
     
 private: 
+    char IDAPhase2(Cube &cube);
     bool treeSearch(Cube &cube, char depth, int lastMove);
+    bool treeSearchPhase2(Cube &cube, char depth, int lastMove);
 };
