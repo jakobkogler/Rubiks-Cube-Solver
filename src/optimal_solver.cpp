@@ -19,12 +19,19 @@ double diffclock(clock_t clock1, clock_t clock2)
 OptimalSolver::OptimalSolver()
 {
     pruning.push_back(new eoPruning());
+    pruning[2]->showPruneInfos(cout);
     pruning.push_back(new coPruning());
+    pruning[1]->showPruneInfos(cout);
     pruning.push_back(new cpPruning());
+    pruning[2]->showPruneInfos(cout);
     pruning.push_back(new cornerPruning());
+    pruning[3]->showPruneInfos(cout);
     pruning.push_back(new ep1Pruning());
+    pruning[4]->showPruneInfos(cout);
     pruning.push_back(new ep2Pruning());
+    pruning[5]->showPruneInfos(cout);
     pruning.push_back(new edgePruning());
+    pruning[6]->showPruneInfos(cout);
 }
 
 OptimalSolver::~OptimalSolver()

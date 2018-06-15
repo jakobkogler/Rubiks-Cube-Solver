@@ -20,6 +20,15 @@ void Prune::buildPruneTable(vector<vector<long long>> &transition_table, int sta
     }
 }
 
+void Prune::showPruneInfos(ostream& os) const {
+    long long sum = 0;
+    for (int prune_value : prune_table) {
+        sum += prune_value;
+    }
+    os << file_path << endl;
+    os << "Effective prune value: " << sum / (double)prune_table.size() << endl;
+}
+
 int Prune::pruneTreeSearch(int state, vector<char> & table, char depth_left, char depth, int lastMove, vector<vector<long long>> &transition_table)
 {
     int cnt = 0;
