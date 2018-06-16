@@ -6,6 +6,7 @@
 #include "corner_permutation.h"
 #include "edge_orientation.h"
 #include "edge_permutation.h"
+#include "edges.h"
 
 
 class Cube
@@ -32,6 +33,8 @@ public:
     int getEoState() const { return eoState; }
     int getEpState1() const { return epState1; }
     int getEpState2() const { return epState2; }
+
+    Edges edges;
 };
 
 
