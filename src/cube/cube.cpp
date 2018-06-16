@@ -14,7 +14,7 @@ Cube::Cube()
     cpState = cornerPermutation.array_to_index(vector<int>{ 0, 1, 2, 3, 4, 5, 6, 7 });
     eoState = edgeOrientation.array_to_index(vector<int>{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
     epState1 = edgePermutation.array_to_index(vector<int>{ 0, 1, 2, 3, 4, 5 });
-    epState2 = edgePermutation.array_to_index(vector<int>{ 6, 7, 8, 9, 10, 11, 12 });
+    epState2 = edgePermutation.array_to_index(vector<int>{ 6, 7, 8, 9, 10, 11 });
 
     cornerOrientation.buildTransitionTable();
     coTransition = cornerOrientation.getTransitionTable();
