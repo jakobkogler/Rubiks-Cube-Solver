@@ -13,6 +13,7 @@ private:
 public:
     edgePruning();
     int pruning_number(Cube &cube);
+    void showPruneInfos(ostream& os) const;
 private:
     void buildPruneTable(vector<vector<long long>> &transition_table, int state_count, int start_value = 0);
     void prune_treeSearch(vector<vector<long long>> &transition_table, long long ep1, long long ep2, char depth_left, char depth, int lastMove);

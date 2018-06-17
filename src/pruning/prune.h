@@ -11,6 +11,7 @@ protected:
 
 public:
     virtual int pruning_number(Cube &cube) = 0;
+    virtual void showPruneInfos(ostream& os) const;
 protected:
     void buildPruneTable(vector<vector<long long>> &transition_table, int state_count, int start_value = 0);
     int pruneTreeSearch(int state, vector<char> & table, char depth_left, char depth, int lastMove, vector<vector<long long>> &transition_table);

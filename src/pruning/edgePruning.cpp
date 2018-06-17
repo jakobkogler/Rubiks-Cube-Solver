@@ -22,6 +22,18 @@ int edgePruning::pruning_number(Cube &cube)
     return ep_prune_value;
 }
 
+void edgePruning::showPruneInfos(ostream& os) const
+{
+    long long sum = 0;
+    for (pair<long long, int> const& p : pruning_map) {
+        sum += p.second;
+    }
+    long long total = 479001600;
+    sum += (total - pruning_map.size()) * edges_combined_max;
+    os << file_path << endl;
+    os << "Effective prune value: " << sum / (double)total << endl;
+}
+
 void edgePruning::buildPruneTable(vector<vector<long long>> &transition_table, int state_count, int start_value)
 {
     prune_count = 0;
