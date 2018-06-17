@@ -12,7 +12,6 @@ set(HEADER_FILES
         eoPruning.h
         ep1Pruning.h
         ep2Pruning.h
-        edgePruning.h
         edgeFirst6Pruning.h
         edgeSecond6Pruning.h
         )
@@ -28,7 +27,6 @@ set(SOURCE_FILES
         eoPruning.cpp
         ep1Pruning.cpp
         ep2Pruning.cpp
-        edgePruning.cpp
         edgeFirst6Pruning.cpp
         edgeSecond6Pruning.cpp
         )
