@@ -11,18 +11,19 @@ public:
     Nibble(unsigned int size = 0, int default_value = 0);
     int operator[](int idx) const;
     void set(int idx, int value);
+    int size() const;
     bool read(std::string file_path);
     void store(std::string file_path);
 private:
     std::vector<T> data;
-    unsigned int size;
+    unsigned int elements;
     unsigned int log;
     unsigned int mask;
     unsigned int actual_size;
 };
 
 template <typename T>
-Nibble<T>::Nibble(unsigned int size, int default_value) : size(size) {
+Nibble<T>::Nibble(unsigned int size, int default_value) : elements(size) {
     T value = default_value & static_cast<T>(15);
     log = 0;
     for (auto shift = 4u; shift < sizeof(T) * 8; shift <<= 1) {
@@ -31,7 +32,7 @@ Nibble<T>::Nibble(unsigned int size, int default_value) : size(size) {
     }
     mask = (1 << log) - 1;
     int values_per_entry = 1 << log;
-    actual_size = (size + values_per_entry - 1) / values_per_entry;
+    actual_size = (elements + values_per_entry - 1) / values_per_entry;
     data.assign(actual_size, value);
 }
 
@@ -48,6 +49,11 @@ void Nibble<T>::set(int idx, int value) {
     int offset = (idx & mask) << 2;
     entry &= ~(static_cast<T>(15) << offset);
     entry |= (value & static_cast<T>(15)) << offset;
+}
+
+template <typename T>
+int Nibble<T>::size() const {
+    return elements;
 }
 
 template <typename T>

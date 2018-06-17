@@ -19,17 +19,18 @@ void Prune::buildPruneTable(std::vector<std::vector<long long>> &transition_tabl
 }
 
 void Prune::showPruneInfos(std::ostream& os) const {
-    // long long sum = 0;
-    // std::vector<int> cnt(20, 0);
-    // for (int prune_value : prune_table) {
-    //     sum += prune_value;
-    //     cnt[prune_value]++;
-    // }
-    // os << file_path << std::endl;
-    // for (int i = 0; i < 20 && cnt[i]; i++) {
-    //     os << "  " << std::setfill(' ') << std::setw(2) << i << ": " << cnt[i] << std::endl;
-    // }
-    // os << "Effective prune value: " << sum / (double)prune_table.size() << std::endl;
+    long long sum = 0;
+    std::vector<int> cnt(20, 0);
+    for (int i = 0; i < prune_table.size(); i++) {
+        int prune_value = prune_table[i];
+        sum += prune_value;
+        cnt[prune_value]++;
+    }
+    os << file_path << std::endl;
+    for (int i = 0; i < 20 && cnt[i]; i++) {
+        os << "  " << std::setfill(' ') << std::setw(2) << i << ": " << cnt[i] << std::endl;
+    }
+    os << "Effective prune value: " << sum / (double)prune_table.size() << std::endl;
 }
 
 int Prune::pruneTreeSearch(int state, Nibble32 & table, int depth_left, int depth, int lastMove, std::vector<std::vector<long long>> &transition_table)

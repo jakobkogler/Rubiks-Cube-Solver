@@ -1,5 +1,6 @@
 #include "edgePruning.h"
 #include <sstream>
+#include <iostream>
 
 std::vector<int> computeOffsets(int cnt) {
     std::vector<int> arr(cnt);
@@ -68,6 +69,7 @@ int edgePruning::pruning_number(Cube &cube)
 void edgePruning::buildPruneTable()
 {
     long long state_count = product(12 - pieces_cnt + 1, 12) << pieces_cnt;
+    std::cout << state_count << std::endl;
 
     prune_table = Nibble32(state_count, 15u);
     if (!prune_table.read(file_path)) {
@@ -76,10 +78,15 @@ void edgePruning::buildPruneTable()
         Cube cube;
         int maxBreathDepthSearch = pieces_cnt <= 6 ? 7 : 8;
         for (char depth = 0; depth <= maxBreathDepthSearch; depth++) {
+            std::cout << (int)depth << std::endl;
             pruneTreeSearch(cube, depth, depth, -1);
         }
 
+        int mask = (1 << 20) - 1;
         for (int state = 0; state < state_count; state++) {
+            if ((state & mask) == mask)
+                std::cout << state / (double)state_count * 100 << std::endl;
+                
             if (prune_table[state] <= maxBreathDepthSearch)
                 continue;
 
