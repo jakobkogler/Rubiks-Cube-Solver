@@ -2,10 +2,10 @@
 #include "fileio.h"
 #include <sstream>
 
-vector<int> computeOffsets() {
-    vector<int> arr(6);
-    for (int i = 0; i < 6; i++) {
-        arr[i] = product(7, 11 - i);
+vector<int> computeOffsets(int cnt) {
+    vector<int> arr(cnt);
+    for (int i = 0; i < cnt; i++) {
+        arr[i] = product(13 - cnt, 11 - i);
     }
     return arr;
 }
@@ -20,7 +20,8 @@ const string create_file_path(initializer_list<int> const& il) {
     return ss.str();
 }
 
-edgePruning::edgePruning(initializer_list<int> const& il) : offsets(computeOffsets()), pieces(il.begin(), il.end())
+edgePruning::edgePruning(initializer_list<int> const& il)
+    : offsets(computeOffsets(il.size())), pieces_cnt(il.size()), pieces(il.begin(), il.end())
 {
     file_path = create_file_path(il);
     buildPruneTable();
@@ -31,13 +32,13 @@ int edgePruning::to_index(Cube const& cube) const {
     int state = 0;
     auto const& perm = cube.edges.edges_perm;
     auto const& orient = cube.edges.edges_orient;
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < pieces_cnt; i++) {
         int p4 = perm[pieces[i]] * 4;
         int x = (cnt >> p4) & 15;
         state += x * offsets[i];
         cnt -= 0x1111111111111110 << p4;
     }
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < pieces_cnt; i++) {
         state = (state << 1) + orient[pieces[i]];
     }
     return state;
@@ -47,11 +48,11 @@ void edgePruning::to_array(int state, Cube & cube) {
     unsigned long long cnt = 0xfedcba9876543210;
     auto & perm = cube.edges.edges_perm;
     auto & orient = cube.edges.edges_orient;
-    for (int i = 0; i < 6; i++) {
-        orient[pieces[i]] = (state >> (5 - i)) & 1;
+    for (int i = 0; i < pieces_cnt; i++) {
+        orient[pieces[i]] = (state >> (pieces_cnt - 1 - i)) & 1;
     }
-    state >>= 6;
-    for (int i = 0; i < 6; i++) {
+    state >>= pieces_cnt;
+    for (int i = 0; i < pieces_cnt; i++) {
         int p4 = (state / offsets[i]) * 4;
         perm[pieces[i]] = (cnt >> p4) & 15;
         unsigned long long mask = ((unsigned long long)1 << p4) - 1;
@@ -67,7 +68,7 @@ int edgePruning::pruning_number(Cube &cube)
 
 void edgePruning::buildPruneTable()
 {
-    long long state_count = (12 * 11 * 10 * 9 * 8 * 7) << 6;
+    long long state_count = product(12 - pieces_cnt + 1, 12) << pieces_cnt;
 
     if (!FileIO::read_char_vector(prune_table, file_path, state_count))
     {
@@ -75,7 +76,7 @@ void edgePruning::buildPruneTable()
         visited = 0;
 
         Cube cube;
-        int maxBreathDepthSearch = 7;
+        int maxBreathDepthSearch = pieces_cnt <= 6 ? 7 : 8;
         for (char depth = 0; depth <= maxBreathDepthSearch; depth++) {
             pruneTreeSearch(cube, depth, depth, -1);
         }

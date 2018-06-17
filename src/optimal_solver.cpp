@@ -25,8 +25,8 @@ OptimalSolver::OptimalSolver()
     pruning.push_back(new cornerPruning());
     // pruning.push_back(new ep1Pruning());
     // pruning.push_back(new ep2Pruning());
-    pruning.push_back(new edgePruning({0, 1, 2, 3, 4, 5}));
-    pruning.push_back(new edgePruning({6, 7, 8, 9, 10, 11}));
+    pruning.push_back(new edgePruning({0, 1, 2, 3, 4, 5, 6}));
+    pruning.push_back(new edgePruning({5, 6, 7, 8, 9, 10, 11}));
 }
 
 OptimalSolver::~OptimalSolver()

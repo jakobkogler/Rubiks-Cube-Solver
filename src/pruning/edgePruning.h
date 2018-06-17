@@ -18,6 +18,7 @@ private:
     bool solveable(Cube & cube, char depth, char maxBreathDepthSearch, int lastMove);
 
     const vector<int> offsets;
+    const int pieces_cnt;
     const vector<int> pieces;
 };
 
