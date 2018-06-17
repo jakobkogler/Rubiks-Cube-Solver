@@ -1,5 +1,4 @@
-#ifndef EOPRUNING_H
-#define EOPRUNING_H
+#pragma once
 
 #include "prune.h"
 
@@ -8,5 +7,3 @@ public:
     eoPruning();
     int pruning_number(Cube &cube);
 };
-
-#endif //EOPRUNING_H

@@ -1,5 +1,4 @@
-#ifndef CUBE_H
-#define CUBE_H
+#pragma once
 
 #include <string>
 #include "corner_orientation.h"
@@ -36,6 +35,3 @@ public:
 
     Edges edges;
 };
-
-
-#endif //CUBE_H

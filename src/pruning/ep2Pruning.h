@@ -1,5 +1,4 @@
-#ifndef EP2PRUNING_H
-#define EP2PRUNING_H
+#pragma once
 
 #include "prune.h"
 
@@ -8,5 +7,3 @@ public:
     ep2Pruning();
     int pruning_number(Cube &cube);
 };
-
-#endif //EP2PRUNING_H

@@ -1,5 +1,4 @@
-#ifndef EDGE_PERMUTATION_H
-#define EDGE_PERMUTATION_H
+#pragma once
 
 #include "group.h"
 
@@ -13,5 +12,3 @@ public:
 private:
     void index_to_array(int index, std::vector<int> & arr);
 };
-
-#endif // EDGE_PERMUTATION_H

@@ -1,5 +1,4 @@
-#ifndef PRUNE_H
-#define PRUNE_H
+#pragma once
 
 #include "cube.h"
 #include <vector>
@@ -17,6 +16,3 @@ protected:
     void buildPruneTable(std::vector<std::vector<long long>> &transition_table, int state_count, int start_value = 0);
     int pruneTreeSearch(int state, std::vector<char> & table, char depth_left, char depth, int lastMove, std::vector<std::vector<long long>> &transition_table);
 };
-
-
-#endif //PRUNE_H

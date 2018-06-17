@@ -1,5 +1,4 @@
-#ifndef COPRUNING_H
-#define COPRUNING_H
+#pragma once
 
 #include "prune.h"
 
@@ -8,5 +7,3 @@ public:
     coPruning();
     int pruning_number(Cube &cube);
 };
-
-#endif //COPRUNING_H

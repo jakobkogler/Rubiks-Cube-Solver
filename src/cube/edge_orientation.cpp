@@ -1,7 +1,6 @@
 #include "edge_orientation.h"
 #include "indexing.h"
 
-
 void EdgeOrientation::index_to_array(int index, std::vector<int> & arr)
 {
     Indexing::index_to_orientation_dependent(index, arr, 2);

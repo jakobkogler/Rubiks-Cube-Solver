@@ -1,5 +1,4 @@
-#ifndef CPPRUNING_H
-#define CPPRUNING_H
+#pragma once
 
 #include "prune.h"
 
@@ -8,5 +7,3 @@ public:
     cpPruning();
     int pruning_number(Cube &cube);
 };
-
-#endif //CPPRUNING_H

@@ -1,6 +1,4 @@
-#ifndef EDGEPRUNING_H
-#define EDGEPRUNING_H
-
+#pragma once
 
 #include "prune.h"
 #include <initializer_list>
@@ -33,6 +31,3 @@ constexpr int product(int a, int b) {
 constexpr int factorial(int x) {
     return product(1, x);
 }
-
-
-#endif //EDGEPRUNING_H

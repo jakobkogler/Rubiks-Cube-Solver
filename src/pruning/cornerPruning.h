@@ -1,6 +1,4 @@
-#ifndef CORNERPRUNING_H
-#define CORNERPRUNING_H
-
+#pragma once
 
 #include "prune.h"
 
@@ -15,6 +13,3 @@ private:
     void pruneTreeSearch(long long orient_state, long long perm_state, char depth_left, char depth, int lastMove);
     bool solveable(long long orient_state, long long perm_state, char depth, char maxBreathDepthSearch, int lastMove);
 };
-
-
-#endif //CORNERPRUNING_H

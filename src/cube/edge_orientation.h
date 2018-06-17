@@ -1,5 +1,4 @@
-#ifndef EDGE_ORIENTATION_H
-#define EDGE_ORIENTATION_H
+#pragma once
 
 #include "group.h"
 
@@ -14,5 +13,3 @@ private:
     void index_to_array(int index, std::vector<int> & arr);
     void permute_array(std::vector<int> & arr, int idx1, int idx2, int idx3, int idx4, int increment);
 };
-
-#endif // EDGE_ORIENTATION_H

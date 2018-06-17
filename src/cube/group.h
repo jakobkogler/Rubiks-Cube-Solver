@@ -1,5 +1,4 @@
-#ifndef GROUP_H
-#define GROUP_H
+#pragma once
 
 #include <vector>
 
@@ -20,5 +19,3 @@ protected:
     virtual void index_to_array(int index, std::vector<int> & arr) = 0;
     virtual int array_to_index(std::vector<int> const& arr) = 0;
 };
-
-#endif //GROUP_H

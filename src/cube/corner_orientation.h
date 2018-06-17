@@ -1,5 +1,4 @@
-#ifndef CORNER_ORIENTATION_H
-#define CORNER_ORIENTATION_H
+#pragma once
 
 #include "group.h"
 
@@ -14,5 +13,3 @@ private:
     void index_to_array(int index, std::vector<int> & arr);
     void permute_array(std::vector<int> & arr, int idx1, int idx2, int idx3, int idx4, int increment1, int increment2);
 };
-
-#endif //CORNER_ORIENTATION_H
