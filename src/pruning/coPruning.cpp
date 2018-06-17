@@ -6,7 +6,7 @@ coPruning::coPruning()
 
     CornerOrientation cornerOrientation;
     cornerOrientation.buildTransitionTable();
-    vector<vector<long long>> transition_table = cornerOrientation.getTransitionTable();
+    std::vector<std::vector<long long>> transition_table = cornerOrientation.getTransitionTable();
 
     buildPruneTable(transition_table, cornerOrientation.get_state_count());
 }

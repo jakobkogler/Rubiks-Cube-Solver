@@ -9,9 +9,9 @@ class CornerOrientationTest
 public:
     CornerOrientation co;
     
-    void test_four_identical_moves(vector<int> state, int move)
+    void test_four_identical_moves(std::vector<int> state, int move)
     {
-        vector<int> current_state(state);
+        std::vector<int> current_state(state);
         for (int i = 1; i <= 4; i++)
         {
             co.apply_move(current_state, 0);
@@ -20,12 +20,12 @@ public:
         BOOST_CHECK(state == current_state);
     }
 
-    vector<vector<int>> get_all_states()
+    std::vector<std::vector<int>> get_all_states()
     {
-        vector<vector<int>> states;
+        std::vector<std::vector<int>> states;
         for (int ternary_rep = 0; ternary_rep < 6561; ternary_rep++)
         {
-            vector<int> state(8);
+            std::vector<int> state(8);
             int ternary_rep_cur = ternary_rep;
             for (int i = 0; i < 8; i++)
             {
@@ -54,8 +54,8 @@ BOOST_AUTO_TEST_SUITE(corner_orientation_tests)
     BOOST_AUTO_TEST_CASE(solved_state)
     {
         auto cot = CornerOrientationTest();
-        vector<int> state(8, 0);
-        vector<int> current_state(state);
+        std::vector<int> state(8, 0);
+        std::vector<int> current_state(state);
     
         cot.co.apply_move(current_state, 0); // U
         BOOST_CHECK(state == current_state);
@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_CASE(opposite_independance)
     auto cot = CornerOrientationTest();
     for (auto state : cot.get_all_states())
     {
-        vector<int> current_state(state);
+        std::vector<int> current_state(state);
         for (int axis = 0; axis < 3; axis++)
         {
             int move1 = axis * 2;

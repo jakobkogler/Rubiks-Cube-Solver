@@ -28,8 +28,7 @@ void cornerPruning::buildPruneTable()
 
     if (!FileIO::read_char_vector(prune_table, file_path, state_count))
     {
-        prune_table = vector<char>(state_count, 11);
-        int visited_count = 0;
+        prune_table = std::vector<char>(state_count, 11);
         char maxBreathDepthSearch = 8;
 
         for (char depth = 0; depth <= maxBreathDepthSearch; depth++) {

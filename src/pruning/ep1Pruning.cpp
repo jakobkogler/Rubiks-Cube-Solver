@@ -6,7 +6,7 @@ ep1Pruning::ep1Pruning()
 
     EdgePermutation edgePermutation;
     edgePermutation.buildTransitionTable();
-    vector<vector<long long>> transition_table = edgePermutation.getTransitionTable();
+    std::vector<std::vector<long long>> transition_table = edgePermutation.getTransitionTable();
 
     buildPruneTable(transition_table, edgePermutation.get_state_count());
 }

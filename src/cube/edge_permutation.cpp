@@ -1,6 +1,6 @@
 #include "edge_permutation.h"
 
-void EdgePermutation::apply_move(vector<int> & arr, int move)
+void EdgePermutation::apply_move(std::vector<int> & arr, int move)
 {
     if (move == 0)
     {
@@ -142,7 +142,7 @@ void EdgePermutation::apply_move(vector<int> & arr, int move)
     }
 }
 
-int EdgePermutation::array_to_index(vector<int> const& arr)
+int EdgePermutation::array_to_index(std::vector<int> const& arr)
 {
     static const unsigned int factorial[] = { 1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800, 479001600 };
 
@@ -167,7 +167,7 @@ int EdgePermutation::array_to_index(vector<int> const& arr)
 }
 
 
-void EdgePermutation::index_to_array(int index, vector<int> & arr)
+void EdgePermutation::index_to_array(int index, std::vector<int> & arr)
 {
     static const unsigned int factorial[] = { 1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800, 479001600 };
     bool usedPieces[12];

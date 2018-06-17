@@ -2,12 +2,12 @@
 #include "indexing.h"
 
 
-void CornerPermutation::index_to_array(int index, vector<int> & arr)
+void CornerPermutation::index_to_array(int index, std::vector<int> & arr)
 {
     Indexing::index_to_permutation(index, arr);
 }
 
-void CornerPermutation::apply_move(vector<int> & arr, int move)
+void CornerPermutation::apply_move(std::vector<int> & arr, int move)
 {
     if (move == 0)
     {
@@ -35,12 +35,12 @@ void CornerPermutation::apply_move(vector<int> & arr, int move)
     }
 }
 
-int CornerPermutation::array_to_index(vector<int> const& arr)
+int CornerPermutation::array_to_index(std::vector<int> const& arr)
 {
     return Indexing::permutation_to_index(arr);
 }
 
-void CornerPermutation::permute_array(vector<int> & arr, int idx1, int idx2, int idx3, int idx4)
+void CornerPermutation::permute_array(std::vector<int> & arr, int idx1, int idx2, int idx3, int idx4)
 {
     int tmp = arr[idx1];
     arr[idx1] = arr[idx2];

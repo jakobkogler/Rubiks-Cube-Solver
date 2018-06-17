@@ -1,11 +1,11 @@
 #include "prune.h"
 #include "fileio.h"
 
-void Prune::buildPruneTable(vector<vector<long long>> &transition_table, int state_count, int start_value)
+void Prune::buildPruneTable(std::vector<std::vector<long long>> &transition_table, int state_count, int start_value)
 {
     if (!FileIO::read_char_vector(prune_table, file_path, state_count))
     {
-        prune_table = vector<char>(state_count, 20);
+        prune_table = std::vector<char>(state_count, 20);
 
         int visited_count = 0;
         char depth = 0;
@@ -20,16 +20,16 @@ void Prune::buildPruneTable(vector<vector<long long>> &transition_table, int sta
     }
 }
 
-void Prune::showPruneInfos(ostream& os) const {
+void Prune::showPruneInfos(std::ostream& os) const {
     long long sum = 0;
     for (int prune_value : prune_table) {
         sum += prune_value;
     }
-    os << file_path << endl;
-    os << "Effective prune value: " << sum / (double)prune_table.size() << endl;
+    os << file_path << std::endl;
+    os << "Effective prune value: " << sum / (double)prune_table.size() << std::endl;
 }
 
-int Prune::pruneTreeSearch(int state, vector<char> & table, char depth_left, char depth, int lastMove, vector<vector<long long>> &transition_table)
+int Prune::pruneTreeSearch(int state, std::vector<char> & table, char depth_left, char depth, int lastMove, std::vector<std::vector<long long>> &transition_table)
 {
     int cnt = 0;
 

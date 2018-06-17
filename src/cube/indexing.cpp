@@ -1,6 +1,6 @@
 #include "indexing.h"
 
-int Indexing::permutation_to_index(vector<int> const& arr)
+int Indexing::permutation_to_index(std::vector<int> const& arr)
 {
     int n = arr.size();
     int index = 0;
@@ -18,7 +18,7 @@ int Indexing::permutation_to_index(vector<int> const& arr)
     return index;
 }
 
-void Indexing::index_to_permutation(int index, vector<int> & arr)
+void Indexing::index_to_permutation(int index, std::vector<int> & arr)
 {
     int n = arr.size();
     arr[n - 1] = 0;
@@ -36,7 +36,7 @@ void Indexing::index_to_permutation(int index, vector<int> & arr)
     }
 }
 
-int Indexing::orientation_to_index_dependent(vector<int> const& arr, int orientation_cnt)
+int Indexing::orientation_to_index_dependent(std::vector<int> const& arr, int orientation_cnt)
 {
     int n = arr.size();
     int index = 0;
@@ -47,7 +47,7 @@ int Indexing::orientation_to_index_dependent(vector<int> const& arr, int orienta
     return index;
 }
 
-void Indexing::index_to_orientation_dependent(int index, vector<int> & arr, int orientation_cnt)
+void Indexing::index_to_orientation_dependent(int index, std::vector<int> & arr, int orientation_cnt)
 {
     int n = arr.size();
     arr[n - 1] = 0;
@@ -63,7 +63,7 @@ void Indexing::index_to_orientation_dependent(int index, vector<int> & arr, int 
     }
 }
 
-int orientation_to_index(vector<int> const& arr, int orientation_cnt)
+int orientation_to_index(std::vector<int> const& arr, int orientation_cnt)
 {
     int n = arr.size();
     int index = 0;
@@ -74,7 +74,7 @@ int orientation_to_index(vector<int> const& arr, int orientation_cnt)
     return index;
 }
 
-void index_to_orientation(int index, vector<int> & arr, int orientation_cnt)
+void index_to_orientation(int index, std::vector<int> & arr, int orientation_cnt)
 {
     int n = arr.size();
     for (int i = n - 1; i >= 0; i--)

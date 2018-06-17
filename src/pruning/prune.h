@@ -7,15 +7,15 @@
 
 class Prune {
 protected:
-    vector<char> prune_table;
-    string file_path;
+    std::vector<char> prune_table;
+    std::string file_path;
 
 public:
     virtual int pruning_number(Cube &cube) = 0;
-    virtual void showPruneInfos(ostream& os) const;
+    virtual void showPruneInfos(std::ostream& os) const;
 protected:
-    void buildPruneTable(vector<vector<long long>> &transition_table, int state_count, int start_value = 0);
-    int pruneTreeSearch(int state, vector<char> & table, char depth_left, char depth, int lastMove, vector<vector<long long>> &transition_table);
+    void buildPruneTable(std::vector<std::vector<long long>> &transition_table, int state_count, int start_value = 0);
+    int pruneTreeSearch(int state, std::vector<char> & table, char depth_left, char depth, int lastMove, std::vector<std::vector<long long>> &transition_table);
 };
 
 

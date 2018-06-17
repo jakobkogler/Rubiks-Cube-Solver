@@ -12,7 +12,7 @@
 
 double diffclock(clock_t clock1, clock_t clock2)
 {
-    double diffticks = abs(clock1 - clock2);
+    double diffticks = std::abs(clock1 - clock2);
     double diffms = (diffticks) / (CLOCKS_PER_SEC / 1000);
     return diffms;
 }
@@ -23,13 +23,13 @@ OptimalSolver::OptimalSolver()
     // pruning.push_back(new coPruning());
     // pruning.push_back(new cpPruning());
     pruning.push_back(new cornerPruning());
-    pruning[0]->showPruneInfos(cout);
+    pruning[0]->showPruneInfos(std::cout);
     // pruning.push_back(new ep1Pruning());
     // pruning.push_back(new ep2Pruning());
     pruning.push_back(new edgePruning({0, 1, 2, 3, 4, 5, 6}));
-    pruning[1]->showPruneInfos(cout);
+    pruning[1]->showPruneInfos(std::cout);
     pruning.push_back(new edgePruning({5, 6, 7, 8, 9, 10, 11}));
-    pruning[2]->showPruneInfos(cout);
+    pruning[2]->showPruneInfos(std::cout);
 }
 
 OptimalSolver::~OptimalSolver()
@@ -41,13 +41,13 @@ OptimalSolver::~OptimalSolver()
     pruning.clear();
 }
 
-char OptimalSolver::solve(string scramble)
+char OptimalSolver::solve(std::string scramble)
 {
     Cube cube(scramble);
     
-    cout << "Solve the scramble \"" << scramble << "\": " << endl;
+    std::cout << "Solve the scramble \"" << scramble << "\": " << std::endl;
     char depth = IDA(cube);
-    cout << endl;
+    std::cout << std::endl;
     return depth;
 }
 
@@ -57,26 +57,26 @@ char OptimalSolver::IDA(Cube &cube)
     nodeCnt = 0;
     clock_t start = clock();
 
-    cout << "Start solving" << endl;
+    std::cout << "Start solving" << std::endl;
     char depth;
     for (depth = 0; depth <= 20; depth++)
     {
-        cout << "Depth " << setfill(' ') << setw(2) << (int)depth << ": " << flush;
+        std::cout << "Depth " << std::setfill(' ') << std::setw(2) << (int)depth << ": " << std::flush;
         if (treeSearch(cube, depth, -1)) //reset cube???
         {
-            cout << "solution, " << setfill(' ') << setw(10) << nodeCnt << " nodes visited" << endl;
-            cout << solution.c_str() << endl;
+            std::cout << "solution, " << std::setfill(' ') << std::setw(10) << nodeCnt << " nodes visited" << std::endl;
+            std::cout << solution.c_str() << std::endl;
             break;
         }
         else
         {
-            cout << "nothing,  " << setfill(' ') << setw(10) << nodeCnt << " nodes visited" << endl;
+            std::cout << "nothing,  " << std::setfill(' ') << std::setw(10) << nodeCnt << " nodes visited" << std::endl;
         }
     }
-    cout << "total: " << nodeCnt << " nodes visited" << endl;
+    std::cout << "total: " << nodeCnt << " nodes visited" << std::endl;
     clock_t end = clock();
     double seconds = diffclock(start, end) / 1000.0;
-    cout << "Time: " << seconds << " seconds(" << (int)(nodeCnt / seconds) << " nodes / second)" << endl;
+    std::cout << "Time: " << seconds << " seconds(" << (int)(nodeCnt / seconds) << " nodes / second)" << std::endl;
 
     return depth;
 }
@@ -110,7 +110,7 @@ bool OptimalSolver::treeSearch(Cube &cube, char depth, int lastMove)
                 cube.apply_move(move);
                 if (treeSearch(cube, depth - 1, move))
                 {
-                    solution = moveNames[move] + moveCntNames[j] + string(" ") + solution;
+                    solution = moveNames[move] + moveCntNames[j] + std::string(" ") + solution;
                     return true;
                 }
             }

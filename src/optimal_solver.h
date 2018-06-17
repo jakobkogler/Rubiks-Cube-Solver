@@ -4,21 +4,19 @@
 #include "cube.h"
 #include "prune.h"
 
-using namespace std;
-
 class OptimalSolver
 {
 private:
     long long nodeCnt;
-    string solution;
-    string moveNames[6] = {"U", "D", "R", "L", "F", "B"};
-    string moveCntNames[3] = {" ", "2", "'"};
-    vector<Prune*> pruning;
+    std::string solution;
+    std::string moveNames[6] = {"U", "D", "R", "L", "F", "B"};
+    std::string moveCntNames[3] = {" ", "2", "'"};
+    std::vector<Prune*> pruning;
 
 public:
     OptimalSolver();
     ~OptimalSolver();
-    char solve(string scramble);
+    char solve(std::string scramble);
     char IDA(Cube &cube);
     
 private: 

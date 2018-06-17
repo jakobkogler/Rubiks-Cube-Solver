@@ -1,22 +1,22 @@
 #include "fileio.h"
 #include <fstream>
 
-void FileIO::store_char_vector(vector<char> &vec, string path)
+void FileIO::store_char_vector(std::vector<char> &vec, std::string path)
 {
-    ofstream file(path.c_str(), ios::out | ofstream::binary);
+    std::ofstream file(path.c_str(), std::ios::out | std::ofstream::binary);
     file.write(&vec[0], vec.size()*sizeof(char));
     file.close();
 }
 
-bool FileIO::read_char_vector(vector<char> &vec, string path, int required_size)
+bool FileIO::read_char_vector(std::vector<char> &vec, std::string path, int required_size)
 {
-    ifstream file(path.c_str(), ios::binary);
+    std::ifstream file(path.c_str(), std::ios::binary);
     if (file.good())
     {
         vec.reserve(required_size);
-        vec.assign(istreambuf_iterator<char>(file), istreambuf_iterator<char>());
+        vec.assign(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
         file.close();
-        return vec.size() == required_size;
+        return (int)vec.size() == required_size;
     }
     else
     {

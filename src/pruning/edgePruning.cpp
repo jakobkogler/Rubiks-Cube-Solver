@@ -2,16 +2,16 @@
 #include "fileio.h"
 #include <sstream>
 
-vector<int> computeOffsets(int cnt) {
-    vector<int> arr(cnt);
+std::vector<int> computeOffsets(int cnt) {
+    std::vector<int> arr(cnt);
     for (int i = 0; i < cnt; i++) {
         arr[i] = product(13 - cnt, 11 - i);
     }
     return arr;
 }
 
-const string create_file_path(initializer_list<int> const& il) {
-    stringstream ss;
+const std::string create_file_path(std::initializer_list<int> const& il) {
+    std::stringstream ss;
     ss << "edgePruning";
     for (int piece : il) {
         ss << piece;
@@ -20,7 +20,7 @@ const string create_file_path(initializer_list<int> const& il) {
     return ss.str();
 }
 
-edgePruning::edgePruning(initializer_list<int> const& il)
+edgePruning::edgePruning(std::initializer_list<int> const& il)
     : offsets(computeOffsets(il.size())), pieces_cnt(il.size()), pieces(il.begin(), il.end())
 {
     file_path = create_file_path(il);
@@ -72,7 +72,7 @@ void edgePruning::buildPruneTable()
 
     if (!FileIO::read_char_vector(prune_table, file_path, state_count))
     {
-        prune_table = vector<char>(state_count, 20);
+        prune_table = std::vector<char>(state_count, 20);
         visited = 0;
 
         Cube cube;

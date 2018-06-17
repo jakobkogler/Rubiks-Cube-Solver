@@ -12,10 +12,10 @@
 class Cube
 {
 private:
-    vector<vector<long long>> coTransition;
-    vector<vector<long long>> cpTransition;
-    vector<vector<long long>> eoTransition;
-    vector<vector<long long>> epTransition;
+    std::vector<std::vector<long long>> coTransition;
+    std::vector<std::vector<long long>> cpTransition;
+    std::vector<std::vector<long long>> eoTransition;
+    std::vector<std::vector<long long>> epTransition;
 
     int coState;
     int cpState;
@@ -25,7 +25,7 @@ private:
 
 public:
     Cube();
-    Cube(string scramble);
+    Cube(std::string scramble);
     void apply_move(int move);
     bool is_solved();
     int getCoState() const { return coState; }

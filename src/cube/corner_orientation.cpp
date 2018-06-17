@@ -2,12 +2,12 @@
 #include "indexing.h"
 
 
-void CornerOrientation::index_to_array(int index, vector<int> & arr)
+void CornerOrientation::index_to_array(int index, std::vector<int> & arr)
 {
     Indexing::index_to_orientation_dependent(index, arr, 3);
 }
 
-void CornerOrientation::apply_move(vector<int> & arr, int move)
+void CornerOrientation::apply_move(std::vector<int> & arr, int move)
 {
     if (move == 0)
     {
@@ -35,12 +35,12 @@ void CornerOrientation::apply_move(vector<int> & arr, int move)
     }
 }
 
-int CornerOrientation::array_to_index(vector<int> const& arr)
+int CornerOrientation::array_to_index(std::vector<int> const& arr)
 {
     return Indexing::orientation_to_index_dependent(arr, 3);
 }
 
-void CornerOrientation::permute_array(vector<int> & arr, int idx1, int idx2, int idx3, int idx4, int increment1, int increment2)
+void CornerOrientation::permute_array(std::vector<int> & arr, int idx1, int idx2, int idx3, int idx4, int increment1, int increment2)
 {
     int tmp = arr[idx1];
     arr[idx1] = (arr[idx2] + increment1) % 3;
