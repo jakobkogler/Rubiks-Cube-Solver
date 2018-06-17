@@ -1,30 +1,52 @@
 #include "edgeFirst6Pruning.h"
 #include "fileio.h"
-#include <iostream>
 
-edgeFirst6Pruning::edgeFirst6Pruning()
+array<int, 6> computeOffsets() {
+    array<int, 6> arr;
+    for (int i = 0; i < 6; i++) {
+        arr[i] = product(7, 11 - i);
+    }
+    return arr;
+}
+
+edgeFirst6Pruning::edgeFirst6Pruning() : offsets(computeOffsets())
 {
     file_path = "edgeFirst6Pruning.data";
-
     buildPruneTable();
 }
 
 int edgeFirst6Pruning::to_index(Cube const& cube) const {
-    unsigned long long mask = 0xfedcba9876543210;
+    unsigned long long cnt = 0xfedcba9876543210;
     int state = 0;
     auto const& perm = cube.edges.edges_perm;
     auto const& orient = cube.edges.edges_orient;
-    static const array<int, 6> f = { 11 * 10 * 9 * 8 * 7, 10 * 9 * 8 * 7, 9 * 8 * 7, 8 * 7, 7, 1 };
     for (int i = 0; i < 6; i++) {
         int p4 = perm[i] * 4;
-        int x = (mask >> p4) & 15;
-        state += x * f[i];
-        mask -= 0x1111111111111110 << p4;
+        int x = (cnt >> p4) & 15;
+        state += x * offsets[i];
+        cnt -= 0x1111111111111110 << p4;
     }
     for (int i = 0; i < 6; i++) {
         state = (state << 1) + orient[i];
     }
     return state;
+}
+
+void edgeFirst6Pruning::to_array(int state, Cube & cube) {
+    unsigned long long cnt = 0xfedcba9876543210;
+    auto & perm = cube.edges.edges_perm;
+    auto & orient = cube.edges.edges_orient;
+    for (int i = 0; i < 6; i++) {
+        orient[i] = (state >> (5 - i)) & 1;
+    }
+    state >>= 6;
+    for (int i = 0; i < 6; i++) {
+        int p4 = (state / offsets[i]) * 4;
+        perm[i] = (cnt >> p4) & 15;
+        unsigned long long mask = ((unsigned long long)1 << p4) - 1;
+        cnt = (cnt & mask) | ((cnt >> 4) & ~mask);
+        state %= offsets[i];
+    }
 }
 
 int edgeFirst6Pruning::pruning_number(Cube &cube)
@@ -47,43 +69,16 @@ void edgeFirst6Pruning::buildPruneTable()
             pruneTreeSearch(cube, depth, depth, -1);
         }
 
-        for (int a = 0; a < 12; a++) {
-            for (int b = 0; b < 12; b++) {
-                if (b == a) continue;
-                for (int c = 0; c < 12; c++) {
-                    if (c == a || c == b) continue;
-                    for (int d = 0; d < 12; d++) {
-                        if (d == a || d == b || d == c) continue;
-                        for (int e = 0; e < 12; e++) {
-                            if (e == a || e == b || e == c || e == d) continue;
-                            for (int f = 0; f < 12; f++) {
-                                if (f == a || f == b || f == c || f == d || f == e) continue;
-                                auto& perm = cube.edges.edges_perm;
-                                auto& orient = cube.edges.edges_orient;
-                                for (int i = 0; i < (1 << 6); i++) {
-                                    perm[0] = a;
-                                    perm[1] = b;
-                                    perm[2] = c;
-                                    perm[3] = d;
-                                    perm[4] = e;
-                                    perm[5] = f;
-                                    for (int j = 0; j < 6; j++)
-                                        orient[j] = (i >> j) & 1;
+        for (int state = 0; state < state_count; state++) {
+            if (prune_table[state] <= maxBreathDepthSearch)
+                continue;
 
-                                    int state = to_index(cube);
-                                    if (prune_table[state] <= maxBreathDepthSearch)
-                                        continue;
+            to_array(state, cube);
 
-                                    for (char depth = maxBreathDepthSearch + 1; depth < 15; depth++) {
-                                        if (solveable(cube, depth, maxBreathDepthSearch, -1)) {
-                                            prune_table[state] = depth;
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+            for (char depth = maxBreathDepthSearch + 1; depth < 15; depth++) {
+                if (solveable(cube, depth, maxBreathDepthSearch, -1)) {
+                    prune_table[state] = depth;
+                    break;
                 }
             }
         }
