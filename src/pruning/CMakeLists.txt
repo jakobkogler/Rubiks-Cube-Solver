@@ -11,10 +11,10 @@ set(HEADER_FILES
         ep1Pruning.h
         ep2Pruning.h
         edgePruning.h
+        nibble.h
         )
 
 include_directories(../cube)
-include_directories(../fileio)
 
 set(SOURCE_FILES
         prune.cpp
@@ -27,7 +27,4 @@ set(SOURCE_FILES
         edgePruning.cpp
         )
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../fileio ${CMAKE_CURRENT_BINARY_DIR}/fileio)
-
 add_library(Prune STATIC ${SOURCE_FILES} ${HEADER_FILES})
-target_link_libraries(Prune FileIO)

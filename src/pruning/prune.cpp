@@ -1,12 +1,10 @@
 #include "prune.h"
-#include "fileio.h"
+#include <iomanip>
 
 void Prune::buildPruneTable(std::vector<std::vector<long long>> &transition_table, int state_count, int start_value)
 {
-    if (!FileIO::read_char_vector(prune_table, file_path, state_count))
-    {
-        prune_table = std::vector<char>(state_count, 20);
-
+    prune_table = Nibble32(state_count, 15);
+    if (!prune_table.read(file_path)) {
         int visited_count = 0;
         char depth = 0;
 
@@ -16,20 +14,25 @@ void Prune::buildPruneTable(std::vector<std::vector<long long>> &transition_tabl
             depth++;
         }
 
-        FileIO::store_char_vector(prune_table, file_path);
+        prune_table.store(file_path);
     }
 }
 
 void Prune::showPruneInfos(std::ostream& os) const {
-    long long sum = 0;
-    for (int prune_value : prune_table) {
-        sum += prune_value;
-    }
-    os << file_path << std::endl;
-    os << "Effective prune value: " << sum / (double)prune_table.size() << std::endl;
+    // long long sum = 0;
+    // std::vector<int> cnt(20, 0);
+    // for (int prune_value : prune_table) {
+    //     sum += prune_value;
+    //     cnt[prune_value]++;
+    // }
+    // os << file_path << std::endl;
+    // for (int i = 0; i < 20 && cnt[i]; i++) {
+    //     os << "  " << std::setfill(' ') << std::setw(2) << i << ": " << cnt[i] << std::endl;
+    // }
+    // os << "Effective prune value: " << sum / (double)prune_table.size() << std::endl;
 }
 
-int Prune::pruneTreeSearch(int state, std::vector<char> & table, char depth_left, char depth, int lastMove, std::vector<std::vector<long long>> &transition_table)
+int Prune::pruneTreeSearch(int state, Nibble32 & table, int depth_left, int depth, int lastMove, std::vector<std::vector<long long>> &transition_table)
 {
     int cnt = 0;
 
@@ -37,7 +40,7 @@ int Prune::pruneTreeSearch(int state, std::vector<char> & table, char depth_left
     {
         if (table[state] > depth)
         {
-            table[state] = depth;
+            table.set(state, depth);
             cnt = 1;
         }
     }
