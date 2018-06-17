@@ -26,9 +26,8 @@ void cornerPruning::buildPruneTable()
 
     long long state_count = (long long)cornerOrientation.get_state_count() * (long long)cornerPermutation.get_state_count();
 
-    if (!FileIO::read_char_vector(prune_table, file_path, state_count))
-    {
-        prune_table = std::vector<char>(state_count, 11);
+    prune_table = Nibble32(state_count, 11u);
+    if (!prune_table.read(file_path)) {
         char maxBreathDepthSearch = 8;
 
         for (char depth = 0; depth <= maxBreathDepthSearch; depth++) {
@@ -43,13 +42,13 @@ void cornerPruning::buildPruneTable()
             //Only the position smaller than 11, since 11 is max
             for (char depth = maxBreathDepthSearch + 1; depth < 11; depth++) {
                 if (solveable(i % 2187, i / 2187, depth, maxBreathDepthSearch, -1)) {
-                    prune_table[i] = depth;
+                    prune_table.set(i, depth);
                     break;
                 }
             }
         }
 
-        FileIO::store_char_vector(prune_table, file_path);
+        prune_table.store(file_path);
     }
 }
 
@@ -60,7 +59,7 @@ void cornerPruning::pruneTreeSearch(long long orient_state, long long perm_state
     {
         if (prune_table[state] > depth)
         {
-            prune_table[state] = depth;
+            prune_table.set(state, depth);
         }
     }
     else

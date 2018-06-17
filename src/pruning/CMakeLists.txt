@@ -11,6 +11,7 @@ set(HEADER_FILES
         ep1Pruning.h
         ep2Pruning.h
         edgePruning.h
+        nibble.h
         )
 
 include_directories(../cube)

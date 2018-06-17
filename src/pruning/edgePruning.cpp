@@ -1,6 +1,7 @@
 #include "edgePruning.h"
 #include "fileio.h"
 #include <sstream>
+#include <iostream>
 
 std::vector<int> computeOffsets(int cnt) {
     std::vector<int> arr(cnt);
@@ -70,14 +71,14 @@ void edgePruning::buildPruneTable()
 {
     long long state_count = product(12 - pieces_cnt + 1, 12) << pieces_cnt;
 
-    if (!FileIO::read_char_vector(prune_table, file_path, state_count))
-    {
-        prune_table = std::vector<char>(state_count, 20);
+    prune_table = Nibble32(state_count, 15u);
+    if (!prune_table.read(file_path)) {
         visited = 0;
 
         Cube cube;
         int maxBreathDepthSearch = pieces_cnt <= 6 ? 7 : 8;
         for (char depth = 0; depth <= maxBreathDepthSearch; depth++) {
+            std::cout << (int)depth << std::endl;
             pruneTreeSearch(cube, depth, depth, -1);
         }
 
@@ -89,13 +90,13 @@ void edgePruning::buildPruneTable()
 
             for (char depth = maxBreathDepthSearch + 1; depth < 15; depth++) {
                 if (solveable(cube, depth, maxBreathDepthSearch, -1)) {
-                    prune_table[state] = depth;
+                    prune_table.set(state, depth);
                     break;
                 }
             }
         }
 
-        FileIO::store_char_vector(prune_table, file_path);
+        prune_table.store(file_path);
     }
 }
 
@@ -106,7 +107,7 @@ void edgePruning::pruneTreeSearch(Cube & cube, char depth_left, char depth, int 
     {
         if (prune_table[state] > depth)
         {
-            prune_table[state] = depth;
+            prune_table.set(state, depth);
             visited++;
         }
     }
