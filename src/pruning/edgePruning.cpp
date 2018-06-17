@@ -1,7 +1,5 @@
 #include "edgePruning.h"
-#include "fileio.h"
 #include <sstream>
-#include <iostream>
 
 std::vector<int> computeOffsets(int cnt) {
     std::vector<int> arr(cnt);
@@ -78,7 +76,6 @@ void edgePruning::buildPruneTable()
         Cube cube;
         int maxBreathDepthSearch = pieces_cnt <= 6 ? 7 : 8;
         for (char depth = 0; depth <= maxBreathDepthSearch; depth++) {
-            std::cout << (int)depth << std::endl;
             pruneTreeSearch(cube, depth, depth, -1);
         }
 

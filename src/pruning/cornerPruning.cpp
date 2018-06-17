@@ -1,5 +1,4 @@
 #include "cornerPruning.h"
-#include "fileio.h"
 
 cornerPruning::cornerPruning()
 {
