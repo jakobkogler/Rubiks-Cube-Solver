@@ -3,11 +3,11 @@
 
 
 #include "prune.h"
-#include <array>
+#include <initializer_list>
 
 class edgePruning : public Prune {
 public:
-    edgePruning();
+    edgePruning(initializer_list<int> const& il);
     int pruning_number(Cube &cube);
     int visited;
 private:
@@ -17,7 +17,8 @@ private:
     void to_array(int state, Cube & cube);
     bool solveable(Cube & cube, char depth, char maxBreathDepthSearch, int lastMove);
 
-    const array<int, 6> offsets;
+    const vector<int> offsets;
+    const vector<int> pieces;
 };
 
 

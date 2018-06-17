@@ -1,17 +1,28 @@
 #include "edgePruning.h"
 #include "fileio.h"
+#include <sstream>
 
-array<int, 6> computeOffsets() {
-    array<int, 6> arr;
+vector<int> computeOffsets() {
+    vector<int> arr(6);
     for (int i = 0; i < 6; i++) {
         arr[i] = product(7, 11 - i);
     }
     return arr;
 }
 
-edgePruning::edgePruning() : offsets(computeOffsets())
+const string create_file_path(initializer_list<int> const& il) {
+    stringstream ss;
+    ss << "edgePruning";
+    for (int piece : il) {
+        ss << piece;
+    }
+    ss << ".data";
+    return ss.str();
+}
+
+edgePruning::edgePruning(initializer_list<int> const& il) : offsets(computeOffsets()), pieces(il.begin(), il.end())
 {
-    file_path = "edgePruning.data";
+    file_path = create_file_path(il);
     buildPruneTable();
 }
 
@@ -21,13 +32,13 @@ int edgePruning::to_index(Cube const& cube) const {
     auto const& perm = cube.edges.edges_perm;
     auto const& orient = cube.edges.edges_orient;
     for (int i = 0; i < 6; i++) {
-        int p4 = perm[i] * 4;
+        int p4 = perm[pieces[i]] * 4;
         int x = (cnt >> p4) & 15;
         state += x * offsets[i];
         cnt -= 0x1111111111111110 << p4;
     }
     for (int i = 0; i < 6; i++) {
-        state = (state << 1) + orient[i];
+        state = (state << 1) + orient[pieces[i]];
     }
     return state;
 }
@@ -37,12 +48,12 @@ void edgePruning::to_array(int state, Cube & cube) {
     auto & perm = cube.edges.edges_perm;
     auto & orient = cube.edges.edges_orient;
     for (int i = 0; i < 6; i++) {
-        orient[i] = (state >> (5 - i)) & 1;
+        orient[pieces[i]] = (state >> (5 - i)) & 1;
     }
     state >>= 6;
     for (int i = 0; i < 6; i++) {
         int p4 = (state / offsets[i]) * 4;
-        perm[i] = (cnt >> p4) & 15;
+        perm[pieces[i]] = (cnt >> p4) & 15;
         unsigned long long mask = ((unsigned long long)1 << p4) - 1;
         cnt = (cnt & mask) | ((cnt >> 4) & ~mask);
         state %= offsets[i];

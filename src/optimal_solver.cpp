@@ -8,7 +8,6 @@
 #include "ep1Pruning.h"
 #include "ep2Pruning.h"
 #include "edgePruning.h"
-#include "edgeSecond6Pruning.h"
 
 
 double diffclock(clock_t clock1, clock_t clock2)
@@ -26,8 +25,8 @@ OptimalSolver::OptimalSolver()
     pruning.push_back(new cornerPruning());
     // pruning.push_back(new ep1Pruning());
     // pruning.push_back(new ep2Pruning());
-    pruning.push_back(new edgePruning());
-    pruning.push_back(new edgeSecond6Pruning());
+    pruning.push_back(new edgePruning({0, 1, 2, 3, 4, 5}));
+    pruning.push_back(new edgePruning({6, 7, 8, 9, 10, 11}));
 }
 
 OptimalSolver::~OptimalSolver()
