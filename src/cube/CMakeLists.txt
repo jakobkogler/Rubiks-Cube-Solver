@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.3)
 
 project(Cube)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -O3")
 
 set(HEADER_FILES
         cube.h
@@ -11,6 +11,7 @@ set(HEADER_FILES
         corner_permutation.h
         edge_orientation.h
         edge_permutation.h
+        edges.h
         indexing.h
         )
 
@@ -21,6 +22,7 @@ set(SOURCE_FILES
         corner_permutation.cpp
         edge_orientation.cpp
         edge_permutation.cpp
+        edges.cpp
         indexing.cpp
         )
 

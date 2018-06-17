@@ -3,6 +3,7 @@
 
 #include "cube.h"
 #include <vector>
+#include <iostream>
 
 class Prune {
 protected:
@@ -19,4 +20,3 @@ protected:
 
 
 #endif //PRUNE_H
-

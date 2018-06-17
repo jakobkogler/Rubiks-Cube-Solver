@@ -61,6 +61,7 @@ void Cube::apply_move(int move)
     eoState = eoTransition[eoState][move];
     epState1 = epTransition[epState1][move];
     epState2 = epTransition[epState2][move];
+    edges.apply_move(move);
 }
 
 bool Cube::is_solved()
