@@ -1,7 +1,5 @@
 #include "fileio.h"
-#include <boost/serialization/unordered_map.hpp>
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
+#include <fstream>
 
 void FileIO::store_char_vector(vector<char> &vec, string path)
 {
@@ -25,24 +23,4 @@ bool FileIO::read_char_vector(vector<char> &vec, string path, int required_size)
         file.close();
         return false;
     }
-}
-
-bool FileIO::read_unordered_map(unordered_map<long long, char> &map, string path, int required_size) {
-    map = unordered_map<long long, char>(required_size*2);
-    ifstream ifile(path, ios::binary);
-    if (ifile.good()) {
-        boost::archive::binary_iarchive iarch(ifile);
-        iarch >> map;
-        ifile.close();
-        return true;
-    }
-    ifile.close();
-    return false;
-}
-
-void FileIO::store_unordered_map(unordered_map<long long, char> &map, string path) {
-    ofstream ofile(path, ios::out | ofstream::binary);
-    boost::archive::binary_oarchive oarch(ofile);
-    oarch << map;
-    ofile.close();
 }
