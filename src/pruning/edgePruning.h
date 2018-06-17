@@ -1,13 +1,13 @@
-#ifndef EDGEFIRST6PRUNING_H
-#define EDGEFIRST6PRUNING_H
+#ifndef EDGEPRUNING_H
+#define EDGEPRUNING_H
 
 
 #include "prune.h"
 #include <array>
 
-class edgeFirst6Pruning : public Prune {
+class edgePruning : public Prune {
 public:
-    edgeFirst6Pruning();
+    edgePruning();
     int pruning_number(Cube &cube);
     int visited;
 private:
@@ -33,4 +33,4 @@ constexpr int factorial(int x) {
 }
 
 
-#endif //EDGEFIRST6PRUNING_H
+#endif //EDGEPRUNING_H

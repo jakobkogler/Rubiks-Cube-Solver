@@ -1,4 +1,4 @@
-#include "edgeFirst6Pruning.h"
+#include "edgePruning.h"
 #include "fileio.h"
 
 array<int, 6> computeOffsets() {
@@ -9,13 +9,13 @@ array<int, 6> computeOffsets() {
     return arr;
 }
 
-edgeFirst6Pruning::edgeFirst6Pruning() : offsets(computeOffsets())
+edgePruning::edgePruning() : offsets(computeOffsets())
 {
-    file_path = "edgeFirst6Pruning.data";
+    file_path = "edgePruning.data";
     buildPruneTable();
 }
 
-int edgeFirst6Pruning::to_index(Cube const& cube) const {
+int edgePruning::to_index(Cube const& cube) const {
     unsigned long long cnt = 0xfedcba9876543210;
     int state = 0;
     auto const& perm = cube.edges.edges_perm;
@@ -32,7 +32,7 @@ int edgeFirst6Pruning::to_index(Cube const& cube) const {
     return state;
 }
 
-void edgeFirst6Pruning::to_array(int state, Cube & cube) {
+void edgePruning::to_array(int state, Cube & cube) {
     unsigned long long cnt = 0xfedcba9876543210;
     auto & perm = cube.edges.edges_perm;
     auto & orient = cube.edges.edges_orient;
@@ -49,12 +49,12 @@ void edgeFirst6Pruning::to_array(int state, Cube & cube) {
     }
 }
 
-int edgeFirst6Pruning::pruning_number(Cube &cube)
+int edgePruning::pruning_number(Cube &cube)
 {
     return prune_table[to_index(cube)];
 }
 
-void edgeFirst6Pruning::buildPruneTable()
+void edgePruning::buildPruneTable()
 {
     long long state_count = (12 * 11 * 10 * 9 * 8 * 7) << 6;
 
@@ -87,7 +87,7 @@ void edgeFirst6Pruning::buildPruneTable()
     }
 }
 
-void edgeFirst6Pruning::pruneTreeSearch(Cube & cube, char depth_left, char depth, int lastMove)
+void edgePruning::pruneTreeSearch(Cube & cube, char depth_left, char depth, int lastMove)
 {
     int state = to_index(cube);
     if (depth_left == 0)
@@ -120,7 +120,7 @@ void edgeFirst6Pruning::pruneTreeSearch(Cube & cube, char depth_left, char depth
     }
 }
 
-bool edgeFirst6Pruning::solveable(Cube & cube, char depth, char maxBreathDepthSearch, int lastMove)
+bool edgePruning::solveable(Cube & cube, char depth, char maxBreathDepthSearch, int lastMove)
 {
     int state = to_index(cube);
     if (prune_table[state] == depth)
