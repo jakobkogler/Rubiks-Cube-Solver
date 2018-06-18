@@ -15,7 +15,8 @@ Cube::Cube()
     eoState = edgeOrientation.array_to_index(std::vector<int>{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
     epState1 = edgePermutation.array_to_index(std::vector<int>{ 0, 1, 2, 3, 4, 5 });
     epState2 = edgePermutation.array_to_index(std::vector<int>{ 6, 7, 8, 9, 10, 11 });
-    edges = Edges({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}, 12);
+    edges = Edges{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}, 7};
+    edges2 = Edges{{10, 11, 8, 9, 6, 7, 4, 5, 2, 3, 0, 1}, 7};
 
     cornerOrientation.buildTransitionTable();
     coTransition = cornerOrientation.getTransitionTable();
@@ -63,6 +64,7 @@ void Cube::apply_move(int move)
     epState1 = epTransition[epState1][move];
     epState2 = epTransition[epState2][move];
     edges.apply_move(move);
+    edges2.apply_move(move);
 }
 
 bool Cube::is_solved()

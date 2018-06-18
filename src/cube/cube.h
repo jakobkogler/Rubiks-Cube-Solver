@@ -34,4 +34,5 @@ public:
     int getEpState2() const { return epState2; }
 
     Edges edges;
+    Edges edges2;
 };

@@ -3,9 +3,9 @@
 #include "prune.h"
 #include <initializer_list>
 
-class edgePruning : public Prune {
+class edgePruning2 : public Prune {
 public:
-    edgePruning(int pieces_cnt);
+    edgePruning2(int pieces_cnt);
     int pruning_number(Cube &cube);
     int visited;
 private:

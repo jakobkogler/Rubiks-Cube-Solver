@@ -1,30 +1,20 @@
-#include "edgePruning.h"
+#include "edgePruning2.h"
 #include <sstream>
 #include <iostream>
 
-const std::string create_file_path(std::initializer_list<int> const& il) {
-    std::stringstream ss;
-    ss << "edgePruning";
-    for (int piece : il) {
-        ss << piece;
-    }
-    ss << ".data";
-    return ss.str();
-}
-
-edgePruning::edgePruning(int pieces_cnt)
+edgePruning2::edgePruning2(int pieces_cnt)
     : pieces_cnt(pieces_cnt)
 {
     file_path = "edgePruning0123456.data";
     buildPruneTable();
 }
 
-int edgePruning::pruning_number(Cube &cube)
+int edgePruning2::pruning_number(Cube &cube)
 {
-    return prune_table[cube.edges.to_index()];
+    return prune_table[cube.edges2.to_index()];
 }
 
-void edgePruning::buildPruneTable()
+void edgePruning2::buildPruneTable()
 {
     long long state_count = product(12 - pieces_cnt + 1, 12) << pieces_cnt;
     std::cout << state_count << std::endl;
@@ -48,7 +38,7 @@ void edgePruning::buildPruneTable()
             if (prune_table[state] <= maxBreathDepthSearch)
                 continue;
 
-            cube.edges.to_array(state);
+            cube.edges2.to_array(state);
 
             for (char depth = maxBreathDepthSearch + 1; depth < 15; depth++) {
                 if (solveable(cube, depth, maxBreathDepthSearch, -1)) {
@@ -62,9 +52,9 @@ void edgePruning::buildPruneTable()
     }
 }
 
-void edgePruning::pruneTreeSearch(Cube & cube, char depth_left, char depth, int lastMove)
+void edgePruning2::pruneTreeSearch(Cube & cube, char depth_left, char depth, int lastMove)
 {
-    int state = cube.edges.to_index();
+    int state = cube.edges2.to_index();
     if (depth_left == 0)
     {
         if (prune_table[state] > depth)
@@ -95,9 +85,9 @@ void edgePruning::pruneTreeSearch(Cube & cube, char depth_left, char depth, int 
     }
 }
 
-bool edgePruning::solveable(Cube & cube, char depth, char maxBreathDepthSearch, int lastMove)
+bool edgePruning2::solveable(Cube & cube, char depth, char maxBreathDepthSearch, int lastMove)
 {
-    int state = cube.edges.to_index();
+    int state = cube.edges2.to_index();
     if (prune_table[state] == depth)
     {
         return true;
