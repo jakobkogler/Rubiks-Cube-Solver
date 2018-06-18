@@ -11,7 +11,6 @@ set(HEADER_FILES
         ep1Pruning.h
         ep2Pruning.h
         edgePruning.h
-        edgePruning2.h
         nibble.h
         )
 
@@ -26,7 +25,6 @@ set(SOURCE_FILES
         ep1Pruning.cpp
         ep2Pruning.cpp
         edgePruning.cpp
-        edgePruning2.cpp
         )
 
 add_library(Prune STATIC ${SOURCE_FILES} ${HEADER_FILES})

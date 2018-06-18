@@ -3,6 +3,8 @@
 #include <unordered_map>
 #include "cube.h"
 #include "prune.h"
+#include "cornerPruning.h"
+#include "edgePruning.h"
 
 class OptimalSolver
 {
@@ -11,11 +13,11 @@ private:
     std::string solution;
     std::string moveNames[6] = {"U", "D", "R", "L", "F", "B"};
     std::string moveCntNames[3] = {" ", "2", "'"};
-    std::vector<Prune*> pruning;
+    cornerPruning cPruning;
+    edgePruning ePruning{7};
 
 public:
     OptimalSolver();
-    ~OptimalSolver();
     char solve(std::string scramble);
     char IDA(Cube &cube);
     
