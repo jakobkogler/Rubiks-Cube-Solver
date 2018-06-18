@@ -2,7 +2,7 @@
 
 void Group::buildTransitionTable()
 {
-    transition_table = std::vector<std::vector<long long>>(state_count, std::vector<long long>(6));
+    transition_table = TransitionTable(state_count);
     std::vector<int> arr(piece_count);
 
     for (int index = 0; index < state_count; index++)

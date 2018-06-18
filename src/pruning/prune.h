@@ -15,6 +15,6 @@ public:
     void showPruneInfos(std::ostream& os) const;
     virtual ~Prune() {}
 protected:
-    void buildPruneTable(std::vector<std::vector<long long>> &transition_table, int state_count, int start_value = 0);
-    int pruneTreeSearch(int state, Nibble32 & table, int depth_left, int depth, int lastMove, std::vector<std::vector<long long>> &transition_table);
+    void buildPruneTable(TransitionTable &transition_table, int state_count, int start_value = 0);
+    int pruneTreeSearch(int state, Nibble32 & table, int depth_left, int depth, int lastMove, TransitionTable &transition_table);
 };

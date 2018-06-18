@@ -1,16 +1,20 @@
 #pragma once
 
 #include <vector>
+#include <array>
+#include <cstdint>
+
+using TransitionTable = std::vector<std::array<uint_fast32_t, 6>>;
 
 class Group
 {
 protected:
     int state_count;
     int piece_count;
-    std::vector<std::vector<long long>> transition_table;
+    TransitionTable transition_table;
 
 public:
-    std::vector<std::vector<long long>> getTransitionTable(){ return transition_table; }
+    TransitionTable getTransitionTable(){ return transition_table; }
     void buildTransitionTable();
     virtual void apply_move(std::vector<int> & arr, int move) = 0;
     int get_state_count(){ return state_count; }

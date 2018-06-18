@@ -6,7 +6,7 @@ eoPruning::eoPruning()
 
     EdgeOrientation edgeOrientation;
     edgeOrientation.buildTransitionTable();
-    std::vector<std::vector<long long>> transition_table = edgeOrientation.getTransitionTable();
+    TransitionTable transition_table = edgeOrientation.getTransitionTable();
 
     buildPruneTable(transition_table, edgeOrientation.get_state_count());
 }

@@ -6,7 +6,7 @@ cpPruning::cpPruning()
 
     CornerPermutation cornerPermutation;
     cornerPermutation.buildTransitionTable();
-    std::vector<std::vector<long long>> transition_table = cornerPermutation.getTransitionTable();
+    TransitionTable transition_table = cornerPermutation.getTransitionTable();
 
     buildPruneTable(transition_table, cornerPermutation.get_state_count());
 }

@@ -1,7 +1,7 @@
 #include "prune.h"
 #include <iomanip>
 
-void Prune::buildPruneTable(std::vector<std::vector<long long>> &transition_table, int state_count, int start_value)
+void Prune::buildPruneTable(TransitionTable &transition_table, int state_count, int start_value)
 {
     prune_table = Nibble32(state_count, 15);
     if (!prune_table.read(file_path)) {
@@ -33,7 +33,7 @@ void Prune::showPruneInfos(std::ostream& os) const {
     os << "Effective prune value: " << sum / (double)prune_table.size() << std::endl;
 }
 
-int Prune::pruneTreeSearch(int state, Nibble32 & table, int depth_left, int depth, int lastMove, std::vector<std::vector<long long>> &transition_table)
+int Prune::pruneTreeSearch(int state, Nibble32 & table, int depth_left, int depth, int lastMove, TransitionTable &transition_table)
 {
     int cnt = 0;
 

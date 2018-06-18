@@ -11,10 +11,10 @@
 class Cube
 {
 private:
-    std::vector<std::vector<long long>> coTransition;
-    std::vector<std::vector<long long>> cpTransition;
-    std::vector<std::vector<long long>> eoTransition;
-    std::vector<std::vector<long long>> epTransition;
+    TransitionTable coTransition;
+    TransitionTable cpTransition;
+    TransitionTable eoTransition;
+    TransitionTable epTransition;
 
     int coState;
     int cpState;

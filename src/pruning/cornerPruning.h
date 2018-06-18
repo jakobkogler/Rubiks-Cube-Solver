@@ -4,7 +4,7 @@
 
 class cornerPruning : public Prune {
 private:
-    std::vector<std::vector<long long>> transition_table_orientation, transition_table_permutation;
+    TransitionTable transition_table_orientation, transition_table_permutation;
 public:
     cornerPruning();
     int pruning_number(Cube &cube);
