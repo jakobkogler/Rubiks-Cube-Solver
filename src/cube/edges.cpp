@@ -60,28 +60,26 @@ void Edges::apply_move(int move) {
     }
 }
 
-// std::pair<uint_fast32_t, uint_fast32_t> Edges::to_index() const {
-uint_fast32_t Edges::to_index() const {
+std::pair<uint32_t, uint32_t> Edges::to_index() const {
     unsigned long long cnt = 0xfedcba9876543210;
-    uint_fast32_t state = 0;
+    uint32_t state = 0;
     for (int i = 0; i < pieces_cnt; i++) {
         int p4 = edges_perm[i] * 4;
         int x = (cnt >> p4) & 15;
         state += x * offsets[i];
         cnt -= 0x1111111111111110 << p4;
     }
-    for (int i = 0; i < pieces_cnt; i++) {
+    for (int i = 0; i < pieces_cnt - 3; i++) {
         state = (state << 1) + edges_orient[i];
     }
-    return state;
-    // uint_fast32_t offset = 0;
-    // for (int i = pieces_cnt - 3; i < pieces_cnt; i++) {
-    //     offset = (offset << 1) + edges_orient[i];
-    // }
-    // return {state, offset};
+    uint32_t offset = 0;
+    for (int i = pieces_cnt - 3; i < pieces_cnt; i++) {
+        offset = (offset << 1) + edges_orient[i];
+    }
+    return {state, offset};
 }
 
-void Edges::to_array(uint_fast32_t state) {
+void Edges::to_array(uint32_t state) {
     unsigned long long cnt = 0xfedcba9876543210;
     for (int i = 0; i < pieces_cnt; i++) {
         edges_orient[i] = (state >> (pieces_cnt - 1 - i)) & 1;

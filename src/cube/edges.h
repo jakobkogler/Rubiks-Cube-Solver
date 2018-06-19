@@ -10,9 +10,8 @@ public:
     std::vector<int> edges_perm;
     std::vector<int> edges_orient;
     void apply_move(int move);
-    // std::pair<uint_fast32_t, uint_fast32_t> to_index() const;
-    uint_fast32_t to_index() const;
-    void to_array(uint_fast32_t state);
+    std::pair<uint32_t, uint32_t> to_index() const;
+    void to_array(uint32_t state);
 private:
     int pieces_cnt;
     std::array<Table12, 6> perm, orient;

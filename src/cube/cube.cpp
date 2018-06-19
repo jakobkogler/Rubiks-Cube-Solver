@@ -55,6 +55,5 @@ void Cube::apply_move(int move)
 
 bool Cube::is_solved()
 {
-    // return cpState == 0 && coState == 0 && edges.to_index() == std::pair<uint_fast32_t, uint_fast32_t>{0, 0} && edges2.to_index() == std::pair<uint_fast32_t, uint_fast32_t>{0, 0};
-    return cpState == 0 && coState == 0 && edges.to_index() == 0 && edges2.to_index() == 0;
+    return cpState == 0 && coState == 0 && edges.to_index() == std::pair<uint32_t, uint32_t>{0, 0} && edges2.to_index() == std::pair<uint32_t, uint32_t>{0, 0};
 }
