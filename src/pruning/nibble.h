@@ -9,8 +9,10 @@ class Nibble
 {
 public:
     Nibble(unsigned int size = 0, int default_value = 0);
-    int operator[](int idx) const;
-    void set(int idx, int value);
+    int get(uint_fast32_t idx) const;
+    int get(std::pair<uint_fast32_t, uint_fast32_t> idx) const;
+    void set(uint_fast32_t idx, int value);
+    void set(std::pair<uint_fast32_t, uint_fast32_t> idx, int value);
     int size() const;
     bool read(std::string file_path);
     void store(std::string file_path);
@@ -37,18 +39,31 @@ Nibble<T>::Nibble(unsigned int size, int default_value) : elements(size) {
 }
 
 template <typename T>
-int Nibble<T>::operator[](int idx) const {
+int Nibble<T>::get(uint_fast32_t idx) const {
     T const& entry = data[idx >> log];
     int offset = (idx & mask) << 2;
     return (entry >> offset) & static_cast<T>(15);
 }
 
 template <typename T>
-void Nibble<T>::set(int idx, int value) {
+int Nibble<T>::get(std::pair<uint_fast32_t, uint_fast32_t> idx) const {
+    T const& entry = data[idx.first];
+    return (entry >> idx.second) & static_cast<T>(15);
+}
+
+template <typename T>
+void Nibble<T>::set(uint_fast32_t idx, int value) {
     T & entry = data[idx >> log];
     int offset = (idx & mask) << 2;
     entry &= ~(static_cast<T>(15) << offset);
     entry |= (value & static_cast<T>(15)) << offset;
+}
+
+template <typename T>
+void Nibble<T>::set(std::pair<uint_fast32_t, uint_fast32_t> idx, int value) {
+    T & entry = data[idx.first];
+    entry &= ~(static_cast<T>(15) << idx.second);
+    entry |= (value & static_cast<T>(15)) << idx.second;
 }
 
 template <typename T>

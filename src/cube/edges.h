@@ -10,6 +10,7 @@ public:
     std::vector<int> edges_perm;
     std::vector<int> edges_orient;
     void apply_move(int move);
+    // std::pair<uint_fast32_t, uint_fast32_t> to_index() const;
     uint_fast32_t to_index() const;
     void to_array(uint_fast32_t state);
 private:

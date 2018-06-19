@@ -1,5 +1,6 @@
 #include "edges.h"
 #include <numeric>
+#include <cassert>
 
 Table12 generatePermTable(Table12 const& labels, int a, int b, int c, int d) {
     Table12 t;
@@ -29,6 +30,7 @@ std::vector<int> computeOffsets(int cnt)
 Edges::Edges(Table12 labels, int pieces_cnt)
     : pieces_cnt(pieces_cnt), offsets(computeOffsets(pieces_cnt))
 {
+    assert(pieces_cnt >= 3);
     edges_perm.assign(pieces_cnt, 0);
     std::iota(edges_perm.begin(), edges_perm.end(), 0);
     edges_orient.assign(pieces_cnt, 0);
@@ -58,6 +60,7 @@ void Edges::apply_move(int move) {
     }
 }
 
+// std::pair<uint_fast32_t, uint_fast32_t> Edges::to_index() const {
 uint_fast32_t Edges::to_index() const {
     unsigned long long cnt = 0xfedcba9876543210;
     uint_fast32_t state = 0;
@@ -71,6 +74,11 @@ uint_fast32_t Edges::to_index() const {
         state = (state << 1) + edges_orient[i];
     }
     return state;
+    // uint_fast32_t offset = 0;
+    // for (int i = pieces_cnt - 3; i < pieces_cnt; i++) {
+    //     offset = (offset << 1) + edges_orient[i];
+    // }
+    // return {state, offset};
 }
 
 void Edges::to_array(uint_fast32_t state) {
