@@ -14,5 +14,5 @@ private:
     void pruneTreeSearch(Edges & edges, char depth_left, char depth, int lastMove);
     bool solveable(Edges & edges, char depth, char maxBreathDepthSearch, int lastMove);
 
-    const int pieces_cnt;
+    int pieces_cnt;
 };
