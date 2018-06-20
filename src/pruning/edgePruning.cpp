@@ -2,68 +2,26 @@
 #include <sstream>
 #include <iostream>
 
-std::vector<int> computeOffsets(int cnt) {
-    std::vector<int> arr(cnt);
-    for (int i = 0; i < cnt; i++) {
-        arr[i] = product(13 - cnt, 11 - i);
-    }
-    return arr;
-}
-
-const std::string create_file_path(std::initializer_list<int> const& il) {
+const std::string create_file_path(int pieces_cnt) {
     std::stringstream ss;
     ss << "edgePruning";
-    for (int piece : il) {
-        ss << piece;
+    for (int i = 0; i < pieces_cnt; i++) {
+        ss << i;
     }
     ss << ".data";
     return ss.str();
 }
 
-edgePruning::edgePruning(std::initializer_list<int> const& il)
-    : offsets(computeOffsets(il.size())), pieces_cnt(il.size()), pieces(il.begin(), il.end())
+edgePruning::edgePruning(int pieces_cnt)
+    : pieces_cnt(pieces_cnt)
 {
-    file_path = create_file_path(il);
+    file_path = create_file_path(pieces_cnt);
     buildPruneTable();
 }
 
-int edgePruning::to_index(Cube const& cube) const {
-    unsigned long long cnt = 0xfedcba9876543210;
-    int state = 0;
-    auto const& perm = cube.edges.edges_perm;
-    auto const& orient = cube.edges.edges_orient;
-    for (int i = 0; i < pieces_cnt; i++) {
-        int p4 = perm[pieces[i]] * 4;
-        int x = (cnt >> p4) & 15;
-        state += x * offsets[i];
-        cnt -= 0x1111111111111110 << p4;
-    }
-    for (int i = 0; i < pieces_cnt; i++) {
-        state = (state << 1) + orient[pieces[i]];
-    }
-    return state;
-}
-
-void edgePruning::to_array(int state, Cube & cube) {
-    unsigned long long cnt = 0xfedcba9876543210;
-    auto & perm = cube.edges.edges_perm;
-    auto & orient = cube.edges.edges_orient;
-    for (int i = 0; i < pieces_cnt; i++) {
-        orient[pieces[i]] = (state >> (pieces_cnt - 1 - i)) & 1;
-    }
-    state >>= pieces_cnt;
-    for (int i = 0; i < pieces_cnt; i++) {
-        int p4 = (state / offsets[i]) * 4;
-        perm[pieces[i]] = (cnt >> p4) & 15;
-        unsigned long long mask = ((unsigned long long)1 << p4) - 1;
-        cnt = (cnt & mask) | ((cnt >> 4) & ~mask);
-        state %= offsets[i];
-    }
-}
-
-int edgePruning::pruning_number(Cube &cube)
+int edgePruning::pruning_number(Edges &edges)
 {
-    return prune_table[to_index(cube)];
+    return prune_table[edges.to_index()];
 }
 
 void edgePruning::buildPruneTable()
@@ -74,12 +32,12 @@ void edgePruning::buildPruneTable()
     prune_table = Nibble32(state_count, 15u);
     if (!prune_table.read(file_path)) {
         visited = 0;
-
-        Cube cube;
+        
+        Edges edges({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}, pieces_cnt);
         int maxBreathDepthSearch = pieces_cnt <= 6 ? 7 : 8;
         for (char depth = 0; depth <= maxBreathDepthSearch; depth++) {
             std::cout << (int)depth << std::endl;
-            pruneTreeSearch(cube, depth, depth, -1);
+            pruneTreeSearch(edges, depth, depth, -1);
         }
 
         int mask = (1 << 20) - 1;
@@ -90,10 +48,10 @@ void edgePruning::buildPruneTable()
             if (prune_table[state] <= maxBreathDepthSearch)
                 continue;
 
-            to_array(state, cube);
+            edges.to_array(state);
 
             for (char depth = maxBreathDepthSearch + 1; depth < 15; depth++) {
-                if (solveable(cube, depth, maxBreathDepthSearch, -1)) {
+                if (solveable(edges, depth, maxBreathDepthSearch, -1)) {
                     prune_table.set(state, depth);
                     break;
                 }
@@ -104,9 +62,9 @@ void edgePruning::buildPruneTable()
     }
 }
 
-void edgePruning::pruneTreeSearch(Cube & cube, char depth_left, char depth, int lastMove)
+void edgePruning::pruneTreeSearch(Edges & edges, char depth_left, char depth, int lastMove)
 {
-    int state = to_index(cube);
+    int state = edges.to_index();
     if (depth_left == 0)
     {
         if (prune_table[state] > depth)
@@ -128,18 +86,18 @@ void edgePruning::pruneTreeSearch(Cube & cube, char depth_left, char depth, int 
 
                 for (int j = 0; j < 3; j++)
                 {
-                    cube.apply_move(move);
-                    pruneTreeSearch(cube, depth_left - 1, depth, move);
+                    edges.apply_move(move);
+                    pruneTreeSearch(edges, depth_left - 1, depth, move);
                 }
-                cube.apply_move(move);
+                edges.apply_move(move);
             }
         }
     }
 }
 
-bool edgePruning::solveable(Cube & cube, char depth, char maxBreathDepthSearch, int lastMove)
+bool edgePruning::solveable(Edges & edges, char depth, char maxBreathDepthSearch, int lastMove)
 {
-    int state = to_index(cube);
+    int state = edges.to_index();
     if (prune_table[state] == depth)
     {
         return true;
@@ -159,13 +117,13 @@ bool edgePruning::solveable(Cube & cube, char depth, char maxBreathDepthSearch, 
 
             for (int j = 0; j < 3; j++)
             {
-                cube.apply_move(move);
-                if (solveable(cube, depth - 1, maxBreathDepthSearch, move))
+                edges.apply_move(move);
+                if (solveable(edges, depth - 1, maxBreathDepthSearch, move))
                 {
                     return true;
                 }
             }
-            cube.apply_move(move);
+            edges.apply_move(move);
         }
 
         return false;

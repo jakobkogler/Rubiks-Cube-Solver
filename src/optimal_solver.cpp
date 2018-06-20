@@ -1,13 +1,6 @@
 #include "optimal_solver.h"
 #include <iostream>
 #include <iomanip>
-#include "eoPruning.h"
-#include "coPruning.h"
-#include "cpPruning.h"
-#include "cornerPruning.h"
-#include "ep1Pruning.h"
-#include "ep2Pruning.h"
-#include "edgePruning.h"
 
 
 double diffclock(clock_t clock1, clock_t clock2)
@@ -19,26 +12,8 @@ double diffclock(clock_t clock1, clock_t clock2)
 
 OptimalSolver::OptimalSolver()
 {
-    // pruning.push_back(new eoPruning());
-    // pruning.push_back(new coPruning());
-    // pruning.push_back(new cpPruning());
-    pruning.push_back(new cornerPruning());
-    pruning[0]->showPruneInfos(std::cout);
-    // pruning.push_back(new ep1Pruning());
-    // pruning.push_back(new ep2Pruning());
-    pruning.push_back(new edgePruning({0, 1, 2, 3, 4, 5, 6}));
-    pruning[1]->showPruneInfos(std::cout);
-    pruning.push_back(new edgePruning({5, 6, 7, 8, 9, 10, 11}));
-    pruning[2]->showPruneInfos(std::cout);
-}
-
-OptimalSolver::~OptimalSolver()
-{
-    for (auto pruning_method : pruning)
-    {
-        delete pruning_method;
-    }
-    pruning.clear();
+    cPruning.showPruneInfos(std::cout);
+    ePruning.showPruneInfos(std::cout);
 }
 
 char OptimalSolver::solve(std::string scramble)
@@ -90,13 +65,12 @@ bool OptimalSolver::treeSearch(Cube &cube, char depth, int lastMove)
     }
     else
     {
-        for (auto pruning_method : pruning)
-        {
-            if (pruning_method->pruning_number(cube) > depth)
-            {
-                return false;
-            }
-        }
+        if (cPruning.pruning_number(cube) > depth)
+            return false;
+        if (ePruning.pruning_number(cube.edges) > depth)
+            return false;
+        if (ePruning.pruning_number(cube.edges2) > depth)
+            return false;
 
         for (int move = 0; move < 6; move++)
         {

@@ -9,7 +9,7 @@ cornerPruning::cornerPruning()
 
 int cornerPruning::pruning_number(Cube &cube)
 {
-    return prune_table[(long long)cube.getCpState() * 2187 + cube.getCoState()];
+    return prune_table[cube.getCpState() * 2187 + cube.getCoState()];
 }
 
 void cornerPruning::buildPruneTable()

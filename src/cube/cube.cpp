@@ -8,26 +8,16 @@ Cube::Cube()
 {
     CornerOrientation cornerOrientation;
     CornerPermutation cornerPermutation;
-    EdgeOrientation edgeOrientation;
-    EdgePermutation edgePermutation;
     coState = cornerOrientation.array_to_index(std::vector<int>{ 0, 0, 0, 0, 0, 0, 0, 0 });
     cpState = cornerPermutation.array_to_index(std::vector<int>{ 0, 1, 2, 3, 4, 5, 6, 7 });
-    eoState = edgeOrientation.array_to_index(std::vector<int>{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
-    epState1 = edgePermutation.array_to_index(std::vector<int>{ 0, 1, 2, 3, 4, 5 });
-    epState2 = edgePermutation.array_to_index(std::vector<int>{ 6, 7, 8, 9, 10, 11 });
-    edges = Edges(12);
+    edges = Edges{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}, 7};
+    edges2 = Edges{{10, 11, 8, 9, 6, 7, 4, 5, 2, 3, 0, 1}, 7};
 
     cornerOrientation.buildTransitionTable();
     coTransition = cornerOrientation.getTransitionTable();
 
     cornerPermutation.buildTransitionTable();
     cpTransition = cornerPermutation.getTransitionTable();
-
-    edgeOrientation.buildTransitionTable();
-    eoTransition = edgeOrientation.getTransitionTable();
-
-    edgePermutation.buildTransitionTable();
-    epTransition = edgePermutation.getTransitionTable();
 }
 
 Cube::Cube(std::string scramble) : Cube()
@@ -59,13 +49,11 @@ void Cube::apply_move(int move)
 {
     coState = coTransition[coState][move];
     cpState = cpTransition[cpState][move];
-    eoState = eoTransition[eoState][move];
-    epState1 = epTransition[epState1][move];
-    epState2 = epTransition[epState2][move];
     edges.apply_move(move);
+    edges2.apply_move(move);
 }
 
 bool Cube::is_solved()
 {
-    return cpState == 0 && coState == 0 && eoState == 0 && epState1 == 0 && epState2 == 366288;
+    return cpState == 0 && coState == 0 && edges.to_index() == 0 && edges2.to_index() == 0;
 }

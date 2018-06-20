@@ -7,8 +7,6 @@ set(HEADER_FILES
         group.h
         corner_orientation.h
         corner_permutation.h
-        edge_orientation.h
-        edge_permutation.h
         edges.h
         indexing.h
         )
@@ -18,8 +16,6 @@ set(SOURCE_FILES
         group.cpp
         corner_orientation.cpp
         corner_permutation.cpp
-        edge_orientation.cpp
-        edge_permutation.cpp
         edges.cpp
         indexing.cpp
         )
