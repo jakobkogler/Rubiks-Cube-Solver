@@ -3,39 +3,36 @@
 #include <vector>
 #include <cstdint>
 #include <fstream>
-#include <iostream>
 
 template <typename T>
 class Nibble
 {
 public:
-    Nibble(unsigned int size = 0, int default_value = 0);
+    Nibble(uint64_t size = 0, int default_value = 0);
     int get(uint32_t idx) const;
     int get(std::pair<uint32_t, uint32_t> idx) const;
     void set(uint32_t idx, int value);
     void set(std::pair<uint32_t, uint32_t> idx, int value);
-    int size() const;
+    uint64_t size() const;
     bool read(std::string file_path);
     void store(std::string file_path);
 private:
     std::vector<T> data;
-    unsigned int elements;
+    uint64_t elements;
     unsigned int log;
     unsigned int mask;
-    unsigned int actual_size;
+    uint64_t actual_size;
 };
 
 template <typename T>
-Nibble<T>::Nibble(unsigned int size, int default_value) : elements(size) {
+Nibble<T>::Nibble(uint64_t size, int default_value) : elements(size) {
     T value = default_value & static_cast<T>(15);
     log = 0;
     for (auto shift = 4u; shift < sizeof(T) * 8; shift <<= 1) {
         value |= value << shift;
         log++;
     }
-    std::cout << log << std::endl;
     mask = (1 << log) - 1;
-    std::cout << mask << std::endl;
     int values_per_entry = 1 << log;
     actual_size = (elements + values_per_entry - 1) / values_per_entry;
     data.assign(actual_size, value);
@@ -72,7 +69,7 @@ void Nibble<T>::set(std::pair<uint32_t, uint32_t> idx, int value) {
 }
 
 template <typename T>
-int Nibble<T>::size() const {
+uint64_t Nibble<T>::size() const {
     return elements;
 }
 

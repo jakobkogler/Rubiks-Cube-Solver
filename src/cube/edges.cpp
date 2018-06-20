@@ -18,9 +18,9 @@ std::array<int, 12> generateOrientTable(Table12 const& labels, int a, int b, int
     return t;
 }
 
-std::vector<int> computeOffsets(int cnt)
+std::vector<uint32_t> computeOffsets(int cnt)
 {
-    std::vector<int> arr(cnt);
+    std::vector<uint32_t> arr(cnt);
     for (int i = 0; i < cnt; i++) {
         arr[i] = product(13 - cnt, 11 - i);
     }
@@ -79,7 +79,7 @@ std::pair<uint32_t, uint32_t> Edges::to_index() const {
     return {state, offset};
 }
 
-void Edges::to_array(uint32_t state) {
+void Edges::to_array(uint64_t state) {
     unsigned long long cnt = 0xfedcba9876543210;
     for (int i = 0; i < pieces_cnt; i++) {
         edges_orient[i] = (state >> (pieces_cnt - 1 - i)) & 1;

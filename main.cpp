@@ -3,7 +3,7 @@
 
 int main()
 {
-    OptimalSolver os(7);
+    OptimalSolver os(8);
 
     std::cout << "** Sexy **" << std::endl;
     os.solve("R U R' U'");
