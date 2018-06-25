@@ -1,7 +1,6 @@
 #pragma once
 
 #include "prune.h"
-#include <initializer_list>
 
 class edgePruning : public Prune {
 public:

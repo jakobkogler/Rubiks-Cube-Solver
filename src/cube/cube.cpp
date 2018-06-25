@@ -2,7 +2,6 @@
 #include <vector>
 #include <sstream>
 #include <regex>
-#include <map>
 
 Cube::Cube(int edgePruningSize)
 {
