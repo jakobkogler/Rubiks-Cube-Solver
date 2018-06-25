@@ -1,5 +1,6 @@
 #include "edges.h"
 #include <numeric>
+#include <cassert>
 
 Table12 generatePermTable(Table12 const& labels, int a, int b, int c, int d) {
     Table12 t;
@@ -17,9 +18,9 @@ std::array<int, 12> generateOrientTable(Table12 const& labels, int a, int b, int
     return t;
 }
 
-std::vector<int> computeOffsets(int cnt)
+std::vector<uint32_t> computeOffsets(int cnt)
 {
-    std::vector<int> arr(cnt);
+    std::vector<uint32_t> arr(cnt);
     for (int i = 0; i < cnt; i++) {
         arr[i] = product(13 - cnt, 11 - i);
     }
@@ -29,6 +30,7 @@ std::vector<int> computeOffsets(int cnt)
 Edges::Edges(Table12 labels, int pieces_cnt)
     : pieces_cnt(pieces_cnt), offsets(computeOffsets(pieces_cnt))
 {
+    assert(pieces_cnt >= 3);
     edges_perm.assign(pieces_cnt, 0);
     std::iota(edges_perm.begin(), edges_perm.end(), 0);
     edges_orient.assign(pieces_cnt, 0);
@@ -58,22 +60,26 @@ void Edges::apply_move(int move) {
     }
 }
 
-uint_fast32_t Edges::to_index() const {
+std::pair<uint32_t, uint32_t> Edges::to_index() const {
     unsigned long long cnt = 0xfedcba9876543210;
-    uint_fast32_t state = 0;
+    uint32_t state = 0;
     for (int i = 0; i < pieces_cnt; i++) {
         int p4 = edges_perm[i] * 4;
         int x = (cnt >> p4) & 15;
         state += x * offsets[i];
         cnt -= 0x1111111111111110 << p4;
     }
-    for (int i = 0; i < pieces_cnt; i++) {
+    for (int i = 0; i < pieces_cnt - 3; i++) {
         state = (state << 1) + edges_orient[i];
     }
-    return state;
+    uint32_t offset = 0;
+    for (int i = pieces_cnt - 3; i < pieces_cnt; i++) {
+        offset = (offset << 1) + edges_orient[i];
+    }
+    return {state, offset};
 }
 
-void Edges::to_array(uint_fast32_t state) {
+void Edges::to_array(uint64_t state) {
     unsigned long long cnt = 0xfedcba9876543210;
     for (int i = 0; i < pieces_cnt; i++) {
         edges_orient[i] = (state >> (pieces_cnt - 1 - i)) & 1;

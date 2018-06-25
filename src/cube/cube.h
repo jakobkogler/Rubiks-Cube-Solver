@@ -16,8 +16,8 @@ private:
     int cpState;
 
 public:
-    Cube();
-    Cube(std::string scramble);
+    Cube(int edgePruningSize);
+    Cube(std::string scramble, int edgePruningSize);
     void apply_move(int move);
     bool is_solved();
     int getCoState() const { return coState; }

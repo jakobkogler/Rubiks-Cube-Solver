@@ -8,22 +8,24 @@ template <typename T>
 class Nibble
 {
 public:
-    Nibble(unsigned int size = 0, int default_value = 0);
-    int operator[](int idx) const;
-    void set(int idx, int value);
-    int size() const;
+    Nibble(uint64_t size = 0, int default_value = 0);
+    int get(uint32_t idx) const;
+    int get(std::pair<uint32_t, uint32_t> idx) const;
+    void set(uint32_t idx, int value);
+    void set(std::pair<uint32_t, uint32_t> idx, int value);
+    uint64_t size() const;
     bool read(std::string file_path);
     void store(std::string file_path);
 private:
     std::vector<T> data;
-    unsigned int elements;
+    uint64_t elements;
     unsigned int log;
     unsigned int mask;
-    unsigned int actual_size;
+    uint64_t actual_size;
 };
 
 template <typename T>
-Nibble<T>::Nibble(unsigned int size, int default_value) : elements(size) {
+Nibble<T>::Nibble(uint64_t size, int default_value) : elements(size) {
     T value = default_value & static_cast<T>(15);
     log = 0;
     for (auto shift = 4u; shift < sizeof(T) * 8; shift <<= 1) {
@@ -37,14 +39,21 @@ Nibble<T>::Nibble(unsigned int size, int default_value) : elements(size) {
 }
 
 template <typename T>
-int Nibble<T>::operator[](int idx) const {
+int Nibble<T>::get(uint32_t idx) const {
     T const& entry = data[idx >> log];
     int offset = (idx & mask) << 2;
     return (entry >> offset) & static_cast<T>(15);
 }
 
 template <typename T>
-void Nibble<T>::set(int idx, int value) {
+int Nibble<T>::get(std::pair<uint32_t, uint32_t> idx) const {
+    T const& entry = data[idx.first];
+    idx.second <<= 2;
+    return (entry >> idx.second) & static_cast<T>(15);
+}
+
+template <typename T>
+void Nibble<T>::set(uint32_t idx, int value) {
     T & entry = data[idx >> log];
     int offset = (idx & mask) << 2;
     entry &= ~(static_cast<T>(15) << offset);
@@ -52,7 +61,15 @@ void Nibble<T>::set(int idx, int value) {
 }
 
 template <typename T>
-int Nibble<T>::size() const {
+void Nibble<T>::set(std::pair<uint32_t, uint32_t> idx, int value) {
+    T & entry = data[idx.first];
+    idx.second <<= 2;
+    entry &= ~(static_cast<T>(15) << idx.second);
+    entry |= (value & static_cast<T>(15)) << idx.second;
+}
+
+template <typename T>
+uint64_t Nibble<T>::size() const {
     return elements;
 }
 
@@ -82,4 +99,4 @@ void Nibble<T>::store(std::string path) {
     file.close();
 }
 
-using Nibble32 = Nibble<uint_fast32_t>;
+using Nibble32 = Nibble<uint32_t>;

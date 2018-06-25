@@ -14,10 +14,11 @@ private:
     std::string moveNames[6] = {"U", "D", "R", "L", "F", "B"};
     std::string moveCntNames[3] = {" ", "2", "'"};
     cornerPruning cPruning;
-    edgePruning ePruning{7};
+    edgePruning ePruning;
+    int edgePruningSize;
 
 public:
-    OptimalSolver();
+    OptimalSolver(int edgePruningSize);
     char solve(std::string scramble);
     char IDA(Cube &cube);
     

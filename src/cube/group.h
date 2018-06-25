@@ -4,7 +4,7 @@
 #include <array>
 #include <cstdint>
 
-using TransitionTable = std::vector<std::array<uint_fast32_t, 6>>;
+using TransitionTable = std::vector<std::array<uint32_t, 6>>;
 
 class Group
 {

@@ -10,7 +10,8 @@ double diffclock(clock_t clock1, clock_t clock2)
     return diffms;
 }
 
-OptimalSolver::OptimalSolver()
+OptimalSolver::OptimalSolver(int edgePruningSize)
+    : ePruning(edgePruningSize), edgePruningSize(edgePruningSize)
 {
     cPruning.showPruneInfos(std::cout);
     ePruning.showPruneInfos(std::cout);
@@ -18,7 +19,7 @@ OptimalSolver::OptimalSolver()
 
 char OptimalSolver::solve(std::string scramble)
 {
-    Cube cube(scramble);
+    Cube cube(scramble, edgePruningSize);
     
     std::cout << "Solve the scramble \"" << scramble << "\": " << std::endl;
     char depth = IDA(cube);

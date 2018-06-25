@@ -21,12 +21,12 @@ edgePruning::edgePruning(int pieces_cnt)
 
 int edgePruning::pruning_number(Edges &edges)
 {
-    return prune_table[edges.to_index()];
+    return prune_table.get(edges.to_index());
 }
 
 void edgePruning::buildPruneTable()
 {
-    long long state_count = product(12 - pieces_cnt + 1, 12) << pieces_cnt;
+    uint64_t state_count = product(12 - pieces_cnt + 1, 12) << pieces_cnt;
     std::cout << state_count << std::endl;
 
     prune_table = Nibble32(state_count, 15u);
@@ -40,19 +40,19 @@ void edgePruning::buildPruneTable()
             pruneTreeSearch(edges, depth, depth, -1);
         }
 
-        int mask = (1 << 20) - 1;
-        for (int state = 0; state < state_count; state++) {
+        uint64_t mask = (1 << 23) - 1;
+        for (uint64_t state = 0; state < state_count; state++) {
             if ((state & mask) == mask)
                 std::cout << state / (double)state_count * 100 << std::endl;
                 
-            if (prune_table[state] <= maxBreathDepthSearch)
+            if (prune_table.get({state >> 3, state & 7}) <= maxBreathDepthSearch)
                 continue;
 
             edges.to_array(state);
 
             for (char depth = maxBreathDepthSearch + 1; depth < 15; depth++) {
                 if (solveable(edges, depth, maxBreathDepthSearch, -1)) {
-                    prune_table.set(state, depth);
+                    prune_table.set({state >> 3, state & 7}, depth);
                     break;
                 }
             }
@@ -64,10 +64,10 @@ void edgePruning::buildPruneTable()
 
 void edgePruning::pruneTreeSearch(Edges & edges, char depth_left, char depth, int lastMove)
 {
-    int state = edges.to_index();
+    auto state = edges.to_index();
     if (depth_left == 0)
     {
-        if (prune_table[state] > depth)
+        if (prune_table.get(state) > depth)
         {
             prune_table.set(state, depth);
             visited++;
@@ -75,7 +75,7 @@ void edgePruning::pruneTreeSearch(Edges & edges, char depth_left, char depth, in
     }
     else
     {
-        if (prune_table[state] == depth - depth_left)
+        if (prune_table.get(state) == depth - depth_left)
         {
             for (int move = 0; move < 6; move++)
             {
@@ -97,8 +97,8 @@ void edgePruning::pruneTreeSearch(Edges & edges, char depth_left, char depth, in
 
 bool edgePruning::solveable(Edges & edges, char depth, char maxBreathDepthSearch, int lastMove)
 {
-    int state = edges.to_index();
-    if (prune_table[state] == depth)
+    auto state = edges.to_index();
+    if (prune_table.get(state) == depth)
     {
         return true;
     }

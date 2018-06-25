@@ -19,10 +19,10 @@ void Prune::buildPruneTable(TransitionTable &transition_table, int state_count, 
 }
 
 void Prune::showPruneInfos(std::ostream& os) const {
-    long long sum = 0;
-    std::vector<int> cnt(20, 0);
-    for (int i = 0; i < prune_table.size(); i++) {
-        int prune_value = prune_table[i];
+    uint64_t sum = 0;
+    std::vector<uint64_t> cnt(20, 0);
+    for (uint64_t i = 0; i < prune_table.size(); i++) {
+        int prune_value = prune_table.get({i >> 3, i & 7});
         sum += prune_value;
         cnt[prune_value]++;
     }
@@ -39,7 +39,7 @@ int Prune::pruneTreeSearch(int state, Nibble32 & table, int depth_left, int dept
 
     if (depth_left == 0)
     {
-        if (table[state] > depth)
+        if (table.get(state) > depth)
         {
             table.set(state, depth);
             cnt = 1;
@@ -47,7 +47,7 @@ int Prune::pruneTreeSearch(int state, Nibble32 & table, int depth_left, int dept
     }
     else
     {
-        if (table[state] == depth - depth_left)
+        if (table.get(state) == depth - depth_left)
         {
             for (int move = 0; move < 6; move++)
             {

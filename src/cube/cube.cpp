@@ -4,14 +4,14 @@
 #include <regex>
 #include <map>
 
-Cube::Cube()
+Cube::Cube(int edgePruningSize)
 {
     CornerOrientation cornerOrientation;
     CornerPermutation cornerPermutation;
     coState = cornerOrientation.array_to_index(std::vector<int>{ 0, 0, 0, 0, 0, 0, 0, 0 });
     cpState = cornerPermutation.array_to_index(std::vector<int>{ 0, 1, 2, 3, 4, 5, 6, 7 });
-    edges = Edges{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}, 7};
-    edges2 = Edges{{10, 11, 8, 9, 6, 7, 4, 5, 2, 3, 0, 1}, 7};
+    edges = Edges{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}, edgePruningSize};
+    edges2 = Edges{{10, 11, 8, 9, 6, 7, 4, 5, 2, 3, 0, 1}, edgePruningSize};
 
     cornerOrientation.buildTransitionTable();
     coTransition = cornerOrientation.getTransitionTable();
@@ -20,7 +20,7 @@ Cube::Cube()
     cpTransition = cornerPermutation.getTransitionTable();
 }
 
-Cube::Cube(std::string scramble) : Cube()
+Cube::Cube(std::string scramble, int edgePruningSize) : Cube(edgePruningSize)
 {
     std::map<char, int> moveNames{{'U', 0}, {'D', 1}, {'R', 2}, {'L', 3}, {'F', 4}, {'B', 5}};
     std::map<char, int> repeatNames{{'\'', 3}, {'2', 2}};
@@ -55,5 +55,5 @@ void Cube::apply_move(int move)
 
 bool Cube::is_solved()
 {
-    return cpState == 0 && coState == 0 && edges.to_index() == 0 && edges2.to_index() == 0;
+    return cpState == 0 && coState == 0 && edges.to_index() == std::pair<uint32_t, uint32_t>{0, 0} && edges2.to_index() == std::pair<uint32_t, uint32_t>{0, 0};
 }

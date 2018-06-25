@@ -9,7 +9,7 @@ cornerPruning::cornerPruning()
 
 int cornerPruning::pruning_number(Cube &cube)
 {
-    return prune_table[cube.getCpState() * 2187 + cube.getCoState()];
+    return prune_table.get(cube.getCpState() * 2187 + cube.getCoState());
 }
 
 void cornerPruning::buildPruneTable()
@@ -35,7 +35,7 @@ void cornerPruning::buildPruneTable()
 
 
         for (int i = 0; i < state_count; i++) {
-            if (prune_table[i] < 11)
+            if (prune_table.get(i) < 11)
                 continue;
 
             //Only the position smaller than 11, since 11 is max
@@ -56,14 +56,14 @@ void cornerPruning::pruneTreeSearch(long long orient_state, long long perm_state
     long long state = perm_state * 2187 + orient_state;
     if (depth_left == 0)
     {
-        if (prune_table[state] > depth)
+        if (prune_table.get(state) > depth)
         {
             prune_table.set(state, depth);
         }
     }
     else
     {
-        if (prune_table[state] == depth - depth_left)
+        if (prune_table.get(state) == depth - depth_left)
         {
             for (int move = 0; move < 6; move++)
             {
@@ -88,7 +88,7 @@ void cornerPruning::pruneTreeSearch(long long orient_state, long long perm_state
 bool cornerPruning::solveable(long long orient_state, long long perm_state, char depth, char maxBreathDepthSearch, int lastMove)
 {
     long long state = perm_state * 2187 + orient_state;
-    if (prune_table[state] == depth)
+    if (prune_table.get(state) == depth)
     {
         return true;
     }
