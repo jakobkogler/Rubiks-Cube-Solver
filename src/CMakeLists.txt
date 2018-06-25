@@ -14,7 +14,6 @@ set(SOURCE_FILES
         )
 
 add_subdirectory(cube)
-add_subdirectory(pruning)
 
 add_library(Optimal_Solver STATIC ${SOURCE_FILES} ${HEADER_FILES})
-target_link_libraries(Optimal_Solver Cube Prune)
+target_link_libraries(Optimal_Solver Cube)

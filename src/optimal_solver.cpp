@@ -18,9 +18,13 @@ private:
 };
 
 OptimalSolver::OptimalSolver(int edgePruningSize)
-    : ePruning(edgePruningSize), edgePruningSize(edgePruningSize)
+    : edgePruningSize(edgePruningSize)
 {
+    Corners corners;
+    cPruning.buildPruneTable(corners);
     cPruning.showPruneInfos(std::cout);
+    Edges edges({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}, edgePruningSize);
+    ePruning.buildPruneTable(edges);
     ePruning.showPruneInfos(std::cout);
 }
 
@@ -73,7 +77,7 @@ bool OptimalSolver::treeSearch(Cube &cube, int depth, int lastMove)
     }
     else
     {
-        if (cPruning.pruning_number(cube) > depth)
+        if (cPruning.pruning_number(cube.corners) > depth)
             return false;
         if (ePruning.pruning_number(cube.edges) > depth)
             return false;

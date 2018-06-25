@@ -1,10 +1,9 @@
 #include <vector>
 #include <string>
-#include <unordered_map>
 #include "cube.h"
 #include "prune.h"
-#include "cornerPruning.h"
-#include "edgePruning.h"
+#include "edges.h"
+#include "corners.h"
 
 class OptimalSolver
 {
@@ -13,8 +12,8 @@ private:
     std::string solution;
     std::string moveNames[6] = {"U", "D", "R", "L", "F", "B"};
     std::string moveCntNames[3] = {" ", "2", "'"};
-    cornerPruning cPruning;
-    edgePruning ePruning;
+    Prune<Corners> cPruning;
+    Prune<Edges> ePruning;
     int edgePruningSize;
 
 public:

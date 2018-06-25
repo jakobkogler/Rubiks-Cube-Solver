@@ -7,8 +7,10 @@ set(HEADER_FILES
         group.h
         corner_orientation.h
         corner_permutation.h
+        corners.h
         edges.h
         indexing.h
+        pruning_info.h
         )
 
 set(SOURCE_FILES
@@ -16,6 +18,7 @@ set(SOURCE_FILES
         group.cpp
         corner_orientation.cpp
         corner_permutation.cpp
+        corners.cpp
         edges.cpp
         indexing.cpp
         )

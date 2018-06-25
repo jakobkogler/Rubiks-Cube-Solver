@@ -1,5 +1,6 @@
 #include "edges.h"
 #include <numeric>
+#include <sstream>
 
 Table12 generatePermTable(Table12 const& labels, int a, int b, int c, int d) {
     Table12 t;
@@ -26,6 +27,16 @@ std::vector<uint32_t> computeOffsets(int cnt)
     return arr;
 }
 
+const std::string create_file_path(int pieces_cnt) {
+    std::stringstream ss;
+    ss << "edgePruning";
+    for (int i = 0; i < pieces_cnt; i++) {
+        ss << i;
+    }
+    ss << ".data";
+    return ss.str();
+}
+
 Edges::Edges(Table12 labels, int pieces_cnt)
     : pieces_cnt(pieces_cnt), offsets(computeOffsets(pieces_cnt))
 {
@@ -41,6 +52,11 @@ Edges::Edges(Table12 labels, int pieces_cnt)
     perm[5] = generatePermTable(labels, 0, 4, 8, 5);
     orient[4] = generateOrientTable(labels, 2, 6, 10, 7);
     orient[5] = generateOrientTable(labels, 0, 4, 8, 5);
+
+    pruning_info.state_count = product(12 - pieces_cnt + 1, 12) << pieces_cnt;
+    pruning_info.maxDepthBFS = pieces_cnt <= 6 ? 7 : 8;
+    pruning_info.maxDepth = 15;
+    pruning_info.pruning_file = create_file_path(pieces_cnt);
 }
 
 void Edges::apply_move(int move) {
@@ -77,7 +93,7 @@ std::pair<uint32_t, uint32_t> Edges::to_index() const {
     return {state, offset};
 }
 
-void Edges::to_array(uint64_t state) {
+void Edges::from_index(uint64_t state) {
     unsigned long long cnt = 0xfedcba9876543210;
     for (int i = 0; i < pieces_cnt; i++) {
         edges_orient[i] = (state >> (pieces_cnt - 1 - i)) & 1;
@@ -90,4 +106,8 @@ void Edges::to_array(uint64_t state) {
         cnt = (cnt & mask) | ((cnt >> 4) & ~mask);
         state %= offsets[i];
     }
+}
+
+PruningInfo Edges::get_pruning_info() const {
+    return pruning_info;
 }
