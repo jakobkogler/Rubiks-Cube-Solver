@@ -18,15 +18,15 @@ private:
     std::vector<uint32_t> offsets;
 };
 
-constexpr uint64_t product(int a, int b)
+constexpr uint64_t product(unsigned a, unsigned b)
 {
-    uint64_t res = 1;
-    for (int x = a; x <= b; x++)
+    uint64_t res = 1u;
+    for (auto x = a; x <= b; x++)
         res *= x;
     return res;
 }
 
-constexpr uint64_t factorial(int x)
+constexpr uint64_t factorial(unsigned x)
 {
     return product(1, x);
 }

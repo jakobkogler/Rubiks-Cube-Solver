@@ -64,7 +64,7 @@ char OptimalSolver::IDA(Cube &cube)
     return depth;
 }
 
-bool OptimalSolver::treeSearch(Cube &cube, char depth, int lastMove)
+bool OptimalSolver::treeSearch(Cube &cube, int depth, int lastMove)
 {
     nodeCnt++;
     if (depth == 0)

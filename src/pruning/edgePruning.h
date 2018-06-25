@@ -10,8 +10,8 @@ public:
     uint64_t visited;
 private:
     void buildPruneTable();
-    void pruneTreeSearch(Edges & edges, char depth_left, char depth, int lastMove);
-    bool solveable(Edges & edges, char depth, char maxBreathDepthSearch, int lastMove);
+    void pruneTreeSearch(Edges & edges, int depth_left, int depth, int lastMove);
+    bool solveable(Edges & edges, int depth, int maxBreathDepthSearch, int lastMove);
 
     int pieces_cnt;
 };

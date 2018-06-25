@@ -10,6 +10,6 @@ public:
     int pruning_number(Cube &cube);
 private:
     void buildPruneTable();
-    void pruneTreeSearch(long long orient_state, long long perm_state, char depth_left, char depth, int lastMove);
-    bool solveable(long long orient_state, long long perm_state, char depth, char maxBreathDepthSearch, int lastMove);
+    void pruneTreeSearch(uint32_t orient_state, uint32_t perm_state, int depth_left, int depth, int lastMove);
+    bool solveable(uint32_t orient_state, uint32_t perm_state, int depth, int maxBreathDepthSearch, int lastMove);
 };

@@ -30,7 +30,7 @@ void Prune::showPruneInfos(std::ostream& os) const {
     for (int i = 0; i < 20 && cnt[i]; i++) {
         os << "  " << std::setfill(' ') << std::setw(2) << i << ": " << cnt[i] << std::endl;
     }
-    os << "Effective prune value: " << sum / (double)prune_table.size() << std::endl;
+    os << "Effective prune value: " << sum / static_cast<double>(prune_table.size()) << std::endl;
 }
 
 int Prune::pruneTreeSearch(int state, Nibble32 & table, int depth_left, int depth, int lastMove, TransitionTable &transition_table)

@@ -23,5 +23,5 @@ public:
     char IDA(Cube &cube);
     
 private: 
-    bool treeSearch(Cube &cube, char depth, int lastMove);
+    bool treeSearch(Cube &cube, int depth, int lastMove);
 };

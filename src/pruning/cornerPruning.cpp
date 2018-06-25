@@ -9,7 +9,7 @@ cornerPruning::cornerPruning()
 
 int cornerPruning::pruning_number(Cube &cube)
 {
-    return prune_table.get(cube.getCpState() * 2187 + cube.getCoState());
+    return prune_table.get(cube.getCpState() * 2187u + cube.getCoState());
 }
 
 void cornerPruning::buildPruneTable()
@@ -23,23 +23,23 @@ void cornerPruning::buildPruneTable()
     cornerPermutation.buildTransitionTable();
     transition_table_permutation = cornerPermutation.getTransitionTable();
 
-    long long state_count = (long long)cornerOrientation.get_state_count() * (long long)cornerPermutation.get_state_count();
+    uint32_t state_count = cornerOrientation.get_state_count() * cornerPermutation.get_state_count();
 
     prune_table = Nibble32(state_count, 11u);
     if (!prune_table.read(file_path)) {
-        char maxBreathDepthSearch = 8;
+        int maxBreathDepthSearch = 8;
 
         for (char depth = 0; depth <= maxBreathDepthSearch; depth++) {
             pruneTreeSearch(0, 0, depth, depth, -1);
         }
 
 
-        for (int i = 0; i < state_count; i++) {
+        for (uint32_t i = 0u; i < state_count; i++) {
             if (prune_table.get(i) < 11)
                 continue;
 
             //Only the position smaller than 11, since 11 is max
-            for (char depth = maxBreathDepthSearch + 1; depth < 11; depth++) {
+            for (int depth = maxBreathDepthSearch + 1; depth < 11; depth++) {
                 if (solveable(i % 2187, i / 2187, depth, maxBreathDepthSearch, -1)) {
                     prune_table.set(i, depth);
                     break;
@@ -51,9 +51,9 @@ void cornerPruning::buildPruneTable()
     }
 }
 
-void cornerPruning::pruneTreeSearch(long long orient_state, long long perm_state, char depth_left, char depth, int lastMove)
+void cornerPruning::pruneTreeSearch(uint32_t orient_state, uint32_t perm_state, int depth_left, int depth, int lastMove)
 {
-    long long state = perm_state * 2187 + orient_state;
+    uint32_t state = perm_state * 2187 + orient_state;
     if (depth_left == 0)
     {
         if (prune_table.get(state) > depth)
@@ -85,9 +85,9 @@ void cornerPruning::pruneTreeSearch(long long orient_state, long long perm_state
     }
 }
 
-bool cornerPruning::solveable(long long orient_state, long long perm_state, char depth, char maxBreathDepthSearch, int lastMove)
+bool cornerPruning::solveable(uint32_t orient_state, uint32_t perm_state, int depth, int maxBreathDepthSearch, int lastMove)
 {
-    long long state = perm_state * 2187 + orient_state;
+    uint32_t state = perm_state * 2187u + orient_state;
     if (prune_table.get(state) == depth)
     {
         return true;
